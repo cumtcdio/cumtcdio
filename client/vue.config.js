@@ -17,6 +17,18 @@ module.exports = {
             template: 'public/project.html',
             filename: 'project.html',
             title: '项目制介绍'
+        },
+        list: {
+            entry: 'src/pages/list/main.js',
+            template: 'public/list.html',
+            filename: 'list.html',
+            title: '列表页面'
+        },
+        details: {
+            entry: 'src/pages/details/main.js',
+            template: 'public/details.html',
+            filename: 'details.html',
+            title: '详情界面'
         }
     }
 }
