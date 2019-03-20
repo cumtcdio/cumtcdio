@@ -13,11 +13,8 @@ export default new Router({
         window.location = '/index.html'
       }
     },
-    {path: '/cdio',
-      name: 'cdio'
-    },
     {path: '/list',
-        name: 'cdio'
+        name: 'list'
     }
   ]
 })
