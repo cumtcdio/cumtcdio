@@ -1,8 +1,8 @@
 <template>
   <div id="details">
     <div class="row">
-      <div class="col-md-2 a" v-if="titleShow"></div>
-      <div class="col-12 col-sm-12 col-md-8 b">
+      <div class="col-xs-0 col-sm-0 col-md-2 col-lg-2 col-xl-2"></div>
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
         <div class="row center">
           <br>
           <br>
@@ -27,12 +27,15 @@
           </div>
           <div class="col-md-2 col-lg-8 col-xl-8"></div>
         </div>
-        <iframe id="iframe" class="row" src="http://www.runoob.com" scrolling="auto" noresize>
-          <p>您的浏览器不支持  iframe 标签。</p>
-        </iframe>
+        <div class="row">
+          <iframe id="iframe" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" src="http://www.runoob.com" scrolling="auto" noresize>
+            <p>您的浏览器不支持  iframe 标签。</p>
+          </iframe>
+        </div>
       </div>
-      <div class="col-md-2 c" v-if="titleShow"></div>
+      <div class="col-xs-0 col-sm-0 col-md-2 col-lg-2 col-xl-2"></div>
     </div>
+    <div class="footer"></div>
   </div>
 </template>
 <script>
@@ -85,10 +88,10 @@ export default {
     methods : {
         changeMobsIframe: function () {
             const mobsf = document.getElementById('iframe')
-            const deviceWIdth = document.body.clientWidth
+            // const deviceWIdth = document.body.clientWidth
             const deviceHeight = document.body.clientHeight
             mobsf.style.height = (Number(deviceHeight)) + 'px'
-            console.log(mobsf.style.height)
+            // console.log(mobsf.style.height)
         }
     },
     mounted() {
@@ -108,9 +111,6 @@ export default {
             }
         }
     }
-    // created: {
-    //     this.setIframeHeight()
-    // }
 }
 </script>
 <style>
@@ -127,6 +127,13 @@ iframe {
   border: 0;
   margin-top: 7px;
   width: 100%;
-  /*height: 100%;*/
+  margin-bottom: 57px;
+}
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 50px;
+  background: rgb(0, 41,86);
 }
 </style>
