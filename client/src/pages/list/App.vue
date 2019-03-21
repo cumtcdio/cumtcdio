@@ -44,13 +44,22 @@
                         <div class="content-list">
                             <div class="content-bottom" v-for="item in list" :key="item.id">
                                 <span class="left">{{item.title}}</span>
-                                <span class="right" v-if="titleShow">{{item.date}}</span>
+                                <span class="right content-date" v-if="titleShow">{{item.date}}</span>
                             </div>
+                        </div>
+                        <div class="content-footer">
+                            <span class="content-footer-item-1" v-if="titleShow">每页14条记录，总共5条记录</span>
+                            <span class="content-footer-item-2">第一页 &lt;&lt;上一页 下一页&gt;&gt; 尾页</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
+        </div>
+        <div class="row center footer">
+            <br>
+            <br>
+            <br>
         </div>
     </div>
 </template>
@@ -130,6 +139,9 @@
 .center {
     background: rgb(0, 41,86);
 }
+.row {
+    margin-right: 0px;
+}
 img{
     width: 100%;
 }
@@ -145,6 +157,18 @@ img{
     float: right;
 }
 .content-bottom {
-    border-bottom: 1px dashed rgb(255, 255, 255);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.8);
+    padding: .8rem;
+}
+.content-date {
+    color: rgba(153,153,153);
+}
+.content-footer {
+    float: right;
+}
+.footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
 }
 </style>
