@@ -1,12 +1,26 @@
 <template>
-  <div id="app">
-    page1
-    <router-link to="/cdio">cdio</router-link><br>
-    <router-link to="/list">list</router-link><br>
-    <router-link to="/details">details</router-link>
+  <div>
+      <index-header></index-header>
+      <index-slide></index-slide>
+      <Content></Content>
+      <index-bottom></index-bottom>
   </div>
 </template>
 
-<style>
-
+<script>
+  import IndexHeader from './components/IndexHeader'
+  import IndexSlide from './components/IndexSlide'
+  import IndexBottom from './components/IndexBottom'
+  import Content from './components/Content'
+  export default {
+      name: 'Index',
+      components: {
+          IndexSlide,
+          IndexHeader,
+          IndexBottom,
+          Content
+      }
+  }
+</script>
+<style scoped>
 </style>
