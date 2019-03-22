@@ -13,7 +13,7 @@
 <style scoped>
     .bg{
     background-color: #C64718;
-    height: 8rem;
+    /*height: 8rem;*/
     }
     .img0{
         width: 100%;
