@@ -6,7 +6,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav font">
                     <li class="nav-item" v-for="item in menus" :key="item.id">
                         <a class="nav-link" :href="item.href">{{item.title}}</a>
                     </li>
@@ -62,5 +62,7 @@ export default {
 }
 </script>
 <style scoped>
-
+    .font{
+        color: blue;
+    }
 </style>

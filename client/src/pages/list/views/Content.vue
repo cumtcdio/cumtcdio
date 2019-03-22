@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+        <div class="line"></div>
         <div class="row center">
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
             <div class="col-12 col-md-8 col-lg-8 col-xl-8">
@@ -102,7 +103,7 @@ export default {
     margin: 0
 }
 .center {
-    background: rgb(0, 41,86);
+    background: #C64718;
 }
 .wrapper{
     padding: 0px;
@@ -123,7 +124,7 @@ img{
     padding: .8rem;
 }
 .content-date {
-    color: rgba(153,153,153);
+    color: rgba(153,153,153)
 }
 .content-footer {
     float: right;
@@ -135,5 +136,9 @@ img{
     padding: .5rem;
     text-align: center;
     color: white;
+}
+.line{
+    height: 1px;
+    color: gainsboro;
 }
 </style>
