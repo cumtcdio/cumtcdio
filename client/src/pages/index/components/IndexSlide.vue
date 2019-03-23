@@ -5,7 +5,7 @@
             <el-carousel :height="bannerH +'px'">
                 <el-carousel-item v-for="item of image"
                                   :key="item.id">
-                    <img :src="item.imgUrl" class="wraper-img"width="100%">
+                    <img :src="item.imgUrl" class="wraper-img" width="100%">
                 </el-carousel-item>
             </el-carousel>
         </div>

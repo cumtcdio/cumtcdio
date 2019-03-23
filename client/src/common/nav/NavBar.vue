@@ -6,9 +6,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav font">
+                <ul class="nav navbar-nav">
                     <li class="nav-item" v-for="item in menus" :key="item.id">
-                        <a class="nav-link" :href="item.href">{{item.title}}</a>
+                        <a class="nav-link" style="color: #fff" :href="item.href">{{item.title}}</a>
                     </li>
                 </ul>
             </div>
@@ -62,7 +62,8 @@ export default {
 }
 </script>
 <style scoped>
-    .font{
-        color: blue;
-    }
+.navbar .nav > li > a:hover {
+    color: red;
+    background-color: rgb(231,141,31);
+}
 </style>

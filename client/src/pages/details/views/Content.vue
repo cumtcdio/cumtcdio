@@ -3,7 +3,6 @@
         <div class="row">
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
             <div class="col-12 col-md-8 col-lg-8 col-xl-8 wrapper">
-                <nav-bar class="center"></nav-bar>
                 <iframe id="iframe" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" src="http://www.runoob.com" scrolling="auto" noresize>
                     <p>您的浏览器不支持  iframe 标签。</p>
                 </iframe>
@@ -13,11 +12,10 @@
     </div>
 </template>
 <script>
-    import NavBar from '../../../common/nav/NavBar'
+
     export default {
         name: 'Details',
         components: {
-            NavBar
         },
         data () {
             return {
@@ -55,9 +53,6 @@
     }
 </script>
 <style scoped>
-.center {
-    background: rgb(51, 105,167);
-}
 .row {
     margin: 0px;
 }

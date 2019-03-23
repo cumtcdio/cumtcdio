@@ -1,29 +1,34 @@
 <template>
   <div id="details">
-    <details-header></details-header>
+    <index-header></index-header>
+    <div class="row center">
+      <div class="col-md-2 col-lg-2 col-xl-2"></div>
+      <div class="col-12 col-md-8 col-lg-8 col-xl-8">
+        <nav-bar></nav-bar>
+      </div>
+      <div class="col-md-2 col-lg-8 col-xl-8"></div>
+    </div>
     <details-content></details-content>
     <index-bottom></index-bottom>
   </div>
 </template>
 <script>
 import IndexBottom from '../index/components/IndexBottom'
-import DetailsHeader from './views/DetailsHeader'
+import IndexHeader from '../index/components/IndexHeader'
+import NavBar from '../../common/nav/NavBar'
 import DetailsContent from  './views/Content'
 export default {
     name: 'Details',
     components: {
         IndexBottom,
         DetailsContent,
-        DetailsHeader
+        IndexHeader,
+        NavBar
     }
 }
 </script>
 <style scoped>
-#details {
-  background-image: url("http://xwzx.cumt.edu.cn/_upload/tpl/00/37/55/template55/images/shuiy.gif");
-}
-.row {
-  margin: 0px;
-  padding: 0px;
+.center {
+  background: #C64718;
 }
 </style>

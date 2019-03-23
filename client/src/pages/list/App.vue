@@ -15,7 +15,7 @@ import ListContent from './views/Content'
             IndexHeader,
             IndexBottom,
             ListContent
-        },
+        }
     }
 </script>
 <style scoped>
