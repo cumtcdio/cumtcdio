@@ -25,4 +25,8 @@
         width: 100%;
         /*height: 5rem;*/
     }
+    .row {
+        margin-right: 0px;
+        padding: 0px;
+    }
 </style>

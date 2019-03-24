@@ -25,8 +25,15 @@
         mounted () {
             this.screenHeight = window.screen.availHeight
             this.height = document.body.scrollHeight
-            if (this.screenHeight > this.height) {
+            if (this.screenHeight > this.height + 200) {
                 this.position = true
+            }
+        },
+        watch:  {
+            height: function (newHeight) {
+                if (this.screenHeight > newHeight + 200) {
+                    this.position = true
+                }
             }
         }
     }

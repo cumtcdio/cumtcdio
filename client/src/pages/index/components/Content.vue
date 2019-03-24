@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="index">
             <div class="row  bg1">
                 <div class="col-12 col-md-4 col-sm col0">
                     <div class="category">{{category1}}</div>
@@ -30,7 +30,7 @@
                         <div class="synopsisTitle">{{item.synopsisTitle}}</div>
                         <div class="synopsis">{{item.synopsis}}</div>
                     </div>
-                    <div class="synopsisBorder" v-for="item in content3" :key="item.id">
+                    <div class="synopsisBorder" v-for="item in content3" :key="item.id + '1'">
                         <div class="synopsisTitle">{{item.synopsisTitle}}</div>
                         <!--<div class="synopsis">{{item.synopsis}}</div>-->
                     </div>
@@ -163,6 +163,9 @@
 .col0{
     padding:1.2rem
 }
+/*.index {*/
+    /*margin-bottom: 67px;*/
+/*}*/
 a {color:#E67F11;}
 a:active  {color:#C8700F;}
 a:link    {color:#E67F11;}

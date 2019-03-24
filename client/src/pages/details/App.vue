@@ -31,4 +31,8 @@ export default {
 .center {
   background: #C64718;
 }
+.row {
+  margin-right: 0px;
+  padding: 0px;
+}
 </style>
