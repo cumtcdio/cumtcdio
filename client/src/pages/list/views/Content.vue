@@ -14,7 +14,10 @@
                 <img src="http://www.cumt.edu.cn/_upload/tpl/04/ae/1198/template1198/images/banner.jpg">
                 <div class="row content">
                     <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                        <div class="title-content">{{title}}</div>
+                        <!--<div class="title-content">{{title}}</div>-->
+                        <select v-model="title" class="title-content">
+                            <option v-for="(item,index) in titles" :key="index">{{item}}</option>
+                        </select>
                     </div>
                     <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
                         <div v-if="titleShow">
@@ -27,13 +30,18 @@
                         <hr>
                         <div class="content-list">
                             <div class="content-bottom" v-for="item in list" :key="item.id">
-                                <span class="left">{{item.title}}</span>
-                                <span class="right content-date" v-if="titleShow">{{item.date}}</span>
+                                <a target="_blank" href="details.html">
+                                    <span class="left">{{item.title}}</span>
+                                    <span class="right content-date" v-if="titleShow">{{item.date_time}}</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="content-footer">
-                            <span class="content-footer-item-1" v-if="titleShow">每页14条记录，总共5条记录</span>
-                            <span class="content-footer-item-2">第一页 &lt;&lt;上一页 下一页&gt;&gt; 尾页</span>
+                        <div class="content-footer" style="margin-top: 8px">
+                            <span class="content-footer-item-1" v-if="titleShow">总共<span>{{totalList}}</span>条记录</span>&nbsp;
+                            <span class="content-footer-item-2">
+                                <span class="page-link">第一页</span>
+                                &lt;&lt;上一页 下一页&gt;&gt;
+                                <span class="page-link">尾页</span> </span>
                         </div>
                     </div>
                 </div>
@@ -44,6 +52,7 @@
 </template>
 <script>
 import NavBar from '../../../common/nav/NavBar'
+import axios from 'axios'
 export default {
     name: 'ListContent',
     components: {
@@ -51,43 +60,37 @@ export default {
     },
     data() {
         return {
+            titles: ['通知', '新闻'],
             title: '通知',
+            totalList: 0,
             titleShow: true,
             timer: null,
             screenWidth: document.body.clientWidth,
-            list: [
-                {id: '1', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '2', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '3', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '4', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '5', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '6', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '7', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '8', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '9', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '10', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '11', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '12', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '13', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '14', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '15', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '16', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '17', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '18', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '19', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '20', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '21', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '22', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '23', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '24', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-                {id: '25', title: '中国矿大师生热议习近平总书记在学校思政课教师代表座谈会上的讲话', date: '2019-03-19'},
-            ]
+            list: []
         }
     },
     methods: {
         deserveIsCOrM: function () {
             if (this.screenWidth <= 750) {
                 this.titleShow = false
+            }
+        },
+        getListData: function () {
+            if (this.title === "新闻") {
+                axios.get('/api/news/news.json').then(response => {
+                    this.getListDataSucc(response)
+                })
+            }else {
+                axios.get('/api/tongzhi/tongzhi.json').then(response => {
+                    this.getListDataSucc(response)
+                })
+            }
+        },
+        getListDataSucc: function(res) {
+            var data = res.data
+            if (data.ret && data.data) {
+                this.list = data.data
+                this.totalList = this.list.length
             }
         }
     },
@@ -100,6 +103,7 @@ export default {
             }
         };
         this.deserveIsCOrM()
+        this.getListData()
     },
     watch: {
         screenWidth: function(val){ //监听屏幕宽度变化
@@ -108,6 +112,9 @@ export default {
             }else {
                 this.titleShow = true
             }
+        },
+        title: function () {
+             this.getListData()
         }
     }
 }
@@ -155,4 +162,14 @@ img{
     height: 1px;
     color: gainsboro;
 }
+.page-link {
+    display: inline;
+    border: none;
+    background: none;
+}
+a {color:#000;}
+a:active  {color:#000;}
+a:link    {color:#000;}
+a:visited {color:#000;}
+a:hover   {color:#E67F11;  text-decoration: none;}
 </style>
