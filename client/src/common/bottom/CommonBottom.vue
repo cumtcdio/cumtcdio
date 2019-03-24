@@ -1,5 +1,5 @@
 <template>
-    <div class="bottom" :class="{'bottom-position': position}">
+    <div id="bottom" class="bottom" :class="{'bottom-position': position}">
         <div class="line"></div>
         <div class="bg">
             <div class="bottomFont">
@@ -17,23 +17,29 @@
         name: "CommonBottom",
         data () {
             return {
-                screenHeight: window.screen.availHeight,
-                height: document.body.scrollHeight,
+                screenHeight: window.innerHeight,
+                height: document.body.clientHeight,
                 position: false
             }
         },
         mounted () {
-            this.screenHeight = window.screen.availHeight
-            this.height = document.body.scrollHeight
-            if (this.screenHeight > this.height + 200) {
+            this.screenHeight = window.innerHeight
+            this.height = document.body.clientHeight
+            if (this.screenHeight >= this.height + 400) {
                 this.position = true
+            } else {
+                this.position = false
             }
         },
-        update () {
-            this.screenHeight = window.screen.availHeight
-            this.height = document.body.scrollHeight
-            if (this.screenHeight > this.height + 200) {
-                this.position = true
+        watch: {
+            height: function () {
+                this.height = document.body.clientHeight
+                console.log(this.height)
+                if (this.screenHeight >= this.height + 400) {
+                    this.position = true
+                } else {
+                    this.position = false
+                }
             }
         }
     }
@@ -52,9 +58,6 @@
     .photo{
         height: 2rem;
     }
-    /*.left{*/
-        /*width: 20%;*/
-    /*}*/
     .line{
         height: 0.1rem;
         color: gainsboro;

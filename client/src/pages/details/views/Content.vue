@@ -63,7 +63,6 @@ import axios from 'axios'
         },
         watch: {
             title: function () {
-                console.log(this.title)
                 this.getDetailsData()
             }
         }

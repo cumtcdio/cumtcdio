@@ -14,7 +14,7 @@
                 <div class="col-12 col-md-4 col-sm col0">
                     <div class="category">{{category2}}</div>
                     <div class="more text-right" >
-                        <a target="" href="">更多&gt;&gt;&nbsp;</a>
+                        <a target="_blank" href="list.html">更多&gt;&gt;&nbsp;</a>
                     </div>
                     <div class="synopsisBorder" v-for="item in content" :key="item.id">
                         <div class="synopsisTitle">{{item.synopsisTitle}}</div>
@@ -40,7 +40,7 @@
                 <div class="col-12 col-md-4 col-sm col0">
                     <div class="category">{{category4}}</div>
                     <div class="more text-right" >
-                        <a target="" href="">更多&gt;&gt;&nbsp;</a>
+                        <a target="_blank" href="list.html">更多&gt;&gt;&nbsp;</a>
                     </div>
                     <div class="synopsisBorder" v-for="item in content" :key="item.id">
                         <div class="synopsisTitle">{{item.synopsisTitle}}</div>
@@ -50,7 +50,7 @@
                 <div class="col-12 col-md-4 col-sm col0">
                     <div class="category">{{category5}}</div>
                     <div class="more text-right" >
-                        <a target="" href="">更多&gt;&gt;&nbsp;</a>
+                        <a target="_blank" href="list.html">更多&gt;&gt;&nbsp;</a>
                     </div>
                     <div class="synopsisBorder" v-for="item in content" :key="item.id">
                         <div class="synopsisTitle">{{item.synopsisTitle}}</div>
@@ -60,7 +60,7 @@
                 <div class="col-12 col-md-4 col-sm col0">
                     <div class="category">{{category6}}</div>
                     <div class="more text-right" >
-                        <a target="" href="">更多&gt;&gt;&nbsp;</a>
+                        <a target="_blank" href="list.html">更多&gt;&gt;&nbsp;</a>
                     </div>
                     <div class="synopsisBorder" v-for="item in content" :key="item.id">
                         <div class="synopsisTitle">{{item.synopsisTitle}}</div>
