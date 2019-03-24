@@ -1,5 +1,5 @@
 <template>
-    <div class="bottom">
+    <div class="bottom" :class="{'bottom-position': position}">
         <div class="line"></div>
         <div class="bg">
             <div class="bottomFont">
@@ -14,7 +14,21 @@
 
 <script>
     export default {
-        name: "CommonBottom"
+        name: "CommonBottom",
+        data () {
+            return {
+                screenHeight: window.screen.availHeight,
+                height: document.body.scrollHeight,
+                position: false
+            }
+        },
+        mounted () {
+            this.screenHeight = window.screen.availHeight
+            this.height = document.body.scrollHeight
+            if (this.screenHeight > this.height) {
+                this.position = true
+            }
+        }
     }
 </script>
 
@@ -40,7 +54,9 @@
     }
     .bottom{
         width:100%;
-        /*position: fixed;*/
         bottom: 0;
+    }
+    .bottom-position {
+        position: fixed;
     }
 </style>

@@ -3,9 +3,12 @@
         <div class="row">
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
             <div class="col-12 col-md-8 col-lg-8 col-xl-8 wrapper">
-                <iframe id="iframe" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" src="http://www.runoob.com" scrolling="auto" noresize>
-                    <p>您的浏览器不支持  iframe 标签。</p>
-                </iframe>
+                <!--<iframe id="iframe" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" src="http://www.runoob.com" scrolling="auto" noresize>-->
+                    <!--<p>您的浏览器不支持  iframe 标签。</p>-->
+                <!--</iframe>-->
+                <iframe id="iFrame1" name="iFrame1" width="100%"
+                        onload="this.height=iFrame1.document.body.scrollHeight" frameborder="0" src="http://blog-1258589922.cos.ap-beijing.myqcloud.com/b8e7f650-0c3b-4782-b472-e31acf89f2fe.html"
+                        scrolling="no"></iframe>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
         </div>
@@ -23,32 +26,6 @@
                 timer: null,
                 screenWidth: document.body.clientWidth
             }
-        },
-        methods : {
-            changeMobsIframe: function () {
-                const mobsf = document.getElementById('iframe')
-                // const deviceWIdth = document.body.clientWidth
-                const deviceHeight = document.body.clientHeight
-                mobsf.style.height = (Number(deviceHeight)) + 'px'
-                // console.log(mobsf.style.height)
-            }
-        },
-        mounted() {
-            this.changeMobsIframe()
-            var _this = this;
-            window.onresize = function(){ // 定义窗口大小变更通知事件
-                _this.screenWidth = document.documentElement.clientWidth; //窗口宽度
-                _this.changeMobsIframe()
-            };
-        },
-        watch: {
-            screenWidth: function(val){ //监听屏幕宽度变化
-                if (val < 770) {
-                    this.titleShow = false
-                }else {
-                    this.titleShow = true
-                }
-            }
         }
     }
 </script>
@@ -60,10 +37,10 @@
     margin: 0;
     padding: 0;
 }
-iframe {
-    border: 0;
-    margin-top: 7px;
-    width: 100%;
-    margin-bottom: 57px;
-}
+/*iframe {*/
+    /*border: 0;*/
+    /*margin-top: 7px;*/
+    /*width: 100%;*/
+    /*margin-bottom: 57px;*/
+/*}*/
 </style>
