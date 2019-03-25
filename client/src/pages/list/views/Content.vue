@@ -27,7 +27,7 @@
                         <hr>
                         <div class="content-list">
                             <div class="content-bottom" v-for="item in list" :key="item.id">
-                                <a target="_blank" href="details.html">
+                                <a target="_blank" :href="link + '?title=' + title">
                                     <div class="row">
                                         <span class="col-10 left">{{item.title}}</span>
                                         <span class="col-2 right content-date" v-if="titleShow">{{item.date_time}}</span>
@@ -64,6 +64,7 @@ export default {
             titleShow: true,
             timer: null,
             screenWidth: document.body.clientWidth,
+            link: 'details.html',
             list: []
         }
     },
@@ -120,9 +121,6 @@ export default {
             }else {
                 this.titleShow = true
             }
-        },
-        title: function () {
-             this.getListData()
         }
     }
 }
@@ -159,7 +157,7 @@ img{
     float: right;
 }
 .title-content {
-    background: rgb(0, 41,86);
+    background: #C64718;
     width: 100%;
     height: 2.5rem;
     padding: .5rem;
