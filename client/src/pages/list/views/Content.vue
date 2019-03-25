@@ -14,10 +14,7 @@
                 <img src="http://www.cumt.edu.cn/_upload/tpl/04/ae/1198/template1198/images/banner.jpg">
                 <div class="row content">
                     <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                        <!--<div class="title-content">{{title}}</div>-->
-                        <select v-model="title" class="title-content">
-                            <option v-for="(item,index) in titles" :key="index">{{item}}</option>
-                        </select>
+                        <div class="title-content">{{title}}</div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
                         <div v-if="titleShow">
@@ -31,8 +28,10 @@
                         <div class="content-list">
                             <div class="content-bottom" v-for="item in list" :key="item.id">
                                 <a target="_blank" href="details.html">
-                                    <span class="left">{{item.title}}</span>
-                                    <span class="right content-date" v-if="titleShow">{{item.date_time}}</span>
+                                    <div class="row">
+                                        <span class="col-10 left">{{item.title}}</span>
+                                        <span class="col-2 right content-date" v-if="titleShow">{{item.date_time}}</span>
+                                    </div>
                                 </a>
                             </div>
                         </div>
@@ -60,7 +59,6 @@ export default {
     },
     data() {
         return {
-            titles: ['通知', '新闻'],
             title: '通知',
             totalList: 0,
             titleShow: true,
@@ -70,6 +68,15 @@ export default {
         }
     },
     methods: {
+        doInitToGetParams: function () {
+            var reg = new RegExp("(^|&)" + 'title' + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                this.title = decodeURI(r[2]);
+            } else {
+                return null;
+            }
+        },
         deserveIsCOrM: function () {
             if (this.screenWidth <= 750) {
                 this.titleShow = false
@@ -104,6 +111,7 @@ export default {
         };
         this.deserveIsCOrM()
         this.getListData()
+        this.doInitToGetParams()
     },
     watch: {
         screenWidth: function(val){ //监听屏幕宽度变化
@@ -145,7 +153,7 @@ img{
     padding: .8rem;
 }
 .content-date {
-    color: rgba(153,153,153)
+    color: rgba(153,153,153,0.8);
 }
 .content-footer {
     float: right;
@@ -157,6 +165,11 @@ img{
     padding: .5rem;
     text-align: center;
     color: white;
+}
+.left{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .line{
     height: 1px;
