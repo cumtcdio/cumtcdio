@@ -1,12 +1,23 @@
 <template>
   <div id="cdio">
     <!-- 页头 -->
-    <div class="menu">
-      <el-menu :default-active="activeIndex" mode="horizontal" class="d-flex justify-content-center" style="height:50px">
-        <el-menu-item :index="item.index" v-for="(item, index) in menus" :key="index" :route="item.href" class="" style="height:50px;line-height:50px">
-          {{item.title}}
-        </el-menu-item>
-      </el-menu>
+    <!--<div class="menu">-->
+      <!--<el-menu :default-active="activeIndex" mode="horizontal" class="d-flex justify-content-center" style="height:50px">-->
+        <!--<el-menu-item :index="item.index" v-for="(item, index) in menus" :key="index" :route="item.href" class="" style="height:50px;line-height:50px">-->
+          <!--{{item.title}}-->
+        <!--</el-menu-item>-->
+      <!--</el-menu>-->
+    <!--</div>-->
+    <!-- 页头 -->
+    <index-header></index-header>
+    <div class="line"></div>
+    <!-- 导航栏 -->
+    <div class="row center">
+      <div class="col-md-2 col-lg-2 col-xl-2"></div>
+      <div class="col-12 col-md-8 col-lg-8 col-xl-8">
+        <nav-bar></nav-bar>
+      </div>
+      <div class="col-md-2 col-lg-8 col-xl-8"></div>
     </div>
     <div>
       <div class="d-flex">
@@ -129,14 +140,22 @@
 
 
 
-    <!-- 页尾 -->
-
+    <!-- 页脚 -->
+    <index-bottom></index-bottom>
   </div>
 </template>
 
 <script>
+  import IndexHeader from '../index/components/IndexHeader'
+  import IndexBottom from '../index/components/IndexBottom'
+  import NavBar from '../../common/nav/NavBar'
   export default {
-    data() {
+      components: {
+          IndexBottom,
+          IndexHeader,
+          NavBar
+      },
+      data() {
       return {
         loading: false,
         currentIndex: '0',
@@ -513,6 +532,10 @@
 .ivu-cell-main{
   width: 100%;
 }
+.line{
+  height: 1px;
+  color: gainsboro;
+}
 .header-three{
   background: linear-gradient(180deg, rgba(217, 237, 247, 1) 0%, rgba(217, 237, 247, 1) 0%, rgba(196, 227, 243, 1) 100%, rgba(196, 227, 243, 1) 100%)
 }
@@ -537,5 +560,11 @@
 .mycard:hover {
     transition: all .3s;
     box-shadow: 0px 8px 20px 0 rgba(19, 23, 37, 0.12), 0 5px 5px rgba(0,0,0,.06);
+}
+.row {
+  margin: 0
+}
+.center {
+  background: #C64718;
 }
 </style>

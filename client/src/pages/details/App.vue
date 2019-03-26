@@ -1,6 +1,7 @@
 <template>
   <div id="details">
     <index-header></index-header>
+    <div class="line"></div>
     <div class="row center">
       <div class="col-md-2 col-lg-2 col-xl-2"></div>
       <div class="col-12 col-md-8 col-lg-8 col-xl-8">
@@ -30,6 +31,10 @@ export default {
 <style scoped>
 .center {
   background: #C64718;
+}
+.line{
+  height: 1px;
+  color: gainsboro;
 }
 .row {
   margin-right: 0px;
