@@ -14,19 +14,19 @@ export default new Router({
     {
       path: '/cdio',
       beforeEnter(){
-        window.location = '/cdio'
+        window.location = '/cdio.html'
       }
     },
     {
         path: '/list',
         beforeEnter(){
-            window.location = '/list'
+            window.location = '/list.html'
         }
     },
     {
         path: '/details',
         beforeEnter(){
-            window.location = '/details'
+            window.location = '/details.html'
         }
     }
   ]
