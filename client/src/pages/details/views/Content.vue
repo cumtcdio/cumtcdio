@@ -3,72 +3,108 @@
         <div class="row">
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
             <div class="col-12 col-md-8 col-lg-8 col-xl-8 wrapper">
-                <nav-bar class="center"></nav-bar>
-                <iframe id="iframe" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" src="http://www.runoob.com" scrolling="auto" noresize>
-                    <p>您的浏览器不支持  iframe 标签。</p>
-                </iframe>
+                <div class="details-title">{{details.title}}</div>
+                <hr />
+                <iframe id="iFrame1" name="iFrame1" width="100%"
+                        frameborder="0" :src="details.src"
+                        scrolling="no"></iframe>
+                <div v-if="!titleIsNews">
+                    <div class="details-from">{{details.from}}</div><br>
+                    <div class="details-from">{{details.date_time}}</div>
+                </div>
+                <div class="details-right-form" v-else>
+                    <div>新闻来源：{{details.newsFrom}}</div>
+                    <div>摄影：{{details.photo}}</div>
+                    <div>责任编辑：{{details.editor}}</div>
+                    <div>审查：{{details.audit}}</div>
+                </div>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
         </div>
     </div>
 </template>
 <script>
-    import NavBar from '../../../common/nav/NavBar'
+import axios from 'axios'
     export default {
         name: 'Details',
         components: {
-            NavBar
         },
         data () {
             return {
-                titleShow: true,
-                timer: null,
-                screenWidth: document.body.clientWidth
+                title: '通知',
+                titleIsNews: false,
+                details: {}
             }
         },
-        methods : {
-            changeMobsIframe: function () {
-                const mobsf = document.getElementById('iframe')
-                // const deviceWIdth = document.body.clientWidth
-                const deviceHeight = document.body.clientHeight
-                mobsf.style.height = (Number(deviceHeight)) + 'px'
-                // console.log(mobsf.style.height)
+        // onload="this.height=iFrame1.document.body.scrollHeight"
+        mounted () {
+            window.onload = function(){
+                window.addEventListener('message',function(event){
+                    if(event.origin == "https://test-1257444045.cos.ap-beijing.myqcloud.com") {
+                        document.getElementById('iFrame1').style.height = event.data + 20 + "px";
+                    }
+                })
             }
+            this.getDetailsData()
+            this.doInitToGetParams()
         },
-        mounted() {
-            this.changeMobsIframe()
-            var _this = this;
-            window.onresize = function(){ // 定义窗口大小变更通知事件
-                _this.screenWidth = document.documentElement.clientWidth; //窗口宽度
-                _this.changeMobsIframe()
-            };
-        },
-        watch: {
-            screenWidth: function(val){ //监听屏幕宽度变化
-                if (val < 770) {
-                    this.titleShow = false
+        methods: {
+            doInitToGetParams: function () {
+                var reg = new RegExp("(^|&)" + 'title' + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) {
+                    this.title = decodeURI(r[2]);
+                    if (this.title === '通知') {
+                        this.titleIsNews = false
+                    }else {
+                        this.titleIsNews = true
+                    }
+                } else {
+                    return null;
+                }
+                this.getDetailsData()
+            },
+            getDetailsData: function () {
+                if (this.title === "通知"){
+                    axios.get('/api/tongzhi/tzDetails.json').then(response => {
+                        this.getDetailsSucc(response)
+                    })
                 }else {
-                    this.titleShow = true
+                    axios.get('/api/news/newsDetails.json').then(response => {
+                        this.getDetailsSucc(response)
+                    })
+                }
+            },
+            getDetailsSucc: function (res) {
+                var data = res.data
+                if (data.ret) {
+                    this.details = data
                 }
             }
         }
     }
 </script>
 <style scoped>
-.center {
-    background: rgb(51, 105,167);
-}
 .row {
     margin: 0px;
+    margin-bottom: 67px;
+}
+.details-title {
+    text-align: center;
+    font-size: 2rem
+}
+hr{
+    height: .1rem;
+    background-color: #C64718;
+}
+.details-from{
+    float: right;
+}
+.details-right-form {
+    float: left;
 }
 .wrapper{
     margin: 0;
     padding: 0;
-}
-iframe {
-    border: 0;
-    margin-top: 7px;
-    width: 100%;
-    margin-bottom: 57px;
 }
 </style>

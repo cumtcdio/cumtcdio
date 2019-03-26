@@ -30,5 +30,16 @@ module.exports = {
             filename: 'details.html',
             title: '详情界面'
         }
+    },
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': '/mock'
+                }
+            }
+        }
     }
 }
