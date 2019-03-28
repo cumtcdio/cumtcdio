@@ -9,13 +9,33 @@
       <!--</el-menu>-->
     <!--</div>-->
     <!-- 页头 -->
-    <index-header></index-header>
+    <div class="bg" style="width:1900px">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10 col-md-4">
+                <img class="img0" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/8_%E8%87%AA%E5%AE%9A%E4%B9%89px_2019.03.22.png">
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
     <div class="line"></div>
     <!-- 导航栏 -->
-    <div class="row center">
+    <div class="row center" style="width:1900px">
       <div class="col-md-2 col-lg-2 col-xl-2"></div>
       <div class="col-12 col-md-8 col-lg-8 col-xl-8">
-        <nav-bar></nav-bar>
+        <nav class="navbar navbar-expand-md navbar-dark">
+            <!--<a class="navbar-brand" href="#">Navbar</a>-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" v-for="item in menus" :key="item.id">
+                        <a class="nav-link" style="color: #fff" :href="item.href">{{item.title}}</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
       </div>
       <div class="col-md-2 col-lg-8 col-xl-8"></div>
     </div>
@@ -141,22 +161,61 @@
 
 
     <!-- 页脚 -->
-    <index-bottom></index-bottom>
+    <div ref="bottom" class="bottom" :class="{'bottom-position': position}" style="width:1900px">
+        <div class="line"></div>
+        <div class="bg" style="height: 60px;line-height: 3rem;">
+            <div class="bottomFont">
+                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E7%B3%BB%E5%BE%BD.png">
+                <span>&nbsp;&nbsp;&nbsp;电子商务与数据科学系&nbsp;&nbsp;&nbsp;</span>
+                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E7%B3%BB%E5%BE%BD.png">
+                <span>&nbsp;&nbsp;&nbsp;微信公众号&nbsp;&nbsp;&nbsp;</span>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import IndexHeader from '../index/components/IndexHeader'
-  import IndexBottom from '../index/components/IndexBottom'
-  import NavBar from '../../common/nav/NavBar'
   export default {
-      components: {
-          IndexBottom,
-          IndexHeader,
-          NavBar
-      },
       data() {
       return {
+        menus: [
+            {
+                index: '1',
+                title: '首页',
+                href: '#'
+            },
+            {
+                index: '2',
+                title: '通知',
+                href: '#'
+            },
+            {
+                index: '3',
+                title: '新闻',
+                href: '#'
+            },
+            {
+                index: '4',
+                title: 'EC-CDIO项目教学',
+                href: '#'
+            },
+            {
+                index: '5',
+                title: '师生风采',
+                href: '#'
+            },
+            {
+                index: '6',
+                title: '专业信息',
+                href: '#'
+            },
+            {
+                index: '7',
+                title: '电子商务专业实习',
+                href: '#'
+            }
+        ],
         loading: false,
         currentIndex: '0',
         activeIndex:'4',
@@ -471,43 +530,6 @@
             },
           },
         ],
-        menus: [
-          {
-            index: '1',
-            title: '首页',
-            href: '#'
-          },
-          {
-            index: '2',
-            title: '通知',
-            href: '#'
-          },
-          {
-            index: '3',
-            title: '新闻',
-            href: '#'
-          },
-          {
-            index: '4',
-            title: 'EC-CDIO项目教学',
-            href: '#'
-          },
-          {
-            index: '5',
-            title: '师生风采',
-            href: '#'
-          },
-          {
-            index: '6',
-            title: '专业信息',
-            href: '#'
-          },
-          {
-            index: '7',
-            title: '电子商务专业实习',
-            href: '#'
-          }
-        ]
       }
     },
     computed: {
@@ -561,10 +583,33 @@
     transition: all .3s;
     box-shadow: 0px 8px 20px 0 rgba(19, 23, 37, 0.12), 0 5px 5px rgba(0,0,0,.06);
 }
-.row {
-  margin: 0
-}
 .center {
   background: #C64718;
+}
+.bg{
+background-color: #C64718;
+/*height: 8rem;*/
+}
+.img0{
+    width: 100%;
+    /*height: 5rem;*/
+}
+.bottomFont{
+    color: white;
+    margin-left: 10%;
+}
+.photo{
+    height: 2rem;
+}
+.line{
+    height: 0.1rem;
+    color: gainsboro;
+}
+.bottom{
+    width:100%;
+    bottom: 0;
+}
+.bottom-position {
+    position: fixed;
 }
 </style>
