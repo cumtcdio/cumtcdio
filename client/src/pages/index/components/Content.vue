@@ -168,7 +168,7 @@
 /*}*/
 a {color:#E67F11;}
 a:active  {color:#C8700F;}
-a:link    {color:#E67F11;}
+a:link    {color:#E67F11;text-decoration:none;}
 a:visited {color:#E67F11;}
 a:hover   {color:#E67F11;}
 </style>
