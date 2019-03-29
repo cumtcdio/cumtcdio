@@ -111,8 +111,8 @@ export default {
             }
         };
         this.deserveIsCOrM()
-        this.getListData()
         this.doInitToGetParams()
+        this.getListData()
     },
     watch: {
         screenWidth: function(val){ //监听屏幕宽度变化
