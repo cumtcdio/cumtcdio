@@ -45,7 +45,6 @@ import axios from 'axios'
                     }
                 })
             }
-            this.getDetailsData()
             this.doInitToGetParams()
         },
         methods: {
@@ -60,7 +59,7 @@ import axios from 'axios'
                         this.titleIsNews = true
                     }
                 } else {
-                    return null;
+                    alert("something wrong happened！")
                 }
                 this.getDetailsData()
             },
