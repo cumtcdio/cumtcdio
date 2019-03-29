@@ -161,7 +161,7 @@
 
 
     <!-- 页脚 -->
-    <div ref="bottom" class="bottom" :class="{'bottom-position': position}" style="width:1900px">
+    <div ref="bottom" class="bottom mt-4" style="width:1900px">
         <div class="line"></div>
         <div class="bg" style="height: 60px;line-height: 3rem;">
             <div class="bottomFont">
