@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cumtcdio.server.mapper.GroupMapper">
+  <resultMap id="BaseResultMap" type="cn.cumtcdio.server.model.Group">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="group_sn" jdbcType="VARCHAR" property="groupSn" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="grade_sn" jdbcType="VARCHAR" property="gradeSn" />
+    <result column="group_img" jdbcType="VARCHAR" property="groupImg" />
+    <result column="teacher" jdbcType="VARCHAR" property="teacher" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, group_sn, group_name, grade_sn, group_img, teacher, `desc`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `group`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `group`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cumtcdio.server.model.Group">
+    insert into `group` (id, group_sn, group_name,
+      grade_sn, group_img, teacher, 
+      `desc`)
+    values (#{id,jdbcType=INTEGER}, #{groupSn,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, 
+      #{gradeSn,jdbcType=VARCHAR}, #{groupImg,jdbcType=VARCHAR}, #{teacher,jdbcType=VARCHAR}, 
+      #{desc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.Group">
+    insert into `group`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="groupSn != null">
+        group_sn,
+      </if>
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="gradeSn != null">
+        grade_sn,
+      </if>
+      <if test="groupImg != null">
+        group_img,
+      </if>
+      <if test="teacher != null">
+        teacher,
+      </if>
+      <if test="desc != null">
+        `desc`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groupSn != null">
+        #{groupSn,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeSn != null">
+        #{gradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="groupImg != null">
+        #{groupImg,jdbcType=VARCHAR},
+      </if>
+      <if test="teacher != null">
+        #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cumtcdio.server.model.Group">
+    update `group`
+    <set>
+      <if test="groupSn != null">
+        group_sn = #{groupSn,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeSn != null">
+        grade_sn = #{gradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="groupImg != null">
+        group_img = #{groupImg,jdbcType=VARCHAR},
+      </if>
+      <if test="teacher != null">
+        teacher = #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        `desc` = #{desc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cumtcdio.server.model.Group">
+    update `group`
+    set group_sn = #{groupSn,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      grade_sn = #{gradeSn,jdbcType=VARCHAR},
+      group_img = #{groupImg,jdbcType=VARCHAR},
+      teacher = #{teacher,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectGroupInfoByGradeSn" resultMap="BaseResultMap" parameterType="STRING">
+    select <include refid="Base_Column_List" />
+    from `group`
+    where grade_sn = #{gradeSn}
+    order by group_sn
+  </select>
+</mapper>
