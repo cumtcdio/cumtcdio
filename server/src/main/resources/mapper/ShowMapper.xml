@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cumtcdio.server.mapper.ShowMapper">
+  <resultMap id="BaseResultMap" type="cn.cumtcdio.server.model.Show">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="html_address" jdbcType="VARCHAR" property="htmlAddress" />
+    <result column="date_time" jdbcType="TIMESTAMP" property="dateTime" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `type`, title, html_address, date_time, summary
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from show
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from show
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.cumtcdio.server.model.Show" useGeneratedKeys="true">
+    insert into show (`type`, title, html_address, date_time,
+      summary)
+    values (#{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{htmlAddress,jdbcType=VARCHAR}, #{dateTime,jdbcType=TIMESTAMP},
+      #{summary,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.cumtcdio.server.model.Show" useGeneratedKeys="true">
+    insert into show
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="htmlAddress != null">
+        html_address,
+      </if>
+      <if test="dateTime != null">
+        date_time,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="htmlAddress != null">
+        #{htmlAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null">
+        #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cumtcdio.server.model.Show">
+    update show
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="htmlAddress != null">
+        html_address = #{htmlAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null">
+        date_time = #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cumtcdio.server.model.Show">
+    update show
+    set `type` = #{type,jdbcType=INTEGER},
+      html_address = #{htmlAddress,jdbcType=VARCHAR},
+      date_time = #{dateTime,jdbcType=TIMESTAMP},
+      summary = #{summary,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllShowByType" resultMap="BaseResultMap">
+    SELECT *
+    FROM `show`
+    WHERE type = #{type}
+  </select>
+  <select id="getShowDetailsByShowId" resultMap="BaseResultMap">
+    SELECT *
+    FROM `show`
+    WHERE id = #{showId}
+  </select>
+</mapper>

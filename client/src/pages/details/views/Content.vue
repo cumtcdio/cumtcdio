@@ -6,18 +6,18 @@
                 <div class="details-title">{{details.title}}</div>
                 <hr />
                 <iframe id="iFrame1" name="iFrame1" width="100%"
-                        frameborder="0" :src="details.src"
+                        frameborder="0" :src="details.htmlAddress"
                         scrolling="no"></iframe>
-                <div v-if="!titleIsNews">
-                    <div class="details-from">{{details.from}}</div><br>
-                    <div class="details-from">{{details.date_time}}</div>
-                </div>
-                <div class="details-right-form" v-else>
-                    <div>新闻来源：{{details.newsFrom}}</div>
-                    <div>摄影：{{details.photo}}</div>
-                    <div>责任编辑：{{details.editor}}</div>
-                    <div>审查：{{details.audit}}</div>
-                </div>
+                <!--<div v-if="!titleIsNews">-->
+                    <!--<div class="details-from">{{details.from}}</div><br>-->
+                    <!--<div class="details-from">{{details.date_time}}</div>-->
+                <!--</div>-->
+                <!--<div class="details-right-form" v-else>-->
+                    <!--<div>新闻来源：{{details.newsFrom}}</div>-->
+                    <!--<div>摄影：{{details.photo}}</div>-->
+                    <!--<div>责任编辑：{{details.editor}}</div>-->
+                    <!--<div>审查：{{details.audit}}</div>-->
+                <!--</div>-->
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
         </div>
@@ -32,6 +32,7 @@ import axios from 'axios'
         data () {
             return {
                 title: '通知',
+                titleParam: 1,
                 titleIsNews: false,
                 details: {}
             }
@@ -49,35 +50,29 @@ import axios from 'axios'
         },
         methods: {
             doInitToGetParams: function () {
-                var reg = new RegExp("(^|&)" + 'title' + "=([^&]*)(&|$)", "i");
+                var reg = new RegExp("(^|&)" + 'showId' + "=([^&]*)(&|$)", "i");
                 var r = window.location.search.substr(1).match(reg);
                 if (r != null) {
-                    this.title = decodeURI(r[2]);
-                    if (this.title === '通知') {
-                        this.titleIsNews = false
-                    }else {
-                        this.titleIsNews = true
-                    }
+                    this.titleParam = decodeURI(r[2]);
+                    // if (this.title === '通知') {
+                    //     this.titleIsNews = false
+                    // }else {
+                    //     this.titleIsNews = true
+                    // }
                 } else {
                     alert("something wrong happened！")
                 }
                 this.getDetailsData()
             },
             getDetailsData: function () {
-                if (this.title === "通知"){
-                    axios.get('/api/tongzhi/tzDetails.json').then(response => {
-                        this.getDetailsSucc(response)
-                    })
-                }else {
-                    axios.get('/api/news/newsDetails.json').then(response => {
-                        this.getDetailsSucc(response)
-                    })
-                }
+                axios.get('/api/show/getShowDetailsByShowId/' + this.titleParam).then(response => {
+                    this.getDetailsSucc(response)
+                })
             },
             getDetailsSucc: function (res) {
                 var data = res.data
-                if (data.ret) {
-                    this.details = data
+                if (data.code === 0 && data.data) {
+                    this.details = data.data
                 }
             }
         }

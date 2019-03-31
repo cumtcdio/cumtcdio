@@ -1,5 +1,5 @@
 <template>
-    <div ref="bottom" class="bottom" :class="{'bottom-position': position}">
+    <div id="bottom" class="bottom" :class="{'bottom-position': position}">
         <div class="line"></div>
         <div class="bg">
             <div class="bottomFont">
@@ -29,12 +29,9 @@
             }
         },
         mounted () {
-            // var bottom = document.getElementById('bottom')
             this.screenHeight = window.innerHeight
-            // this.height = document.body.clientHeight
-            // this.topHeight =  bottom.offsetTop
-            this.topHeight = this.$refs.bottom.getBoundingClientRect().top
-            if (this.screenHeight >= this.topHeight + 500) {
+            this.topHeight = document.getElementById("bottom").offsetTop
+            if (this.screenHeight >= this.topHeight + 80) {
                 this.position = true
             } else {
                 this.position = false

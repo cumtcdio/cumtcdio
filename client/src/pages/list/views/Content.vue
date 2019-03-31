@@ -27,10 +27,10 @@
                         <hr>
                         <div class="content-list">
                             <div class="content-bottom" v-for="item in list" :key="item.id">
-                                <a target="_blank" :href="link + '?title=' + title">
+                                <a target="_blank" :href="link + '?showId=' + item.showId">
                                     <div class="row">
                                         <span class="col-10 left">{{item.title}}</span>
-                                        <span class="col-2 right content-date" v-if="titleShow">{{item.date_time}}</span>
+                                        <span class="col-2 right content-date" v-if="titleShow">{{item.dateTime}}</span>
                                     </div>
                                 </a>
                             </div>
@@ -60,6 +60,7 @@ export default {
     data() {
         return {
             title: '通知',
+            titleParam: 0,
             totalList: 0,
             titleShow: true,
             timer: null,
@@ -74,8 +75,30 @@ export default {
             var r = window.location.search.substr(1).match(reg);
             if (r != null) {
                 this.title = decodeURI(r[2]);
+                this.transformTitleToTitlepAram(this.title);
             } else {
                 return null;
+            }
+        },
+        transformTitleToTitlepAram: function (title) {
+            switch (title){
+                case "通知":
+                    this.titleParam = 0;
+                    break;
+                case "新闻":
+                    this.titleParam = 1;
+                    break;
+                case "师生风采":
+                    this.titleParam = 2;
+                    break;
+                case "专业信息":
+                    this.titleParam = 3;
+                    break;
+                case "专业实习":
+                    this.titleParam = 4;
+                    break;
+                default:
+                    alert("SomeThing wrong happened！");
             }
         },
         deserveIsCOrM: function () {
@@ -84,19 +107,13 @@ export default {
             }
         },
         getListData: function () {
-            if (this.title === "新闻") {
-                axios.get('/api/news/news.json').then(response => {
-                    this.getListDataSucc(response)
-                })
-            }else {
-                axios.get('/api/tongzhi/tongzhi.json').then(response => {
-                    this.getListDataSucc(response)
-                })
-            }
+            axios.get('/api/show/getAllShowByType/' + this.titleParam).then(response => {
+                this.getListDataSucc(response);
+            })
         },
         getListDataSucc: function(res) {
             var data = res.data
-            if (data.ret && data.data) {
+            if (data.code === 0 && data.data) {
                 this.list = data.data
                 this.totalList = this.list.length
             }
