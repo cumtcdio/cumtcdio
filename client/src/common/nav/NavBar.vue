@@ -24,37 +24,37 @@ export default {
                 {
                     index: '1',
                     title: '首页',
-                    href: '#'
+                    href: 'index'
                 },
                 {
                     index: '2',
                     title: '通知',
-                    href: '#'
+                    href: 'list.html?title=通知'
                 },
                 {
                     index: '3',
                     title: '新闻',
-                    href: '#'
+                    href: 'list.html?title=新闻'
                 },
                 {
                     index: '4',
                     title: 'EC-CDIO项目教学',
-                    href: '#'
+                    href: 'cdio.html'
                 },
                 {
                     index: '5',
                     title: '师生风采',
-                    href: '#'
+                    href: 'list.html?title=师生风采'
                 },
                 {
                     index: '6',
                     title: '专业信息',
-                    href: '#'
+                    href: 'list.html?title=专业信息'
                 },
                 {
                     index: '7',
                     title: '电子商务专业实习',
-                    href: '#'
+                    href: 'list.html?title=专业实习'
                 }
             ]
         }

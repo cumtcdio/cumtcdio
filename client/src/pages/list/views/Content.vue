@@ -124,6 +124,8 @@ export default {
                     this.totalList = response.data.data
                     if (this.totalList > 2 ){
                         this.pageBiggerThenOne = true
+                    } else {
+                        this.pageIsLast = true
                     }
                 }
             })
@@ -184,7 +186,6 @@ export default {
             }
         },
         offset: function (val) {
-            console.log(val)
             if (val > 0) {
                 this.pageIsOne = false
             } else {
