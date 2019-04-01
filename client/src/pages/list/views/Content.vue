@@ -38,9 +38,15 @@
                         <div class="content-footer" style="margin-top: 8px">
                             <span class="content-footer-item-1" v-if="titleShow">总共<span>{{totalList}}</span>条记录</span>&nbsp;
                             <span class="content-footer-item-2">
-                                <span class="page-link">第一页</span>
-                                &lt;&lt;上一页 下一页&gt;&gt;
-                                <span class="page-link">尾页</span> </span>
+                                <span class="page-link" @click="toFirstPage">第一页</span>
+                                &lt;&lt;
+                                <span class="page-link" style="font-size: small" v-if="!pageIsOne" @click="toPreviousPage">上一页</span>
+                                <span class="page-link" style="font-size: small" v-if="!pageIsLast" @click="toNextPage">
+                                    下一页
+                                </span>
+                                &gt;&gt;
+                                <span class="page-link" v-if="pageBiggerThenOne" @click="toLastPage">尾页</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -62,6 +68,10 @@ export default {
             title: '通知',
             titleParam: 0,
             totalList: 0,
+            offset: 0,
+            pageBiggerThenOne: false,
+            pageIsOne: true,
+            pageIsLast: false,
             titleShow: true,
             timer: null,
             screenWidth: document.body.clientWidth,
@@ -106,8 +116,21 @@ export default {
                 this.titleShow = false
             }
         },
+        // 1、获取所有类型数据的个数
+        countOneTypeShowList: function () {
+            axios.get('/api/show/countOneTypeShowList/' + this.titleParam).then(response => {
+                var data = response.data
+                if (data.code === 0 && data.data) {
+                    this.totalList = response.data.data
+                    if (this.totalList > 2 ){
+                        this.pageBiggerThenOne = true
+                    }
+                }
+            })
+        },
+        // 2、获取懒加载数据
         getListData: function () {
-            axios.get('/api/show/getAllShowByType/' + this.titleParam).then(response => {
+            axios.get('/api/show/getShowListLazied/' + this.titleParam + '/' + this.offset).then(response => {
                 this.getListDataSucc(response);
             })
         },
@@ -115,8 +138,28 @@ export default {
             var data = res.data
             if (data.code === 0 && data.data) {
                 this.list = data.data
-                this.totalList = this.list.length
             }
+        },
+        toFirstPage: function () {
+            this.offset = 0;
+            this.getListData()
+        },
+        toPreviousPage: function () {
+            this.offset = this.offset - 2;
+            this.getListData()
+        },
+        toNextPage: function () {
+            this.offset = this.offset + 2;
+            this.getListData()
+        },
+        toLastPage: function () {
+            var mod = this.totalList % 2
+            if (mod === 0) {
+                this.offset = this.totalList -2
+            } else {
+                this.offset = this.totalList - 1;
+            }
+            this.getListData()
         }
     },
     mounted() {
@@ -129,6 +172,7 @@ export default {
         };
         this.deserveIsCOrM()
         this.doInitToGetParams()
+        this.countOneTypeShowList()
         this.getListData()
     },
     watch: {
@@ -137,6 +181,19 @@ export default {
                 this.titleShow = false
             }else {
                 this.titleShow = true
+            }
+        },
+        offset: function (val) {
+            console.log(val)
+            if (val > 0) {
+                this.pageIsOne = false
+            } else {
+                this.pageIsOne = true
+            }
+            if (val > (this.totalList - 2)) {
+                this.pageIsLast = true
+            } else {
+                this.pageIsLast = false
             }
         }
     }

@@ -24,15 +24,7 @@ public class ShowServiceImpl implements ShowService {
     @Override
     public List<ShowInfoVO> getAllShowInfoByType(Integer type) {
         List<Show> showList = showMapper.getAllShowByType(type);
-        List<ShowInfoVO> showInfoVOS = new ArrayList<>();
-        for (Show show : showList){
-            ShowInfoVO showInfoVO = new ShowInfoVO();
-            BeanUtils.copyProperties(show, showInfoVO);
-            showInfoVO.setShowId(show.getId());
-            showInfoVO.setDateTime(dateFormat(show.getDateTime()));
-            showInfoVOS.add(showInfoVO);
-        }
-        return showInfoVOS;
+        return transformShowToShowInfoVO(showList);
     }
 
     @Override
@@ -43,6 +35,29 @@ public class ShowServiceImpl implements ShowService {
         showInfoVO.setShowId(show.getId());
         showInfoVO.setDateTime(dateFormat(show.getDateTime()));
         return showInfoVO;
+    }
+
+    @Override
+    public Integer countOneTypeShowList(Integer type) {
+        return showMapper.countOneTypeShowList(type);
+    }
+
+    @Override
+    public List<ShowInfoVO> getShowListLazied(Integer type, Integer offset) {
+        List<Show> showList = showMapper.getShowListLazied(type, offset);
+        return transformShowToShowInfoVO(showList);
+    }
+
+    private List<ShowInfoVO> transformShowToShowInfoVO(List<Show> showList) {
+        List<ShowInfoVO> showInfoVOS = new ArrayList<>();
+        for (Show show : showList){
+            ShowInfoVO showInfoVO = new ShowInfoVO();
+            BeanUtils.copyProperties(show, showInfoVO);
+            showInfoVO.setShowId(show.getId());
+            showInfoVO.setDateTime(dateFormat(show.getDateTime()));
+            showInfoVOS.add(showInfoVO);
+        }
+        return showInfoVOS;
     }
 
     public String dateFormat(Date date) {

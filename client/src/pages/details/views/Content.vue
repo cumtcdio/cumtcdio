@@ -8,16 +8,6 @@
                 <iframe id="iFrame1" name="iFrame1" width="100%"
                         frameborder="0" :src="details.htmlAddress"
                         scrolling="no"></iframe>
-                <!--<div v-if="!titleIsNews">-->
-                    <!--<div class="details-from">{{details.from}}</div><br>-->
-                    <!--<div class="details-from">{{details.date_time}}</div>-->
-                <!--</div>-->
-                <!--<div class="details-right-form" v-else>-->
-                    <!--<div>新闻来源：{{details.newsFrom}}</div>-->
-                    <!--<div>摄影：{{details.photo}}</div>-->
-                    <!--<div>责任编辑：{{details.editor}}</div>-->
-                    <!--<div>审查：{{details.audit}}</div>-->
-                <!--</div>-->
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
         </div>
@@ -54,11 +44,6 @@ import axios from 'axios'
                 var r = window.location.search.substr(1).match(reg);
                 if (r != null) {
                     this.titleParam = decodeURI(r[2]);
-                    // if (this.title === '通知') {
-                    //     this.titleIsNews = false
-                    // }else {
-                    //     this.titleIsNews = true
-                    // }
                 } else {
                     alert("something wrong happened！")
                 }
@@ -90,12 +75,6 @@ import axios from 'axios'
 hr{
     height: .1rem;
     background-color: #C64718;
-}
-.details-from{
-    float: right;
-}
-.details-right-form {
-    float: left;
 }
 .wrapper{
     margin: 0;

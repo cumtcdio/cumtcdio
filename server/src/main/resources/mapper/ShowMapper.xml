@@ -98,4 +98,15 @@
     FROM `show`
     WHERE id = #{showId}
   </select>
+  <select id="countOneTypeShowList" resultType="INTEGER">
+    SELECT count(*)
+    FROM `show`
+    WHERE type = #{type}
+  </select>
+  <select id="getShowListLazied" resultMap="BaseResultMap">
+    SELECT *
+    FROM `show`
+    WHERE type = #{type}
+    ORDER BY date_time desc limit 2 offset #{offset}
+  </select>
 </mapper>

@@ -14,4 +14,8 @@ public interface ShowService {
     List<ShowInfoVO> getAllShowInfoByType(Integer type);
 
     ShowInfoVO getShowDetailsByShowId(Integer id);
+
+    Integer countOneTypeShowList(Integer type);
+
+    List<ShowInfoVO> getShowListLazied(Integer type, Integer offset);
 }
