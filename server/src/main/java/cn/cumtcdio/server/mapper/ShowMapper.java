@@ -20,4 +20,7 @@ public interface ShowMapper extends MyBatisBaseDao<Show, Integer> {
 
     List<Show> getShowListLazied(@Param(value = "type") Integer type,
                                  @Param(value = "offset") Integer offset);
+
+    // 插入一条数据
+    Integer insertShow(Show show);
 }

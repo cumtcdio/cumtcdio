@@ -6,25 +6,17 @@
       </el-header>
       <el-container>
         <el-aside width="180px" class="home-aside">
-          <el-menu default-active="1" class="el-menu-vertical-demo">
-            <el-submenu index="1">
+          <el-menu default-active="1" class="el-menu-vertical-demo" style="background: #ececec;width: 180px;" router>
+            <el-submenu v-for="item in routes" :key="item.id" :index="item.id+''">
               <template slot="title">
-                <!--<i class="el-icon-location"></i>-->
-                <span>测试</span>
+                <i :class="item.icon"></i>
+                <span>{{item.name}}</span>
               </template>
+              <el-menu-item v-for="child in item.child" :key="child.id" :index="child.path">
+                <!--<i class="el-icon-menu"></i>-->
+                <span slot="title">{{child.name}}</span>
+              </el-menu-item>
             </el-submenu>
-            <el-menu-item index="2">
-              <!--<i class="el-icon-menu"></i>-->
-              <router-link to="/slide" slot="title">轮播图</router-link>
-            </el-menu-item>
-            <el-menu-item index="2">
-              <!--<i class="el-icon-menu"></i>-->
-              <router-link to="/cdio" slot="title">CUMT-CDIO</router-link>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <!--<i class="el-icon-document"></i>-->
-              <router-link to="/show" slot="title">文章管理</router-link>
-            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main>
@@ -40,6 +32,25 @@
 <script>
 export default {
   name: 'app',
+  data () {
+      return {
+          routes: [
+              {id: 1, name: '轮播图', icon: 'el-icon-picture', child: [
+                      {id: 1, name: '轮播图', path: '/slide'},
+                  ]},
+              {id: 2, name: '文章管理',icon: 'el-icon-document', child: [
+                      {id: 1, name: '通知', path: '/show/1'},
+                      {id: 2, name: '新闻', path: '/show/2'},
+                      {id: 3, name: '师生风采', path: '/show/3'},
+                      {id: 4, name: '专业信息', path: '/show/4'},
+                      {id: 5, name: '专业实习', path: '/show/5'}
+                  ]},
+              {id: 3, name: 'CUMT-CDIO', icon: 'el-icon-info', child: [
+                      {id: 1, name: 'CDIO管理', path: '/cdio'}
+                  ]}
+          ]
+      }
+  }
 }
 </script>
 

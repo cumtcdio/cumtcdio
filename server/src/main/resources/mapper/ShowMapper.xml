@@ -28,9 +28,12 @@
     values (#{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{htmlAddress,jdbcType=VARCHAR}, #{dateTime,jdbcType=TIMESTAMP},
       #{summary,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.cumtcdio.server.model.Show" useGeneratedKeys="true">
-    insert into show
+  <insert id="insertShow" parameterType="cn.cumtcdio.server.model.Show">
+    insert into `show`
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
       <if test="type != null">
         `type`,
       </if>
@@ -45,11 +48,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="htmlAddress != null">
         #{htmlAddress,jdbcType=VARCHAR},

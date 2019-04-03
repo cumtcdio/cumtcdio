@@ -2,12 +2,15 @@ package cn.cumtcdio.server.controller;
 
 import cn.cumtcdio.server.VO.ResultVO;
 import cn.cumtcdio.server.VO.ShowInfoVO;
+import cn.cumtcdio.server.model.Show;
 import cn.cumtcdio.server.service.ShowService;
 import cn.cumtcdio.server.util.ResultVOUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 /**
  * @author SpringBoot Jun
@@ -44,5 +47,14 @@ public class ShowController {
     @ApiOperation(value = "通过type获取list个数")
     public ResultVO countOneTypeShowList(@PathVariable(value = "type")Integer type) {
         return ResultVOUtil.success(showService.countOneTypeShowList(type));
+    }
+
+    /**
+     * 插入一条数据
+     */
+    @RequestMapping(value = "/insertShow",method = RequestMethod.POST)
+    @ApiOperation(value = "插入一条数据", response = Show.class)
+    public ResultVO insertShow(@RequestBody Show show) throws IOException {
+        return ResultVOUtil.success(showService.insertSelective(show));
     }
 }

@@ -35,6 +35,11 @@ public class Show implements Serializable {
      */
     private String summary;
 
+    /**
+     * 存储html时的临时数据
+     */
+    private String htmlContent;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -83,6 +88,14 @@ public class Show implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 
     @Override
