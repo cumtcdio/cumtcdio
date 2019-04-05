@@ -39,11 +39,11 @@ export default {
                       {id: 1, name: '轮播图', path: '/slide'},
                   ]},
               {id: 2, name: '文章管理',icon: 'el-icon-document', child: [
-                      {id: 1, name: '通知', path: '/show/1'},
-                      {id: 2, name: '新闻', path: '/show/2'},
-                      {id: 3, name: '师生风采', path: '/show/3'},
-                      {id: 4, name: '专业信息', path: '/show/4'},
-                      {id: 5, name: '专业实习', path: '/show/5'}
+                      {id: 1, name: '通知', path: '/show/0'},
+                      {id: 2, name: '新闻', path: '/show/1'},
+                      {id: 3, name: '师生风采', path: '/show/2'},
+                      {id: 4, name: '专业信息', path: '/show/3'},
+                      {id: 5, name: '专业实习', path: '/show/4'}
                   ]},
               {id: 3, name: 'CUMT-CDIO', icon: 'el-icon-info', child: [
                       {id: 1, name: 'CDIO管理', path: '/cdio'}

@@ -1,11 +1,24 @@
 <template>
-    <div>
-        <quill-editor
-                v-model="formItem.htmlContent"
-                ref="myQuillEditor"
-                :options="editorOption">
-        </quill-editor>
-        <button @click="postToServer">提交</button>
+    <div class="formItem">
+        <el-form ref="formItem" :rules="rules" :model="formItem" label-width="80px">
+            <el-form-item label="标题" prop="title">
+                <el-input v-model="formItem.title"></el-input>
+            </el-form-item>
+            <el-form-item label="简要说明" prop="summary">
+                <el-input type="textarea" v-model="formItem.summary"></el-input>
+            </el-form-item>
+            <el-form-item prop="htmlContent" label="正文">
+                <quill-editor
+                        v-model="formItem.htmlContent"
+                        ref="myQuillEditor"
+                        :options="editorOption">
+                </quill-editor>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="success" size="small" @click="postToServer('formItem')"
+                           style="display:block;margin:7px auto">立即提交</el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </template>
 <script>
@@ -47,38 +60,49 @@
                     theme:'snow'
                 },
                 formItem: {
-                    'id': null,
-                    'title': '',
-                    'type': 0,
-                    'htmlAddress': '',
-                    'dateTime': null,
-                    'summary': '',
-                    'htmlContent': ''
+                    id: null,
+                    title: '',
+                    type: this.$store.state.showType,
+                    htmlAddress: '',
+                    dateTime: null,
+                    summary: '',
+                    htmlContent: ''
+                },
+                rules: {
+                    title: [
+                        {required: true, message: '请输入标题', trigger: 'blur' }
+                    ],
+                    summary: [
+                        {required: true, message: '请输入简要说明', trigger: 'blur'}
+                    ],
+                    htmlContent: [
+                        {required: true, message: '请输入正文内容', trigger: 'blur'}
+                    ]
                 }
             }
         },
         methods: {
-            postToServer: function () {
-                this.formItem.summary = '通知测试';
-                this.formItem.title = 'cos存储通知';
-                this.formItem.type = 0;
-                console.log(this.formItem)
-                this.formItem.htmlContent += `<script type="text/javascript">
-                                                window.onload = function () {
-                                                     var h = document.body.scrollHeight;
-                                                     parent.postMessage(h, "http://localhost:8080");
-                                                }<\/script>`;
-                axios.post('/api/show/insertShow',this.formItem).then(res =>{
-                    // if(res.status === 200){
-                    //     this.finish = true
-                    //     this.editorFinish = true
-                    //     alert(res.status)
-                    // }
-                    console.log(res)
-                }).catch(error =>{
-                    alert(error)
+            postToServer: function (formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.formItem.type = this.$store.state.showType;
+                        axios.post('/api/show/insertShow',this.formItem).then(res =>{
+                            if(res.status === 200){
+                                // this.finish = true
+                                // this.editorFinish = true
+                                alert(res.status)
+                            }
+                        }).catch(error =>{
+                            alert(error)
+                        })
+                    } else {
+                        return false
+                    }
                 })
             }
+        },
+        mounted() {
+
         }
     }
 </script>
