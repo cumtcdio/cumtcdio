@@ -23,7 +23,7 @@
                 border
                 style="width: 100%">
             <el-table-column
-                    prop="id"
+                    prop="showId"
                     label="#"
                     width="50">
             </el-table-column>
@@ -60,32 +60,44 @@
     </el-container>
 </template>
 <script>
+    import axios from 'axios'
     export default {
         name: 'ShowList',
         data() {
             return{
-                tableData: [
-                    {id: '1', title: '第一条数据', htmlAddress: 'www.1111.com', date: '2019-3-4', summary: 'aa'},
-                    {id: '2', title: '第二条数据', htmlAddress: 'www.2222.com', date: '2019-3-15', summary: 'bb'},
-                    {id: '3', title: '第三条数据', htmlAddress: 'www.3333.com', date: '2019-4-1', summary: 'cc'},
-                    {id: '4', title: '第四条数据', htmlAddress: 'www.4444.com', date: '2019-4-3', summary: 'dd'},
-                ]
+                tableData: []
             }
         },
         methods: {
+            getShowList: function () {
+                var type = this.$store.state.showType
+                axios.get('/api/show/getAllShowByType/' + type).then(response => {
+                    var data = response.data
+                    if (data.data) {
+                        this.tableData = data.data
+                    }
+                })
+            },
             toShowEdit: function (val) {
                 var index = 0;
                 var id  = parseInt(this.$route.params.id);
                 if (val === 0) {
                     index = 0
                 }else {
-                    index = val.id
+                    index = val.showId
                 }
                 this.$router.push('/show/' + id + '/' + index);
             },
             deleteShow: function (show) {
                 alert(show)
-                // console.log(show)
+            }
+        },
+        mounted() {
+            this.getShowList()
+        },
+        watch: {
+            $route: function () {
+                this.getShowList()
             }
         }
     }

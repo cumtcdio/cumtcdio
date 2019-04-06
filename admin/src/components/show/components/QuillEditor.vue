@@ -78,7 +78,8 @@
                     htmlContent: [
                         {required: true, message: '请输入正文内容', trigger: 'blur'}
                     ]
-                }
+                },
+                showId: 0
             }
         },
         methods: {
@@ -99,10 +100,34 @@
                         return false
                     }
                 })
+            },
+            getForItemIfExit: function (id) {
+                if (id) {
+                    axios.get("/api/show/getShowDetailsByShowId/" + id).then(response => {
+                        var data = response.data
+                        if (data.data){
+                            this.formItem = data.data
+                        }
+                    })
+                }
+            },
+            initIfShowIdIsNotZero: function () {
+                var id = parseInt(this.$route.params.index);
+                if (id === 0) {
+                    alert(id)
+                }else {
+                    this.showId = id;
+                    this.getForItemIfExit(this.showId)
+                }
             }
         },
         mounted() {
-
+            this.initIfShowIdIsNotZero()
+        },
+        watch: {
+            $route: function () {
+                this.initIfShowIdIsNotZero()
+            }
         }
     }
 </script>
