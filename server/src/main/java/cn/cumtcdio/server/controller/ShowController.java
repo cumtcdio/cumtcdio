@@ -57,4 +57,23 @@ public class ShowController {
     public ResultVO insertShow(@RequestBody Show show) throws IOException {
         return ResultVOUtil.success(showService.insertSelective(show));
     }
+
+    /**
+     * 删除一条数据
+     */
+    @RequestMapping(value = "/deleteByShowId/{id}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除一条数据")
+    public ResultVO deleteByShowId(@PathVariable Integer id){
+        return ResultVOUtil.success(showService.deleteByShowId(id));
+    }
+
+    /**
+     * 根据title和type搜索数据
+     */
+    @RequestMapping(value = "/getShowListByShowTitleAndType/{title}/{type}", method = RequestMethod.GET)
+    @ApiOperation(value = "根据title和type搜索数据", response = ShowInfoVO.class)
+    public ResultVO getShowListByShowTitleAndType(@PathVariable(value = "title") String title,
+                      @PathVariable(value = "type") Integer type){
+        return ResultVOUtil.success(showService.getShowListByShowTitleAndType(title,type));
+    }
 }

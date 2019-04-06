@@ -108,6 +108,17 @@ public class ShowServiceImpl implements ShowService {
         return showMapper.insertShow(show);
     }
 
+    @Override
+    public Integer deleteByShowId(Integer id) {
+        return showMapper.deleteByShowId(id);
+    }
+
+    @Override
+    public List<ShowInfoVO> getShowListByShowTitleAndType(String title, Integer type) {
+        List<Show> showList = showMapper.getShowListByShowTitleAndType(title, type);
+        return transformShowToShowInfoVO(showList);
+    }
+
     private List<ShowInfoVO> transformShowToShowInfoVO(List<Show> showList) {
         List<ShowInfoVO> showInfoVOS = new ArrayList<>();
         for (Show show : showList){

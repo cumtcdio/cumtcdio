@@ -22,4 +22,10 @@ public interface ShowService {
 
     //插入一条show数据
     Integer insertSelective(Show show) throws IOException;
+
+    //删除一条数据
+    Integer deleteByShowId(Integer id);
+
+    //根据title搜索数据
+    List<ShowInfoVO> getShowListByShowTitleAndType(String title, Integer type);
 }

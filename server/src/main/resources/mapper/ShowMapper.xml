@@ -112,4 +112,14 @@
     WHERE type = #{type}
     ORDER BY date_time desc limit 2 offset #{offset}
   </select>
+  <select id="getShowListByShowTitleAndType" resultMap="BaseResultMap">
+    SELECT *
+    FROM `show`
+    WHERE title LIKE concat('%',#{title},'%') and type = #{type}
+  </select>
+  <select id="deleteByShowId" resultType="INTEGER">
+    DELETE
+    FROM `show`
+    WHERE id = #{id}
+  </select>
 </mapper>

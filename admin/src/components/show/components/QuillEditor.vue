@@ -114,7 +114,15 @@
             initIfShowIdIsNotZero: function () {
                 var id = parseInt(this.$route.params.index);
                 if (id === 0) {
-                    alert(id)
+                    this.formItem = {
+                        id: null,
+                        title: '',
+                        type: this.$store.state.showType,
+                        htmlAddress: '',
+                        dateTime: null,
+                        summary: '',
+                        htmlContent: ''
+                    }
                 }else {
                     this.showId = id;
                     this.getForItemIfExit(this.showId)

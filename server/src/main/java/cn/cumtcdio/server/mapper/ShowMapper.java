@@ -23,4 +23,9 @@ public interface ShowMapper extends MyBatisBaseDao<Show, Integer> {
 
     // 插入一条数据
     Integer insertShow(Show show);
+    // 删除一条数据
+    Integer deleteByShowId(Integer id);
+    //根据title搜索数据
+    List<Show> getShowListByShowTitleAndType(@Param(value = "title") String title,
+                                             @Param(value = "type") Integer type);
 }

@@ -12,8 +12,10 @@
                         clearable
                         style="width: 300px;padding: 0px;"
                         size="mini"
+                        @keyup.enter.native="searchShowList"
+                        v-model="keyWord"
                         prefix-icon="el-icon-search"/>
-                <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search" >
+                <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search" @click="searchShowList">
                     搜索
                 </el-button>
             </div>
@@ -21,6 +23,7 @@
         <el-table
                 :data="tableData"
                 border
+                v-loading="tableLoading"
                 style="width: 100%">
             <el-table-column
                     prop="showId"
@@ -36,7 +39,7 @@
                     label="地址">
             </el-table-column>
             <el-table-column
-                    prop="date"
+                    prop="dateTime"
                     label="日期">
             </el-table-column>
             <el-table-column
@@ -54,6 +57,16 @@
                     <el-button type="danger" style="padding: 3px 4px 3px 4px;margin: 2px" size="mini" icon="el-icon-delete"
                                @click="deleteShow(scope.row)">删除
                     </el-button>
+                    <el-dialog
+                            title="提示"
+                            :visible.sync="dialogVisible"
+                            width="30%">
+                        <span>是否删除这一条数据</span>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="dialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="deleteShowConfirmed">确 定</el-button>
+                        </span>
+                    </el-dialog>
                 </template>
             </el-table-column>
         </el-table>
@@ -65,18 +78,41 @@
         name: 'ShowList',
         data() {
             return{
-                tableData: []
+                tableData: [],
+                dialogVisible: false,
+                deleteShowId: null,
+                tableLoading: true,
+                keyWord: ''
             }
         },
         methods: {
             getShowList: function () {
+                this.tableLoading = true
                 var type = this.$store.state.showType
                 axios.get('/api/show/getAllShowByType/' + type).then(response => {
                     var data = response.data
                     if (data.data) {
+                        this.tableLoading = false
                         this.tableData = data.data
                     }
                 })
+            },
+            searchShowList: function () {
+                this.tableLoading = true
+                var type = this.$store.state.showType
+                if (this.keyWord === ''){
+                    this.getShowList()
+                }else {
+                    axios.get('api/show/getShowListByShowTitleAndType/' + this.keyWord + '/' + type).then(response => {
+                        var data = response.data
+                        if (data.data) {
+                            this.tableLoading = false
+                            this.tableData = data.data
+                        }else {
+                            alert('there is something wrong')
+                        }
+                    })
+                }
             },
             toShowEdit: function (val) {
                 var index = 0;
@@ -89,7 +125,17 @@
                 this.$router.push('/show/' + id + '/' + index);
             },
             deleteShow: function (show) {
-                alert(show)
+                this.deleteShowId = show.showId
+                this.dialogVisible = true
+            },
+            deleteShowConfirmed: function () {
+                axios.delete('/api/show/deleteByShowId/' + this.deleteShowId).then(response => {
+                    var data = response.data
+                    if (data.code === 0){
+                        this.dialogVisible = false
+                        this.getShowList()
+                    }
+                })
             }
         },
         mounted() {
