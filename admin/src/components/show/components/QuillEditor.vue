@@ -86,27 +86,45 @@
             postToServer: function (formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.formItem.type = this.$store.state.showType;
-                        axios.post('/api/show/insertShow',this.formItem).then(res =>{
-                            if(res.status === 200){
-                                // this.finish = true
-                                // this.editorFinish = true
-                                alert(res.status)
-                            }
-                        }).catch(error =>{
-                            alert(error)
-                        })
+                        var id = parseInt(this.$route.params.index);
+                        if (id === 0) {
+                            this.insetShow()
+                        } else {
+                            this.updateShow()
+                        }
+
                     } else {
                         return false
                     }
                 })
             },
+            insetShow: function () {
+                this.formItem.type = this.$store.state.showType;
+                axios.post('/api/show/insertShow',this.formItem).then(res =>{
+                    if(res.status === 200){
+                        this.$router.push('/show/' + this.$store.state.showType)
+                    }
+                }).catch(error =>{
+                    alert(error)
+                })
+            },
+            updateShow: function () {
+                axios.put('/api/show/updateShowByShowId', this.formItem).then(res => {
+                    if (res.status === 200) {
+                        this.$router.push('/show/' + this.$store.state.showType)
+                    }
+                }).catch(error =>{
+                    alert(error)
+                })
+                // console.log(this.formItem)
+            },
             getForItemIfExit: function (id) {
                 if (id) {
-                    axios.get("/api/show/getShowDetailsByShowId/" + id).then(response => {
+                    axios.get("/api/show/getUpdateShowByShowId/" + id).then(response => {
                         var data = response.data
                         if (data.data){
                             this.formItem = data.data
+                            this.formItem.id = data.data.showId
                         }
                     })
                 }

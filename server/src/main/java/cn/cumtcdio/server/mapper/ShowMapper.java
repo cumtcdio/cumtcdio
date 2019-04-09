@@ -28,4 +28,7 @@ public interface ShowMapper extends MyBatisBaseDao<Show, Integer> {
     //根据title搜索数据
     List<Show> getShowListByShowTitleAndType(@Param(value = "title") String title,
                                              @Param(value = "type") Integer type);
+
+    //更新一条数据
+    Integer updateShowByShowId(Show show);
 }

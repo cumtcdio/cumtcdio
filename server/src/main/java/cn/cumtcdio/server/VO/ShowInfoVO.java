@@ -15,6 +15,8 @@ public class ShowInfoVO {
 
     String htmlAddress;
 
+    String htmlContent;
+
     String dateTime;
 
     String summary;
@@ -65,5 +67,13 @@ public class ShowInfoVO {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 }

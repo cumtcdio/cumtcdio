@@ -68,6 +68,26 @@ public class ShowController {
     }
 
     /**
+     * 根据ID更新一条数据
+     */
+    @RequestMapping(value = "/updateShowByShowId", method = RequestMethod.PUT)
+    @ApiOperation(value = "根据ID更新一条数据")
+    public ResultVO updateShowByShowId(@RequestBody Show show){
+        return ResultVOUtil.success(showService.updateShowByShowId(show));
+    }
+
+    /**
+     * 这是更新数据前的获取数据，需要进行Body内容的获取
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getUpdateShowByShowId/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "根据ID获取更新需要的数据",response = ShowInfoVO.class)
+    public ResultVO getUpdateShowByShowId(@PathVariable Integer id) {
+        return ResultVOUtil.success(showService.getUpdateShowByShowId(id));
+    }
+
+    /**
      * 根据title和type搜索数据
      */
     @RequestMapping(value = "/getShowListByShowTitleAndType/{title}/{type}", method = RequestMethod.GET)

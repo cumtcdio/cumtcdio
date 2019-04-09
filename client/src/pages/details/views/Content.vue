@@ -1,19 +1,24 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row ql-container ql-snow">
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
             <div class="col-12 col-md-8 col-lg-8 col-xl-8 wrapper">
                 <div class="details-title">{{details.title}}</div>
                 <hr />
-                <iframe id="iFrame1" name="iFrame1" width="100%"
-                        frameborder="0" :src="details.htmlAddress"
-                        scrolling="no"></iframe>
+                <div class="ql-editor">
+                    <iframe id="iFrame1" name="iFrame1" width="100%"
+                            frameborder="0" :src="details.htmlAddress"
+                            scrolling="no"></iframe>
+                </div>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2"></div>
         </div>
     </div>
 </template>
 <script>
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 import axios from 'axios'
     export default {
         name: 'Details',
@@ -31,7 +36,7 @@ import axios from 'axios'
         mounted () {
             window.onload = function(){
                 window.addEventListener('message',function(event){
-                    if(event.origin == "https://test-1257444045.cos.ap-beijing.myqcloud.com") {
+                    if(event.origin == "http://show-1257444045.cos.ap-shanghai.myqcloud.com") {
                         document.getElementById('iFrame1').style.height = event.data + 20 + "px";
                     }
                 })

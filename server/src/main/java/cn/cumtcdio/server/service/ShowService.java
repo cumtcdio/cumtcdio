@@ -28,4 +28,8 @@ public interface ShowService {
 
     //根据title搜索数据
     List<ShowInfoVO> getShowListByShowTitleAndType(String title, Integer type);
+
+    ShowInfoVO getUpdateShowByShowId(Integer id);
+
+    Integer updateShowByShowId(Show show);
 }

@@ -16,9 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +63,58 @@ public class ShowServiceImpl implements ShowService {
 
     @Override
     public Integer insertSelective(Show show) throws IOException {
+        postToCos(show);
+        show.setDateTime(new Date());
+        return showMapper.insertShow(show);
+    }
+
+    @Override
+    public Integer deleteByShowId(Integer id) {
+        return showMapper.deleteByShowId(id);
+    }
+
+    @Override
+    public List<ShowInfoVO> getShowListByShowTitleAndType(String title, Integer type) {
+        List<Show> showList = showMapper.getShowListByShowTitleAndType(title, type);
+        return transformShowToShowInfoVO(showList);
+    }
+
+    @Override
+    public ShowInfoVO getUpdateShowByShowId(Integer id) {
+        Show show = showMapper.getShowDetailsByShowId(id);
+        ShowInfoVO showInfoVO = new ShowInfoVO();
+        BeanUtils.copyProperties(show, showInfoVO);
+        showInfoVO.setShowId(show.getId());
+        showInfoVO.setDateTime(dateFormat(show.getDateTime()));
+        showInfoVO.setHtmlContent(getHtmlContentByAddress(show.getHtmlAddress()));
+        return showInfoVO;
+    }
+
+    @Override
+    public Integer updateShowByShowId(Show show) {
+        postToCos(show);
+        return showMapper.updateShowByShowId(show);
+    }
+
+    private List<ShowInfoVO> transformShowToShowInfoVO(List<Show> showList) {
+        List<ShowInfoVO> showInfoVOS = new ArrayList<>();
+        for (Show show : showList){
+            ShowInfoVO showInfoVO = new ShowInfoVO();
+            BeanUtils.copyProperties(show, showInfoVO);
+            showInfoVO.setShowId(show.getId());
+            showInfoVO.setDateTime(dateFormat(show.getDateTime()));
+            showInfoVOS.add(showInfoVO);
+        }
+        return showInfoVOS;
+    }
+
+    public String dateFormat(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String dateTime = format.format(date);
+        return dateTime;
+    }
+
+    private Show postToCos(Show show) {
         if (show.getHtmlContent() != null && !show.getHtmlContent().equals("") ){
             File fileTemp = new File(UUID.randomUUID().toString()+".html");
             try{
@@ -81,7 +133,7 @@ public class ShowServiceImpl implements ShowService {
                             "window.onload = function () {\n" +
                             "var h = document.body.scrollHeight;\n" +
                             "parent.postMessage(h, \"http://localhost:8080\");\n" +
-                            "}<\\/script>");
+                            "}</script>");
                     ps.println("</body>");
                     ps.println("</html>");
                     ps.close();
@@ -104,36 +156,35 @@ public class ShowServiceImpl implements ShowService {
                 e.printStackTrace();
             }
         }
-        show.setDateTime(new Date());
-        return showMapper.insertShow(show);
+        return show;
     }
 
-    @Override
-    public Integer deleteByShowId(Integer id) {
-        return showMapper.deleteByShowId(id);
-    }
-
-    @Override
-    public List<ShowInfoVO> getShowListByShowTitleAndType(String title, Integer type) {
-        List<Show> showList = showMapper.getShowListByShowTitleAndType(title, type);
-        return transformShowToShowInfoVO(showList);
-    }
-
-    private List<ShowInfoVO> transformShowToShowInfoVO(List<Show> showList) {
-        List<ShowInfoVO> showInfoVOS = new ArrayList<>();
-        for (Show show : showList){
-            ShowInfoVO showInfoVO = new ShowInfoVO();
-            BeanUtils.copyProperties(show, showInfoVO);
-            showInfoVO.setShowId(show.getId());
-            showInfoVO.setDateTime(dateFormat(show.getDateTime()));
-            showInfoVOS.add(showInfoVO);
+    URL url;
+    int responseCode;
+    HttpURLConnection urlConnection;
+    BufferedReader reader;
+    public String getHtmlContentByAddress(String address) {
+        String line = "";
+        String str = "";
+        try {
+            url = new URL(address);
+            urlConnection = (HttpURLConnection)url.openConnection();
+            responseCode = urlConnection.getResponseCode();
+            if (responseCode == 200) {
+                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
+                while ((str=reader.readLine()) != null) {
+                    line = line + str;
+                    str = "";
+                }
+            }else {
+               return "获取不到网页的源码，服务器响应代码为：" + responseCode;
+            }
+        } catch (Exception e) {
+            System.out.println("获取不到网页的源码，服务器响应代码为：" + e);
         }
-        return showInfoVOS;
-    }
-
-    public String dateFormat(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String dateTime = format.format(date);
-        return dateTime;
+        int start = line.indexOf("body") + 5 ;
+        int end = line.indexOf("script") -1;
+        line = line.substring(start, end);
+        return line;
     }
 }
