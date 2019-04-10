@@ -110,7 +110,7 @@
     SELECT *
     FROM `show`
     WHERE type = #{type}
-    ORDER BY date_time desc limit 2 offset #{offset}
+    ORDER BY date_time desc limit 10 offset #{offset}
   </select>
   <select id="getShowListByShowTitleAndType" resultMap="BaseResultMap">
     SELECT *

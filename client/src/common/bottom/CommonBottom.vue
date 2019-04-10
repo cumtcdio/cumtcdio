@@ -1,5 +1,6 @@
 <template>
-    <div id="bottom" class="bottom" :class="{'bottom-position': position}">
+    <!--:class="{'bottom-position': position}"-->
+    <div id="bottom" class="bottom">
         <div class="line"></div>
         <div class="bg">
             <div class="bottomFont">
@@ -23,19 +24,19 @@
         name: "CommonBottom",
         data () {
             return {
-                screenHeight: window.innerHeight,
-                topHeight: '',
-                position: false
+                // screenHeight: window.innerHeight,
+                // topHeight: '',
+                // position: false
             }
         },
         mounted () {
-            this.screenHeight = window.innerHeight
-            this.topHeight = document.getElementById("bottom").offsetTop
-            if (this.screenHeight >= this.topHeight + 80) {
-                this.position = true
-            } else {
-                this.position = false
-            }
+            // this.screenHeight = window.innerHeight
+            // this.topHeight = document.getElementById("bottom").offsetTop
+            // if (this.screenHeight >= this.topHeight + 80) {
+            //     this.position = true
+            // } else {
+            //     this.position = false
+            // }
         },
         watch: {
 
@@ -64,7 +65,7 @@
         width:100%;
         bottom: 0;
     }
-    .bottom-position {
-        position: fixed;
-    }
+    /*.bottom-position {*/
+        /*position: fixed;*/
+    /*}*/
 </style>
