@@ -11,7 +11,7 @@
         name: 'Show',
         components: {
             ShowHeader,
-            ShowList
+            ShowList,
         }
     }
 </script>

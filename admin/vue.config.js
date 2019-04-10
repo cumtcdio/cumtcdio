@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 module.exports = {
     pages: {
         index:{
@@ -17,5 +18,15 @@ module.exports = {
                 // }
             }
         }
+    },
+    chainWebpack: config => {
+        config.plugin('provide').use(webpack.ProvidePlugin, [{
+            $: 'jquery',
+            jquery: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            'window.Quill': 'quill/dist/quill.js',
+            'Quill': 'quill/dist/quill.js'
+        }]);
     }
 }
