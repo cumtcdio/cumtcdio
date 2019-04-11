@@ -70,6 +70,19 @@
                 </template>
             </el-table-column>
         </el-table>
+        <div style="margin-bottom: 8px;">
+            <div style="display: flex;justify-content: space-between;margin: 2px" v-if="paginationShow">
+                <span>&nbsp;</span>
+                <el-pagination
+                        background
+                        :current-page="currentPage"
+                        @current-change="currentChange"
+                        :page-size="10"
+                        layout="prev, pager, next"
+                        :total="totalCount">
+                </el-pagination>
+            </div>
+        </div>
     </el-container>
 </template>
 <script>
@@ -82,14 +95,32 @@
                 dialogVisible: false,
                 deleteShowId: null,
                 tableLoading: true,
-                keyWord: ''
+                keyWord: '',
+                currentPage: 0,
+                offset: 0,
+                totalCount: -1,
+                paginationShow: true
             }
         },
         methods: {
+            currentChange(currentChange){
+                this.currentPage = currentChange
+                this.offset = (currentChange - 1) * 10;
+                this.getShowList()
+            },
+            getTotalCount: function () {
+                var type = this.$store.state.showType
+                axios.get('/api/show/countOneTypeShowList/' + type).then(res => {
+                    var data = res.data
+                    if (data.data) {
+                        this.totalCount = data.data
+                    }
+                })
+            },
             getShowList: function () {
                 this.tableLoading = true
                 var type = this.$store.state.showType
-                axios.get('/api/show/getAllShowByType/' + type).then(response => {
+                axios.get('/api/show/getShowListLazied/' + type + '/' + this.offset).then(response => {
                     var data = response.data
                     if (data.data) {
                         this.tableLoading = false
@@ -102,12 +133,15 @@
                 var type = this.$store.state.showType
                 if (this.keyWord === ''){
                     this.getShowList()
+                    this.getTotalCount()
+                    this.paginationShow = true
                 }else {
                     axios.get('api/show/getShowListByShowTitleAndType/' + this.keyWord + '/' + type).then(response => {
                         var data = response.data
                         if (data.data) {
                             this.tableLoading = false
                             this.tableData = data.data
+                            this.paginationShow = false
                         }else {
                             alert('there is something wrong')
                         }
@@ -139,10 +173,12 @@
             }
         },
         mounted() {
+            this.getTotalCount
             this.getShowList()
         },
         watch: {
             $route: function () {
+                this.getTotalCount()
                 this.getShowList()
             }
         }
