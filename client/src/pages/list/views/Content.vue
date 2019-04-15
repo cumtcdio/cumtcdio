@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="content-footer" style="margin-top: 8px">
-                            <span class="content-footer-item-1" v-if="titleShow">总共<span>{{totalList}}</span>条记录</span>&nbsp;
+                            <span class="content-footer-item-1" v-if="titleShow">总共<span>{{totalList}}</span>条记录 每页10条</span>&nbsp;
                             <span class="content-footer-item-2">
                                 <span class="page-link" @click="toFirstPage">第一页</span>
                                 &lt;&lt;
@@ -122,7 +122,7 @@ export default {
                 var data = response.data
                 if (data.code === 0 && data.data) {
                     this.totalList = response.data.data
-                    if (this.totalList > 2 ){
+                    if (this.totalList > 10 ){
                         this.pageBiggerThenOne = true
                     } else {
                         this.pageIsLast = true
@@ -147,19 +147,19 @@ export default {
             this.getListData()
         },
         toPreviousPage: function () {
-            this.offset = this.offset - 2;
+            this.offset = this.offset - 10;
             this.getListData()
         },
         toNextPage: function () {
-            this.offset = this.offset + 2;
+            this.offset = this.offset + 10;
             this.getListData()
         },
         toLastPage: function () {
-            var mod = this.totalList % 2
+            var mod = this.totalList % 10
             if (mod === 0) {
-                this.offset = this.totalList -2
+                this.offset = this.totalList -10
             } else {
-                this.offset = this.totalList - 1;
+                this.offset = this.totalList - mod;
             }
             this.getListData()
         }
@@ -191,7 +191,7 @@ export default {
             } else {
                 this.pageIsOne = true
             }
-            if (val > (this.totalList - 2)) {
+            if (val > (this.totalList - 10)) {
                 this.pageIsLast = true
             } else {
                 this.pageIsLast = false

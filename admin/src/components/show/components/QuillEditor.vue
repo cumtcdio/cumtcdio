@@ -26,7 +26,9 @@
     import 'quill/dist/quill.snow.css'
     import 'quill/dist/quill.bubble.css'
     import axios from 'axios'
-    import { quillEditor } from 'vue-quill-editor'
+    import { quillEditor , Quill} from 'vue-quill-editor'
+    import ImageResize from 'quill-image-resize-module'
+    Quill.register('modules/imageResize', ImageResize)
     export default {
         components:{
             quillEditor
@@ -55,7 +57,15 @@
                             ['clean'],    //清除字体样式
                             ['image','video']    //上传图片、上传视频
 
-                        ]
+                        ],
+                        imageResize: {
+                            displayStyles: {
+                                backgroundColor: 'black',
+                                border: 'none',
+                                color: 'white'
+                            },
+                            modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
+                        }
                     },
                     theme:'snow'
                 },
@@ -158,6 +168,6 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
