@@ -9,21 +9,15 @@
       <!--</el-menu>-->
     <!--</div>-->
     <!-- 页头 -->
-    <div class="bg" style="width:1900px">
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-10 col-md-4">
-                <img class="img0" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/8_%E8%87%AA%E5%AE%9A%E4%B9%89px_2019.03.22.png">
-            </div>
-            <div class="col-1"></div>
+    <div class="bg" style="width:1600px">
+        <div>
+            <img class="img0 ml-5" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/8_%E8%87%AA%E5%AE%9A%E4%B9%89px_2019.03.22.png">
         </div>
     </div>
     <div class="line"></div>
     <!-- 导航栏 -->
-    <div class="row center" style="width:1900px">
-      <div class="col-md-2 col-lg-2 col-xl-2"></div>
-      <div class="col-12 col-md-8 col-lg-8 col-xl-8">
-        <nav class="navbar navbar-expand-md navbar-dark">
+    <div class="center" style="width:1600px">
+        <nav class="navbar navbar-expand-md navbar-dark" style="margin-left:400px">
             <!--<a class="navbar-brand" href="#">Navbar</a>-->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -36,8 +30,6 @@
                 </ul>
             </div>
         </nav>
-      </div>
-      <div class="col-md-2 col-lg-8 col-xl-8"></div>
     </div>
     <div>
       <div class="d-flex">
@@ -68,9 +60,13 @@
                     <div style="min-width:80px">指导老师：</div>
                     <div>{{currentGroup.teacher}}</div>
                   </div>
-                  <div class="col-6 mt-3 d-flex">
+                  <div class="col-12 mt-3 d-flex">
                     <div style="min-width:80px">成员：</div>
                     <div>{{currentGroup.member}}</div>
+                  </div>
+                  <div class="col-12 mt-3 d-flex">
+                    <div style="min-width:80px">项目简介：</div>
+                    <div>{{currentGroup.desc}}</div>
                   </div>
                 </div>
               </div>
@@ -80,88 +76,140 @@
             </div> 
           </div>
           <!-- CDIO -->
-          <table class="table mt-4 mr-5" v-loading="loading">
+          
+          <table class="table mt-4 mr-5 table-bordered" v-loading="loading">
             <thead class="header-two text-center">
               <tr>
-                <td>C</td>
-                <td>D</td>
-                <td>I</td>
-                <td>O</td>
+                <th>C</th>
+                <th>D</th>
+                <th>I</th>
+                <th>O</th>
               </tr>
             </thead>
             <tbody class="text-center">
               <tr>
-                <td>项目创意</td>
-                <td>项目展示</td>
-                <td>后端源码下载</td>
-                <td>网络营销</td>
+                <td>
+                  <el-select v-model="cIndex" placeholder="请选择" size="medium">
+                    <el-option
+                      v-for="(course,index) in currentGroup.c"
+                      :key="index"
+                      :label="course.courseName"
+                      :value="index">
+                    </el-option>
+                  </el-select>
+                </td>
+                <td>
+                  <el-select v-model="dIndex" placeholder="请选择" size="medium">
+                    <el-option
+                      v-for="(course,index) in currentGroup.d"
+                      :key="index"
+                      :label="course.courseName"
+                      :value="index">
+                    </el-option>
+                  </el-select>
+                </td>
+                <td>
+                  <el-select v-model="iIndex" placeholder="请选择" size="medium">
+                    <el-option
+                      v-for="(course,index) in currentGroup.i"
+                      :key="index"
+                      :label="course.courseName"
+                      :value="index">
+                    </el-option>
+                  </el-select>
+                </td>
+                <td>
+                  <el-select v-model="oIndex" placeholder="请选择" size="medium">
+                    <el-option
+                      v-for="(course,index) in currentGroup.o"
+                      :key="index"
+                      :label="course.courseName"
+                      :value="index">
+                    </el-option>
+                  </el-select>
+                </td>
+              </tr>
+              <!-- achievement -->
+              <tr>
+                <td style="margin:0;padding:0">
+                  <div v-for="(item,index) in currentGroup.c[cIndex].achievement" :key="index" class="achievement">
+                    <a :href="item.address">{{item.name}}</a>
+                  </div>
+                </td>
+                <td style="margin:0;padding:0">
+                  <div v-for="(item,index) in currentGroup.d[dIndex].achievement" :key="index" class="achievement">
+                    <a :href="item.address">{{item.name}}</a>
+                  </div>
+                </td>
+                <td style="margin:0;padding:0">
+                  <div v-for="(item,index) in currentGroup.i[iIndex].achievement" :key="index" class="achievement">
+                    <a :href="item.address">{{item.name}}</a>
+                  </div>
+                </td>
+                <td style="margin:0;padding:0">
+                  <div v-for="(item,index) in currentGroup.o[oIndex].achievement" :key="index" class="achievement">
+                    <a :href="item.address">{{item.name}}</a>
+                  </div>
+                </td>
+              </tr>
+              <!-- processManage -->
+              <tr class="table-secondary">
+                <td>项目过程管理</td>
+                <td>项目过程管理</td>
+                <td>项目过程管理</td>
+                <td>项目过程管理</td>
               </tr>
               <tr>
-                <td>商业计划书</td>
-                <td>前端源码</td>
-                <td>数据库下载</td>
-                <td>电子商务运营管理</td>
-              </tr>
-              <tr>
-                <td>项目概要</td>
-                <td></td>
-                <td></td>
-                <td>商务数据挖掘</td>
-              </tr>
-              <tr>
-                <td>89</td>
-                <td>90</td>
-                <td>92</td>
-                <td>98</td>
+                <td style="margin:0;padding:0;cursor:pointer">
+                  <div v-for="(item,index) in currentGroup.c[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index)">
+                    <div style="position:relative">
+                      <div class="ellipsis">{{item.title}}</div>
+                      <div class="time text-muted">{{item.time}}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="margin:0;padding:0;cursor:pointer">
+                  <div v-for="(item,index) in currentGroup.d[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index)">
+                    <div style="position:relative">
+                      <div class="ellipsis">{{item.title}}</div>
+                      <div class="time text-muted">{{item.time}}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="margin:0;padding:0;cursor:pointer">
+                  <div v-for="(item,index) in currentGroup.i[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index)">
+                    <div style="position:relative">
+                      <div class="ellipsis">{{item.title}}</div>
+                      <div class="time text-muted">{{item.time}}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="margin:0;padding:0;cursor:pointer">
+                  <div v-for="(item,index) in currentGroup.o[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index)">
+                    <div style="position:relative">
+                      <div class="ellipsis">{{item.title}}</div>
+                      <div class="time text-muted">{{item.time}}</div>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
-          <!-- 项目过程管理 -->
-          <div class="card" style="width:1000px;margin-top:30px" v-loading="loading">
-            <div class="card-header header-three">项目过程管理</div>
-            <div class="card-body">
-              <hr>
-              <div class="row">
-                <div class="col-3">
-                  <CellGroup>
-                      <Cell :title="item.event" :label="item.time" v-for="(item, index) in currentGroup.processManager.C" :key="index" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
-                        
-                      </Cell>
-                  </CellGroup>
-                </div>
-                <div class="col-3">
-                  <CellGroup>
-                      <Cell :title="item.event" :label="item.time" v-for="(item, index) in currentGroup.processManager.D" :key="index" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
-                        
-                      </Cell>
-                  </CellGroup>
-                </div>
-                <div class="col-3">
-                  <CellGroup>
-                      <Cell :title="item.event" :label="item.time" v-for="(item, index) in currentGroup.processManager.I" :key="index" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
-                        
-                      </Cell>
-                  </CellGroup>
-                </div>
-                <div class="col-3">
-                  <CellGroup>
-                      <Cell :title="item.event" :label="item.time" v-for="(item, index) in currentGroup.processManager.O" :key="index" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
-                        
-                      </Cell>
-                  </CellGroup>
-                </div>
-              </div>
-              <hr>
-            </div>
-          </div>
+          <el-dialog
+            title="项目过程管理"
+            :visible.sync="dialogVisible"
+            width="30%">
+            <div v-text="dialogContent.title"></div>
+            <div v-text="dialogContent.time"></div>
+            <div v-text="dialogContent.require"></div>
+            <div v-text="dialogContent.content"></div>
+          </el-dialog>
         </div>
       </div>
     </div>
 
-
-
     <!-- 页脚 -->
-    <div ref="bottom" class="bottom mt-4" style="width:1900px">
+    <div ref="bottom" class="bottom mt-4" style="width:1600px">
         <div class="line"></div>
         <div class="bg" style="height: 60px;line-height: 3rem;">
             <div class="bottomFont">
@@ -179,6 +227,17 @@
   export default {
       data() {
       return {
+        dialogContent: {
+          title: '',
+          time: '',
+          require: '',
+          content: ''
+        },
+        dialogVisible: false,
+        cIndex: 0,
+        dIndex: 0,
+        iIndex: 0,
+        oIndex: 0,
         menus: [
             {
                 index: '1',
@@ -226,316 +285,137 @@
             teacher: '冯文龙',
             member: 'XXX、XXX、XXX、XXX、XXX',
             teamImg: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1967724590,2451003767&fm=11&gp=0.jpg',
-            processManager:{
-              C:[
+            desc: '这里是项目概要这里是项目概要这里是项目概要这里是项目概要这里是项目概要项目概要项目概要项目概要',
+            c:[
+              {
+                courseId: 1,
+                courseName: '互联网商业模式设计',
+                achievement:[
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
+                    name: '商业计划书',
+                    address: '#'
                   },
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
+                    name: '商业计划书2',
+                    address: '#'
+                  }
+                ],
+                processManage: [
+                  {
+                    title: '完成商业计划书',
+                    require: `这里是任务的要求
+                    1.要求一
+                    2.要求二`,
+                    content: '这里是任务的内容',
+                    time:'2019/4/10'
+                  }
+                ]
+              },
+              {
+                courseId: 1,
+                courseName: '互联网商业模式设计2',
+                achievement:[
+                  {
+                    name: '商业计划书3',
+                    address: '#'
                   },
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
+                    name: '商业计划书4',
+                    address: '#'
+                  }
+                ],
+                processManage: [
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              D:[
+                    title: '完成商业计划书完成商业计划书完成完成商业计划书完成商业计划书完成商业计划书',
+                    require: `这里是任务的要求
+                    1.要求一
+                    2.要求二`,
+                    content: '这里是任务的内容',
+                    time:'2019/4/10'
+                  }
+                ]
+              }
+            ],
+            d:[
+              {
+                courseId: 1,
+                courseName: 'web前端',
+                achievement:[
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
+                    name: '商业计划书',
+                    address: '#'
+                  }
+                ],
+                processManage: [
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计完成前端首页设计'
-                  },
+                    title: '完成商业计划书',
+                    require: `这里是任务的要求
+                    1.要求一
+                    2.要求二`,
+                    content: '这里是任务的内容',
+                    time:'2019/4/10'
+                  }
+                ]
+              }
+            ],
+            i:[
+              {
+                courseId: 1,
+                courseName: '互联网商业模式设计',
+                achievement:[
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
+                    name: '商业计划书',
+                    address: '#'
+                  }
+                ],
+                processManage: [
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              I:[
+                    title: '完成商业计划书',
+                    require: `这里是任务的要求
+                    1.要求一
+                    2.要求二`,
+                    content: '这里是任务的内容',
+                    time:'2019/4/10'
+                  }
+                ]
+              }
+            ],
+            o:[
+              {
+                courseId: 1,
+                courseName: '互联网商业模式设计',
+                achievement:[
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
+                    name: '商业计划书',
+                    address: '#'
+                  }
+                ],
+                processManage: [
                   {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              O:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-            },
-          },
-          {
-            title:'第二组',
-            name: '吃货联盟',
-            teacher: '张卫华',
-            member: 'XXX、XXX、XXX、XXX、XXX',
-            teamImg: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1967724590,2451003767&fm=11&gp=0.jpg',
-            processManager:{
-              C:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              D:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计完成前端首页设计'
-                  },
-              ],
-              I:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              O:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-            },
-          },
-          {
-            title:'第三组',
-            name: '校园移动微创客联盟',
-            teacher: '冯文龙',
-            member: 'XXX、XXX、XXX、XXX、XXX',
-            teamImg: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1967724590,2451003767&fm=11&gp=0.jpg',
-            processManager:{
-              C:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              D:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计完成前端首页设计'
-                  },
-              ],
-              I:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              O:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-            },
-          },
-          {
-            title:'第四组',
-            name: '校园移动微创客联盟',
-            teacher: '冯文龙',
-            member: 'XXX、XXX、XXX、XXX、XXX',
-            teamImg: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1967724590,2451003767&fm=11&gp=0.jpg',
-            processManager:{
-              C:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              D:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计完成前端首页设计'
-                  },
-              ],
-              I:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              O:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-            },
-          },
-          {
-            title:'第五组',
-            name: '校园移动微创客联盟',
-            teacher: '冯文龙',
-            member: 'XXX、XXX、XXX、XXX、XXX',
-            teamImg: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1967724590,2451003767&fm=11&gp=0.jpg',
-            processManager:{
-              C:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              D:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计完成前端首页设计'
-                  },
-              ],
-              I:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-              O:[
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-                  {
-                    time: '2019/3/20',
-                    event: '完成前端首页设计'
-                  },
-              ],
-            },
-          },
-        ],
+                    title: '完成商业计划书',
+                    require: `这里是任务的要求
+                    1.要求一
+                    2.要求二`,
+                    content: '这里是任务的内容',
+                    time:'2019/4/9'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     },
     computed: {
       currentGroup() {
         return this.groups[this.currentIndex] 
       }
+    },
+    mounted(){
+      // this.cValue = this.currentGroup.c[0].courseId
+      // this.dValue = this.currentGroup.d[0].courseId
+      // this.iValue = this.currentGroup.i[0].courseId
+      // this.oValue = this.currentGroup.o[0].courseId
     },
     methods: {
       changeCurrentGroup(index) {
@@ -544,6 +424,22 @@
           this.loading = false;
         }, 400);
         this.currentIndex = index
+      },
+      cDialogShow(index){
+        this.dialogContent = this.currentGroup.c[this.cIndex].processManage[index]
+        this.dialogVisible = true
+      },
+      dDialogShow(index){
+        this.dialogContent = this.currentGroup.d[this.dIndex].processManage[index]
+        this.dialogVisible = true
+      },
+      iDialogShow(index){
+        this.dialogContent = this.currentGroup.i[this.iIndex].processManage[index]
+        this.dialogVisible = true
+      },
+      oDialogShow(index){
+        this.dialogContent = this.currentGroup.o[this.oIndex].processManage[index]
+        this.dialogVisible = true
       }
     },
   }
@@ -551,6 +447,26 @@
 
 
 <style scoped>
+.ellipsis{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  max-width: 250px;
+}
+.time{
+  position: absolute;
+  font-size: 13px;
+  right: 0;
+  bottom: -15px
+}
+.achievement{
+  border-bottom:1px solid #dee2e6;
+  line-height: 50px;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  justify-content: center;
+}
 .ivu-cell-main{
   width: 100%;
 }
@@ -591,7 +507,7 @@ background-color: #C64718;
 /*height: 8rem;*/
 }
 .img0{
-    width: 100%;
+    height: 160px;
     /*height: 5rem;*/
 }
 .bottomFont{
@@ -611,5 +527,12 @@ background-color: #C64718;
 }
 .bottom-position {
     position: fixed;
+}
+a{
+  color: #212529
+}
+a:hover{
+  color: #212529;
+  text-decoration: none
 }
 </style>
