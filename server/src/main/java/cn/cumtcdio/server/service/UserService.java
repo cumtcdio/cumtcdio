@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2019/3/17 15:36
  */
 @Service
-public class UserService extends BaseService<UserMapper, User>{
+public class UserService{
     @Autowired
     private UserMapper userMapper;
 

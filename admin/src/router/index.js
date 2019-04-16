@@ -8,7 +8,7 @@ import Slide from  '../components/slide/Slide'
 import ShowEdit from  '../components/show/components/ShowEdit'
 import GroupInfo from '../components/cumt/views/groupInfo.vue';
 import GroupInsert from '../components/cumt/views/groupInsert.vue';
-import GroupUpdate from '../components/cumt/views/groupUpdate.vue';
+import processManage from '../components/cumt/views/processManage.vue';
 
 Vue.use(Router)
 
@@ -19,7 +19,7 @@ export default new Router ({
         {path: '/cdio', component: CumtCDIO},
         {path: '/cdio/group/:grade/:sn', component: GroupInfo},
         {path: '/cdio/group/insert', component: GroupInsert},
-        {path: '/cdio/group/update', component: GroupUpdate},
+        {path: '/cdio/group/processManage', component: processManage},
         {path: '/show/:id', component: Show},
         {path: '/show/:id/:index', component: ShowEdit},
         {path: '/slide', component: Slide},

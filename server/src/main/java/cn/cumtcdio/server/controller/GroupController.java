@@ -1,5 +1,6 @@
 package cn.cumtcdio.server.controller;
 
+import cn.cumtcdio.server.VO.GroupDetailVO;
 import cn.cumtcdio.server.VO.GroupInfoVO;
 import cn.cumtcdio.server.VO.ResultVO;
 import cn.cumtcdio.server.service.GroupService;
@@ -28,6 +29,12 @@ public class GroupController {
         List<GroupInfoVO> groupInfoVOS = groupService.getAllGroupInfoByGradeSn(gradeSn);
         return ResultVOUtil.success(groupInfoVOS);
 
+    }
+
+    @GetMapping("/id/{groupId}")
+    public ResultVO getDetailByGroupId(@PathVariable Integer groupId){
+        GroupDetailVO groupDetailVO = groupService.getDetailByGroupId(groupId);
+        return ResultVOUtil.success(groupDetailVO);
     }
 
 }

@@ -1,9 +1,14 @@
 package cn.cumtcdio.server.mapper;
 
-
 import cn.cumtcdio.server.model.User;
-import cn.cumtcdio.server.util.MyMapper;
 
-public interface UserMapper extends MyMapper<User> {
+import java.util.List;
 
+/**
+ * UserMapper继承基类
+ */
+public interface UserMapper extends MyBatisBaseDao<User, Integer> {
+    List<String> getMembersByGroupId(Integer groupId);
+
+    List<User> selectAll();
 }

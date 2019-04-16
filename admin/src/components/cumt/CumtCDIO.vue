@@ -33,8 +33,8 @@
                     <el-table-column
                     label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(item.grade,scope.row.groupSn)" type="text" size="small">查看</el-button>
-                        <el-button type="text" size="small" @click="editClick">编辑</el-button>
+                        <el-button @click="handleClick(item.grade,scope.row.groupSn)" type="text" size="small">基本信息修改</el-button>
+                        <el-button type="text" size="small" @click="editClick">项目过程管理</el-button>
                     </template>
                     </el-table-column>
                 </el-table>
@@ -103,7 +103,7 @@
                 this.$router.push("/cdio/group/insert")
             },
             editClick(){
-                this.$router.push("/cdio/group/update")
+                this.$router.push("/cdio/group/processManage")
             }
         },
     }

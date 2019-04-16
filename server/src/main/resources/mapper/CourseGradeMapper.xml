@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cumtcdio.server.mapper.CourseGradeMapper">
+  <resultMap id="BaseResultMap" type="cn.cumtcdio.server.model.CourseGradeKey">
+    <id column="course_id" jdbcType="INTEGER" property="courseId" />
+    <id column="grade_sn" jdbcType="VARCHAR" property="gradeSn" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="cn.cumtcdio.server.model.CourseGradeKey">
+    delete from course_grade
+    where course_id = #{courseId,jdbcType=INTEGER}
+      and grade_sn = #{gradeSn,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.cumtcdio.server.model.CourseGradeKey">
+    insert into course_grade (course_id, grade_sn)
+    values (#{courseId,jdbcType=INTEGER}, #{gradeSn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.CourseGradeKey">
+    insert into course_grade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="gradeSn != null">
+        grade_sn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeSn != null">
+        #{gradeSn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="getCourseIdsByGradeSn" parameterType="STRING" resultType="INTEGER">
+    select course_id
+    from course_grade
+    where grade_sn = #{gradeSn}
+  </select>
+</mapper>
