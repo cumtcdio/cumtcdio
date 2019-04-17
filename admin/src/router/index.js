@@ -2,13 +2,14 @@ import Vue from 'vue'
 import Router from  'vue-router'
 
 import Home from '../components/Home'
-import CumtCDIO from '../components/cumt/CumtCDIO'
+import CumtCDIO from '../components/cumt/group/CumtCDIO'
 import Show from '../components/show/Show'
 import Slide from  '../components/slide/Slide'
 import ShowEdit from  '../components/show/components/ShowEdit'
-import GroupInfo from '../components/cumt/views/groupInfo.vue';
-import GroupInsert from '../components/cumt/views/groupInsert.vue';
-import processManage from '../components/cumt/views/processManage.vue';
+import GroupInfo from '../components/cumt/group/views/groupInfo.vue';
+import GroupInsert from '../components/cumt/group/views/groupInsert.vue';
+import ProcessManage from '../components/cumt/group/views/processManage.vue';
+import CdioAdmin from '../components/cumt/admin/admin.vue';
 
 Vue.use(Router)
 
@@ -19,7 +20,8 @@ export default new Router ({
         {path: '/cdio', component: CumtCDIO},
         {path: '/cdio/group/:grade/:sn', component: GroupInfo},
         {path: '/cdio/group/insert', component: GroupInsert},
-        {path: '/cdio/group/processManage', component: processManage},
+        {path: '/cdio/group/processManage', component: ProcessManage},
+        {path: '/cdio/admin', component: CdioAdmin},
         {path: '/show/:id', component: Show},
         {path: '/show/:id/:index', component: ShowEdit},
         {path: '/slide', component: Slide},

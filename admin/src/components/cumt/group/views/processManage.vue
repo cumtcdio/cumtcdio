@@ -364,9 +364,11 @@
             processUploadSuccess(){
                 
             },
-            handlePreview(address){
-                // console.log(address)
-            },
+            // handlePreview(address){
+            //     // console.log(address)
+            // },
+            
+
         },
     }
 </script>

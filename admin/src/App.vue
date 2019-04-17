@@ -46,7 +46,8 @@ export default {
                       {id: 5, name: '专业实习', path: '/show/4'}
                   ]},
               {id: 3, name: 'CUMT-CDIO', icon: 'el-icon-info', child: [
-                      {id: 1, name: 'CDIO管理', path: '/cdio'}
+                      {id: 1, name: '项目组管理', path: '/cdio'},
+                      {id: 2, name: 'cdio管理', path: '/cdio/admin'}
                   ]}
           ]
       }
