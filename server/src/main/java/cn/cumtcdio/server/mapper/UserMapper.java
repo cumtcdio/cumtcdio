@@ -10,5 +10,7 @@ import java.util.List;
 public interface UserMapper extends MyBatisBaseDao<User, Integer> {
     List<String> getMembersByGroupId(Integer groupId);
 
-    List<User> selectAll();
+    User selectByUserName(String username);
+
+    User getUserInfoByUsername(String username);
 }

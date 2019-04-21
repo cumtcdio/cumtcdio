@@ -1,40 +1,26 @@
-package cn.cumtcdio.server.model;
+package cn.cumtcdio.server.VO;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.io.Serializable;
+import cn.cumtcdio.server.model.Role;
+
 import java.util.List;
 
 /**
- * user
- * @author 
+ * @author SpringBoot Jun
+ * @date 2019/4/14 18:17
  */
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserVO {
     private Integer id;
 
-    /**
-     * 默认手机号
-     */
-    @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "real_name")
     private String realName;
 
-    @Column(name = "group_id")
     private Integer groupId;
 
-    @Column(name = "phone")
     private String phone;
 
-    @Column(name = "state")
     private Integer state;
 
     private List<Role> roleList;

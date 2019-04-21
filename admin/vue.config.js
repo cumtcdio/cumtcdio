@@ -16,6 +16,10 @@ module.exports = {
                 // pathRewrite: {
                 //     '^/api': '/mock'
                 // }
+            },
+            '/auth': {
+               target: 'http://localhost:8090',
+               changeOrigin: true
             }
         }
     },
