@@ -1,29 +1,29 @@
 import Vue from 'vue'
 import Router from  'vue-router'
-
 import Home from '../components/Home'
-import CumtCDIO from '../components/cumt/group/CumtCDIO'
-import Show from '../components/show/Show'
-import Slide from  '../components/slide/Slide'
-import ShowEdit from  '../components/show/components/ShowEdit'
-import GroupInfo from '../components/cumt/group/views/groupInfo.vue';
-import GroupInsert from '../components/cumt/group/views/groupInsert.vue';
-import ProcessManage from '../components/cumt/group/views/processManage.vue';
-import CdioAdmin from '../components/cumt/admin/admin.vue';
+import Login from '../components/Login'
+import NotFound from '../components/errorPage/NotFound'
 
 Vue.use(Router)
 
 export default new Router ({
-    routes :[
-        {path: '/', component: Home},
-        {path: '/home', component: Home},
-        {path: '/cdio', component: CumtCDIO},
-        {path: '/cdio/group/:grade/:sn', component: GroupInfo},
-        {path: '/cdio/group/insert', component: GroupInsert},
-        {path: '/cdio/group/processManage', component: ProcessManage},
-        {path: '/cdio/admin', component: CdioAdmin},
-        {path: '/show/:id', component: Show},
-        {path: '/show/:id/:index', component: ShowEdit},
-        {path: '/slide', component: Slide},
-    ],
+    routes: [
+        {
+            path: '/',
+            name: 'Login',
+            component: Login,
+            hidden: true
+        }, {
+            path: '/home',
+            name: '主页',
+            component: Home,
+            hidden: true,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '*',
+            component: NotFound
+        }
+    ]
 })

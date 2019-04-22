@@ -25,7 +25,6 @@
     import 'quill/dist/quill.core.css'
     import 'quill/dist/quill.snow.css'
     import 'quill/dist/quill.bubble.css'
-    import axios from 'axios'
     import { quillEditor , Quill} from 'vue-quill-editor'
     import ImageResize from 'quill-image-resize-module'
     Quill.register('modules/imageResize', ImageResize)
@@ -98,7 +97,7 @@
                     if (valid) {
                         var id = parseInt(this.$route.params.index);
                         if (id === 0) {
-                            this.insetShow()
+                            this.insertShow()
                         } else {
                             this.updateShow()
                         }
@@ -108,10 +107,10 @@
                     }
                 })
             },
-            insetShow: function () {
+            insertShow: function () {
                 this.formItem.type = this.$store.state.showType;
-                axios.post('/api/show/insertShow',this.formItem).then(res =>{
-                    if(res.status === 200){
+                this.postRequest('/api/show/insertShow',this.formItem).then(res =>{
+                    if(res.code === 0){
                         this.$router.push('/show/' + this.$store.state.showType)
                     }
                 }).catch(error =>{
@@ -119,22 +118,21 @@
                 })
             },
             updateShow: function () {
-                axios.put('/api/show/updateShowByShowId', this.formItem).then(res => {
-                    if (res.status === 200) {
+                this.putRequest('/api/show/updateShowByShowId', this.formItem).then(res => {
+                    if (res.code === 0) {
                         this.$router.push('/show/' + this.$store.state.showType)
                     }
                 }).catch(error =>{
                     alert(error)
                 })
-                // console.log(this.formItem)
             },
             getForItemIfExit: function (id) {
                 if (id) {
-                    axios.get("/api/show/getUpdateShowByShowId/" + id).then(response => {
+                    this.getRequest("/api/show/getUpdateShowByShowId/" + id).then(response => {
                         var data = response.data
-                        if (data.data){
-                            this.formItem = data.data
-                            this.formItem.id = data.data.showId
+                        if (data){
+                            this.formItem = data
+                            this.formItem.id = data.showId
                         }
                     })
                 }

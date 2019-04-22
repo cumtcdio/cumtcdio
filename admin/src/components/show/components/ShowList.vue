@@ -86,7 +86,6 @@
     </el-container>
 </template>
 <script>
-    import axios from 'axios'
     export default {
         name: 'ShowList',
         data() {
@@ -110,21 +109,21 @@
             },
             getTotalCount: function () {
                 var type = this.$store.state.showType
-                axios.get('/api/show/countOneTypeShowList/' + type).then(res => {
+                this.getRequest('/api/show/countOneTypeShowList/' + type).then(res => {
                     var data = res.data
-                    if (data.data) {
-                        this.totalCount = data.data
+                    if (data) {
+                        this.totalCount = data
                     }
                 })
             },
             getShowList: function () {
                 this.tableLoading = true
                 var type = this.$store.state.showType
-                axios.get('/api/show/getShowListLazied/' + type + '/' + this.offset).then(response => {
-                    var data = response.data
-                    if (data.data) {
+                this.getRequest('/api/show/getShowListLazied/' + type + '/' + this.offset).then(res => {
+                    var data = res.data
+                    if (data) {
                         this.tableLoading = false
-                        this.tableData = data.data
+                        this.tableData = data
                     }
                 })
             },
@@ -136,7 +135,7 @@
                     this.getTotalCount()
                     this.paginationShow = true
                 }else {
-                    axios.get('api/show/getShowListByShowTitleAndType/' + this.keyWord + '/' + type).then(response => {
+                    this.getRequest('api/show/getShowListByShowTitleAndType/' + this.keyWord + '/' + type).then(response => {
                         var data = response.data
                         if (data.data) {
                             this.tableLoading = false
@@ -163,8 +162,8 @@
                 this.dialogVisible = true
             },
             deleteShowConfirmed: function () {
-                axios.delete('/api/show/deleteByShowId/' + this.deleteShowId).then(response => {
-                    var data = response.data
+                this.deleteRequest('/api/show/deleteByShowId/' + this.deleteShowId).then(response => {
+                    var data = response
                     if (data.code === 0){
                         this.dialogVisible = false
                         this.getShowList()
@@ -173,13 +172,15 @@
             }
         },
         mounted() {
-            this.getTotalCount
+            this.getTotalCount()
             this.getShowList()
         },
         watch: {
-            $route: function () {
-                this.getTotalCount()
-                this.getShowList()
+            $route: function (to) {
+                if (to.path.startsWith('/show')){
+                    this.getTotalCount()
+                    this.getShowList()
+                }
             }
         }
     }

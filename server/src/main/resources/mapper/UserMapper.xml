@@ -10,6 +10,11 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
+  <resultMap id="UserRoleMapper" type="cn.cumtcdio.server.model.User" extends="BaseResultMap">
+    <collection property="roleList" column="id"
+                select="cn.cumtcdio.server.mapper.RoleMapper.getRoleByUserId" fetchType="eager">
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List">
     id, username, `password`, real_name, group_id, phone, `state`
   </sql>
@@ -118,6 +123,16 @@
     select real_name
     from user
     where group_id=#{groupId}
+  </select>
+  <select id="selectByUserName" resultMap="UserRoleMapper">
+    SELECT *
+    FROM user
+    WHERE username = #{username}
+  </select>
+  <select id="getUserInfoByUsername" resultMap="BaseResultMap">
+    SELECT id,username,real_name
+    FROM user
+    WHERE username = #{username}
   </select>
   <select id="selectAll">
     select *
