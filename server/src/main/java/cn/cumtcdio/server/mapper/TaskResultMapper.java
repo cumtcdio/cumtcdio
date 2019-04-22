@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface TaskResultMapper extends MyBatisBaseDao<TaskResult, Integer> {
     TaskResult selectByTaskIdAndGroupId(@Param("taskId") Integer taskId, @Param("groupId") Integer groupId);
+
+    int deleteByTaskId(Integer taskId);
 }

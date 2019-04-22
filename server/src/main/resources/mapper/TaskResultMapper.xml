@@ -109,4 +109,8 @@
     where task_id = #{taskId}
     and group_id = #{groupId}
   </select>
+  <delete id="deleteByTaskId" parameterType="INTEGER">
+    delete from task_result
+    where task_id = #{taskId}
+  </delete>
 </mapper>

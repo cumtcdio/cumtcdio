@@ -1,31 +1,31 @@
 <template>
     <div class="wrapper">
-        <el-tabs v-model="activeGrade" type="card" editable @edit="handleGradeEdit">
-            <el-tab-pane v-for="(item, index) in grades" :key="index" :label="item.grade" :name="item.grade">
+        <el-tabs v-model="activeGradeId" type="card" editable @edit="handleGradeEdit" @tab-click="changeGradeSn">
+            <el-tab-pane v-for="(item, index) in grades" :key="index" :label="item.gradeSn" :name="item.gradeId+''">
                 <!-- CDIO tab -->
-                <el-tabs v-model="activeName" type="border-card">
+                <el-tabs v-model="activeType" type="border-card">
                     <el-tab-pane label="C" name="C">
                         <!-- 课程 tab -->
-                        <el-tabs v-model="courseName" type="card" editable @edit="handleTabsEdit">
+                        <el-tabs v-model="activeCourseId" type="card" editable @edit="handleCourseEdit">
                             <el-tab-pane
                                 :key="index"
-                                v-for="(item, index) in item.courses"
-                                :label="item.title"
-                                :name="item.name"
+                                v-for="(item, index) in item.cCourses"
+                                :label="item.courseName"
+                                :name="item.courseId+''"
                             >
                                 <el-card class="box-card m-3">
                                     <div slot="header" class="clearfix">
                                         <span>成果</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text">添加课程所需成果</el-button>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
                                     </div>
                                     <div class="text item">
-                                        商业计划书
+                                        <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
                                     </div>
                                 </el-card>
                                 <el-card class="box-card m-3">
                                     <div slot="header" class="clearfix">
                                         <span>项目过程管理</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text">发布任务</el-button>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="taskDialogVisible = true">发布任务</el-button>
                                     </div>
                                     <div class="text item">
                                         <el-table
@@ -37,46 +37,237 @@
                                                 label="任务名称">
                                                 </el-table-column>
                                                 <el-table-column
-                                                prop="require"
                                                 label="要求">
                                                     <template slot-scope="scope">
-                                                        <pre>{{scope.row.require}}</pre>
+                                                        <pre>{{scope.row.requires}}</pre>
                                                     </template>
                                                 </el-table-column>
                                                 <el-table-column
-                                                prop="content"
+                                                prop="desc"
                                                 label="任务内容">
                                                 </el-table-column>
                                                 <el-table-column
-                                                prop="time"
                                                 label="发布时间">
+                                                    <template slot-scope="scope">
+                                                        <div>{{scope.row.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                                    </template>
                                                 </el-table-column>
                                                 <el-table-column
                                                 label="操作">
                                                     <template slot-scope="scope">
-                                                        <el-button @click="handleEditDelete(scope)" type="text" size="small">删除该任务</el-button>
+                                                        <el-button @click="handleTaskDelete(scope)" type="text" size="small">删除该任务</el-button>
                                                     </template>
                                                 </el-table-column>
                                         </el-table>
-
                                     </div>
                                 </el-card>
                             </el-tab-pane>
                         </el-tabs>
                     </el-tab-pane>
                     <el-tab-pane label="D" name="D">
-                        
+                        <!-- 课程 tab -->
+                        <el-tabs v-model="activeCourseId" type="card" editable @edit="handleCourseEdit">
+                            <el-tab-pane
+                                :key="index"
+                                v-for="(item, index) in item.dCourses"
+                                :label="item.courseName"
+                                :name="item.courseId+''"
+                            >
+                                <el-card class="box-card m-3">
+                                    <div slot="header" class="clearfix">
+                                        <span>成果</span>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
+                                    </div>
+                                    <div class="text item">
+                                        <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
+                                    </div>
+                                </el-card>
+                                <el-card class="box-card m-3">
+                                    <div slot="header" class="clearfix">
+                                        <span>项目过程管理</span>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="taskDialogVisible = true">发布任务</el-button>
+                                    </div>
+                                    <div class="text item">
+                                        <el-table
+                                        :data="item.processManage"
+                                        stripe
+                                        style="width: 100%">
+                                                <el-table-column
+                                                prop="title"
+                                                label="任务名称">
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="要求">
+                                                    <template slot-scope="scope">
+                                                        <pre>{{scope.row.requires}}</pre>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column
+                                                prop="desc"
+                                                label="任务内容">
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="发布时间">
+                                                    <template slot-scope="scope">
+                                                        <div>{{scope.row.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="操作">
+                                                    <template slot-scope="scope">
+                                                        <el-button @click="handleTaskDelete(scope)" type="text" size="small">删除该任务</el-button>
+                                                    </template>
+                                                </el-table-column>
+                                        </el-table>
+                                    </div>
+                                </el-card>
+                            </el-tab-pane>
+                        </el-tabs>
                     </el-tab-pane>
                     <el-tab-pane label="I" name="I">
-                        
+                        <!-- 课程 tab -->
+                        <el-tabs v-model="activeCourseId" type="card" editable @edit="handleCourseEdit">
+                            <el-tab-pane
+                                :key="index"
+                                v-for="(item, index) in item.iCourses"
+                                :label="item.courseName"
+                                :name="item.courseId+''"
+                            >
+                                <el-card class="box-card m-3">
+                                    <div slot="header" class="clearfix">
+                                        <span>成果</span>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
+                                    </div>
+                                    <div class="text item">
+                                        <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
+                                    </div>
+                                </el-card>
+                                <el-card class="box-card m-3">
+                                    <div slot="header" class="clearfix">
+                                        <span>项目过程管理</span>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="taskDialogVisible = true">发布任务</el-button>
+                                    </div>
+                                    <div class="text item">
+                                        <el-table
+                                        :data="item.processManage"
+                                        stripe
+                                        style="width: 100%">
+                                                <el-table-column
+                                                prop="title"
+                                                label="任务名称">
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="要求">
+                                                    <template slot-scope="scope">
+                                                        <pre>{{scope.row.requires}}</pre>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column
+                                                prop="desc"
+                                                label="任务内容">
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="发布时间">
+                                                    <template slot-scope="scope">
+                                                        <div>{{scope.row.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="操作">
+                                                    <template slot-scope="scope">
+                                                        <el-button @click="handleTaskDelete(scope)" type="text" size="small">删除该任务</el-button>
+                                                    </template>
+                                                </el-table-column>
+                                        </el-table>
+                                    </div>
+                                </el-card>
+                            </el-tab-pane>
+                        </el-tabs>
                     </el-tab-pane>
                     <el-tab-pane label="O" name="O">
-                        
+                        <!-- 课程 tab -->
+                        <el-tabs v-model="activeCourseId" type="card" editable @edit="handleCourseEdit">
+                            <el-tab-pane
+                                :key="index"
+                                v-for="(item, index) in item.oCourses"
+                                :label="item.courseName"
+                                :name="item.courseId+''"
+                            >
+                                <el-card class="box-card m-3">
+                                    <div slot="header" class="clearfix">
+                                        <span>成果</span>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
+                                    </div>
+                                    <div class="text item">
+                                        <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
+                                    </div>
+                                </el-card>
+                                <el-card class="box-card m-3">
+                                    <div slot="header" class="clearfix">
+                                        <span>项目过程管理</span>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="taskDialogVisible = true">发布任务</el-button>
+                                    </div>
+                                    <div class="text item">
+                                        <el-table
+                                        :data="item.processManage"
+                                        stripe
+                                        style="width: 100%">
+                                                <el-table-column
+                                                prop="title"
+                                                label="任务名称">
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="要求">
+                                                    <template slot-scope="scope">
+                                                        <pre>{{scope.row.requires}}</pre>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column
+                                                prop="desc"
+                                                label="任务内容">
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="发布时间">
+                                                    <template slot-scope="scope">
+                                                        <div>{{scope.row.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column
+                                                label="操作">
+                                                    <template slot-scope="scope">
+                                                        <el-button @click="handleTaskDelete(scope)" type="text" size="small">删除该任务</el-button>
+                                                    </template>
+                                                </el-table-column>
+                                        </el-table>
+                                    </div>
+                                </el-card>
+                            </el-tab-pane>
+                        </el-tabs>
                     </el-tab-pane>
                 </el-tabs>
             </el-tab-pane>
         </el-tabs>
-        
+        <el-dialog
+        title="发布任务"
+        :visible.sync="taskDialogVisible"
+        width="30%">
+        <el-form ref="form" :model="taskFormItem" label-width="80px">
+            <el-form-item label="任务标题" prop="title">
+                <el-input v-model="taskFormItem.title" placeholder="请输入任务标题"></el-input>
+            </el-form-item>
+            <el-form-item label="任务要求" prop="require">
+                <el-input type="textarea" :rows="2" v-model="taskFormItem.require" placeholder="请输入任务要求"></el-input>
+            </el-form-item>
+            <el-form-item label="任务内容" prop="desc">
+                <el-input v-model="taskFormItem.desc" placeholder="请输入任务内容"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="handleTaskCancel">取 消</el-button>
+            <el-button type="primary" @click="handleTaskAdd">发 布</el-button>
+        </span>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -84,101 +275,87 @@
     export default {
         data() {
             return {
-                activeGrade: '2016',
-                courseName: '1',
+                taskFormItem:{
+                    title:"",
+                    require:"",
+                    desc:"",
+                },
+                taskDialogVisible: false,
+                activeGradeSn: "0",
+                activeGradeId: "0",
+                activeType: 'C',
+                activeCourseId: "0",
                 grades:[
-                    {
-                        grade: '2016',
-                        courses:[
-                                    {
-                                title: '互联网商业模式设计',
-                                name: '1',
-                                achievement: [
-                                    {
-                                        name: '商业计划书'
-                                    }
-                                ],
-                                processManage: [
-                                    {
-                                        title: '完成商业计划书',
-                                        require: `这里是任务的要求
-                                        1.要求一
-                                        2.要求二`,
-                                        content: '这里是任务的内容',
-                                        time:'2019/4/10'
-                                    }
-                                ]
-                            }, 
-                            {
-                                title: '课程 2',
-                                name: '2',
-                                achievement: [
-
-                                ],
-                                processManage: [
-                                    
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        grade: '2017',
-                        courses:[
-                                    {
-                                title: '互联网商业模式设计',
-                                name: '1',
-                                achievement: [
-                                    {
-                                        name: '商业计划书'
-                                    }
-                                ],
-                                processManage: [
-                                    {
-                                        title: '完成商业计划书',
-                                        require: `这里是任务的要求
-                                        1.要求一
-                                        2.要求二`,
-                                        content: '这里是任务的内容',
-                                        time:'2019/4/10'
-                                    }
-                                ]
-                            }, 
-                            {
-                                title: '课程 2',
-                                name: '2',
-                                achievement: [
-
-                                ],
-                                processManage: [
-                                    
-                                ]
-                            }
-                        ]
-                    }
+                            
                 ],
-                tabIndex: 2,
-                activeName: 'C'
             }
         },
+        mounted(){
+            this.init()
+            
+        },
         methods: {
-            handleTabsEdit(targetName, action) {
+            init(){
+                this.axios.get("http://localhost:8090/api/admin/gradeCourse")
+                    .then(res => {
+                        this.grades = res.data
+                        this.activeGradeId = this.grades[0].gradeId + ""
+                        this.activeGradeSn = this.grades[0].gradeSn + ""
+                        this.activeCourseId = this.grades[0].cCourses[0].courseId+ ""
+                    })
+            },
+            initData(){
+                this.axios.get("http://localhost:8090/api/admin/gradeCourse")
+                    .then(res => {
+                        this.grades = res.data
+                    })
+            },
+            changeGradeSn(tab){
+                this.activeGradeSn = tab.label
+            },
+            handleAddAchievement(){
+                this.$prompt('请输入成果名', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消'
+                    }).then(({ value }) => {
+                        let formItem = {
+                            gradeSn : this.activeGradeSn,
+                            courseId : this.activeCourseId,
+                            achievementName : value
+                        }
+                        this.axios.post("http://localhost:8090/api/admin/achievement/insert",formItem)
+                            .then(res =>{
+                                if(res.status == 200){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '添加成功'
+                                    });
+                                    this.initData()
+                                }
+                            })
+                    })
+            },
+            handleCourseEdit(targetName, action) {
                 if (action === 'add') {
                     this.$prompt('请输入课程名称', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消'
                     }).then(({ value }) => {
-                        let newTabName = ++this.tabIndex + '';
-                        this.courses.push({
-                            title: value,
-                            name: newTabName,
-                            achievement: [
-
-                            ],
-                            processManage: [
-                                
-                            ]
-                        });
-                        this.courseName = newTabName;
+                        let formItem = {
+                            courseName: value,
+                            courseType: this.activeType,
+                            gradeId: this.activeGradeId
+                        }
+                        this.axios.post("http://localhost:8090/api/admin/course/insert",formItem)
+                            .then(res =>{
+                                if(res.status == 200){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '添加成功'
+                                    });
+                                    this.initData()
+                                }
+                            })
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -192,24 +369,20 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        let tabs = this.courses;
-                        let activeName = this.courseName;
-                        if (activeName === targetName) {
-                            tabs.forEach((tab, index) => {
-                            if (tab.name === targetName) {
-                                let nextTab = tabs[index + 1] || tabs[index - 1];
-                                if (nextTab) {
-                                activeName = nextTab.name;
-                                }
-                            }
-                            });
+                        let formItem = {
+                            courseId: targetName,
+                            gradeId: this.activeGradeId
                         }
-                        this.courseName = activeName;
-                        this.courses = tabs.filter(tab => tab.name !== targetName);
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        });
+                        this.axios.delete("http://localhost:8090/api/admin/course/delete",{params:formItem})
+                            .then(res =>{
+                                if(res.status == 200){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '删除成功'
+                                    });
+                                    this.initData()
+                                }
+                            })
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -224,14 +397,16 @@
                         confirmButtonText: '确定',
                         cancelButtonText: '取消'
                     }).then(({ value }) => {
-                        let newTabName = ++this.tabIndex + '';
-                        this.grades.push({
-                            grade: value,
-                            courses:[
-                                       
-                            ]
-                        });
-                        this.courseName = newTabName;
+                        this.axios.post("http://localhost:8090/api/admin/grade/insert?gradeSn="+value)
+                            .then(res =>{
+                                if(res.status == 200){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '添加成功'
+                                    });
+                                    this.initData()
+                                }
+                            })
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -245,25 +420,16 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        let tabs = this.courses;
-                        let activeName = this.courseName;
-                        if (activeName === targetName) {
-                            tabs.forEach((tab, index) => {
-                            if (tab.name === targetName) {
-                                let nextTab = tabs[index + 1] || tabs[index - 1];
-                                if (nextTab) {
-                                activeName = nextTab.name;
+                        this.axios.delete("http://localhost:8090/api/admin/grade/delete?gradeId="+targetName)
+                            .then(res =>{
+                                if(res.status == 200){
+                                    this.$message({
+                                        type: 'success',
+                                        message: '删除成功!'
+                                    });
+                                    this.initData()
                                 }
-                            }
-                            });
-                        }
-                        
-                        this.courseName = activeName;
-                        this.courses = tabs.filter(tab => tab.name !== targetName);
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        });
+                            })
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -272,22 +438,79 @@
                     });
                 }
             },
-            handleEditDelete(scope){
+            handleTaskCancel(){
+                this.taskDialogVisible = false,
+                this.taskFormItem.title = ""
+                this.taskFormItem.require = ""
+                this.taskFormItem.desc = ""
+            },
+            handleTaskDelete(scope){
                 this.$confirm('此操作将删除该任务, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.courses[0].processManage.splice(scope.$index,1)
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    this.axios.delete("http://localhost:8090/api/admin/task/delete?taskId="+scope.row.id)
+                        .then(res =>{
+                            if(res.status == 200){
+                                this.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                                this.initData()
+                            }
+                        })
                 }).catch(() => {
 
                 });
             },
+            handleTaskAdd(){
+                this.taskDialogVisible = false
+                let formItem = {
+                    title: this.taskFormItem.title,
+                    requires: this.taskFormItem.require,
+                    desc: this.taskFormItem.desc,
+                    gradeSn: this.activeGradeSn,
+                    courseId: this.activeCourseId
+                }
+                this.axios.post("http://localhost:8090/api/admin/task/insert",formItem)
+                    .then(res =>{
+                        if(res.status == 200){
+                            this.$message({
+                                type: 'success',
+                                message: '发布成功!'
+                            });
+                            this.initData()
+                            this.taskFormItem.title = ""
+                            this.taskFormItem.require = ""
+                            this.taskFormItem.desc = ""
+                        }
+                    })
+            }
         },
+        filters: {
+            dateFormat: function(value,fmt) {
+                let getDate = new Date(value);
+                let o = {
+                    'M+': getDate.getMonth() + 1,
+                    'd+': getDate.getDate(),
+                    'h+': getDate.getHours(),
+                    'm+': getDate.getMinutes(),
+                    's+': getDate.getSeconds(),
+                    'q+': Math.floor((getDate.getMonth() + 3) / 3),
+                    'S': getDate.getMilliseconds()
+                };
+                if (/(y+)/.test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+                }
+                for (let k in o) {
+                    if (new RegExp('(' + k + ')').test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+                    }
+                }
+                return fmt;
+            }
+        }
         
     }
 </script>

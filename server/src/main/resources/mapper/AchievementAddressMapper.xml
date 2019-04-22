@@ -96,4 +96,8 @@
     where achievement_id = #{achievementId}
     and group_id = #{groupId}
   </select>
+  <delete id="deleteByAchievementId" parameterType="INTEGER">
+    delete from achievement_address
+    where achievement_id = #{achievementId}
+  </delete>
 </mapper>
