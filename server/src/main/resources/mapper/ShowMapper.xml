@@ -143,4 +143,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getShowList2Lazied" resultMap="BaseResultMap">
+    SELECT *
+    FROM `show`
+    WHERE type = #{type}
+    ORDER BY date_time desc limit 2
+  </select>
 </mapper>

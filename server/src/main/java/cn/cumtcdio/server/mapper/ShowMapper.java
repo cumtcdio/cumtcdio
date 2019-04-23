@@ -31,4 +31,7 @@ public interface ShowMapper extends MyBatisBaseDao<Show, Integer> {
 
     //更新一条数据
     Integer updateShowByShowId(Show show);
+
+    //加载最新两条数据
+    List<Show> getShowList2Lazied(@Param(value = "type") Integer type);
 }

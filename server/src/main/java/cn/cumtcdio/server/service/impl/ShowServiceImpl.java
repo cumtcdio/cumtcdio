@@ -187,4 +187,10 @@ public class ShowServiceImpl implements ShowService {
         line = line.substring(start, end);
         return line;
     }
+
+    @Override
+    public List<ShowInfoVO> getShowList2Lazied(Integer type) {
+        List<Show> showList = showMapper.getShowList2Lazied(type);
+        return transformShowToShowInfoVO(showList);
+    }
 }
