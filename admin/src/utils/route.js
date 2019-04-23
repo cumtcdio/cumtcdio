@@ -28,6 +28,7 @@ export const formatRoutes = (routes)=> {
         if (children && children instanceof Array) {
             children = formatRoutes(children);
         }
+
         let fmRouter = {
             path: path,
             component(resolve){
@@ -41,6 +42,8 @@ export const formatRoutes = (routes)=> {
                     require(['../components/cumt/group/views/' + component + '.vue'], resolve)
                 } else if (component.startsWith("processManage")) {
                     require(['../components/cumt/group/views/' + component + '.vue'], resolve)
+                } else if (component.startsWith("admin")) {
+                    require(['../components/cumt/admin/' + component + '.vue'], resolve)
                 } else if (component.startsWith("Edit")) {
                     require(['../components/show/components/' + component + '.vue'], resolve)
                 } else if (component.startsWith("Show")) {
