@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import store from './store'
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/bootstrap.css'
+import axios from 'axios'
 import {getRequest} from './utils/request'
 import {deleteRequest} from './utils/request'
 import {postRequest} from './utils/request'
@@ -14,6 +15,7 @@ import {initMenu} from "./utils/route";
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.prototype.axios = axios
 
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.deleteRequest = deleteRequest;

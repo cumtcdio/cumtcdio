@@ -97,8 +97,8 @@ public class GroupDetailVOUtil {
             CourseVO courseVO = new CourseVO();
             courseVO.setCourseId(course.getId());
             courseVO.setCourseName(course.getName());
-            //查找所有该课程的所有achievement
-            List<Achievement> achievements = achievementMapper.selectByCourseId(course.getId());
+            //查找所有该年级该课程的所有achievement
+            List<Achievement> achievements = achievementMapper.selectByCourseIdAndGradeSn(course.getId(),group.getGradeSn());
             List<AchievementVO> achievementVOS = new ArrayList<>();
             for (Achievement achievement: achievements){
                 AchievementVO achievementVO = new AchievementVO();

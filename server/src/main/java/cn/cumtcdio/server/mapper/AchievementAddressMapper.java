@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface AchievementAddressMapper extends MyBatisBaseDao<AchievementAddress, Integer> {
     AchievementAddress selectByAchiIdAndGroupId(@Param("achievementId") Integer achievementId, @Param("groupId") Integer groupId);
+
+    int deleteByAchievementId(Integer achievementId);
 }

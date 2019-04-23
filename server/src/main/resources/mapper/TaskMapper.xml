@@ -31,7 +31,7 @@
       #{requires,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, #{gradeSn,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.Task">
+  <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.Task" useGeneratedKeys="true" keyProperty="id">
     insert into task
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
