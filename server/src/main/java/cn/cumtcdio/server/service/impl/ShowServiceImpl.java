@@ -132,7 +132,7 @@ public class ShowServiceImpl implements ShowService {
                     ps.println("<script type=\"text/javascript\">\n" +
                             "window.onload = function () {\n" +
                             "var h = document.body.scrollHeight;\n" +
-                            "parent.postMessage(h, \"http://localhost:8080\");\n" +
+                            "parent.postMessage(h, \"http://www.cumtcdio.cn\");\n" +
                             "}</script>");
                     ps.println("</body>");
                     ps.println("</html>");
