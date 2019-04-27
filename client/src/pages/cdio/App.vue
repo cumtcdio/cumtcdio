@@ -11,7 +11,7 @@
     <!-- 页头 -->
     <div class="bg" style="width:1600px">
         <div>
-            <img class="img0 ml-5" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/8_%E8%87%AA%E5%AE%9A%E4%B9%89px_2019.03.22.png">
+            <img class="img0 ml-5" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E7%B3%BB%E5%BE%BD%2B%E7%B3%BB%E5%90%8D-1-3.jpg">
         </div>
     </div>
     <div class="line"></div>
@@ -213,9 +213,9 @@
         <div class="line"></div>
         <div class="bg" style="height: 60px;line-height: 3rem;">
             <div class="bottomFont">
-                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E7%B3%BB%E5%BE%BD.png">
+                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E8%83%8C%E6%99%AF%E7%B3%BB%E5%BE%BD.jpg">
                 <span>&nbsp;&nbsp;&nbsp;电子商务与数据科学系&nbsp;&nbsp;&nbsp;</span>
-                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E7%B3%BB%E5%BE%BD.png">
+                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7.jpg">
                 <span>&nbsp;&nbsp;&nbsp;微信公众号&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>
