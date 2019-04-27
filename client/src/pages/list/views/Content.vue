@@ -205,7 +205,7 @@ export default {
     margin: 0
 }
 .center {
-    background: #C64718;
+    background: #024E98;
 }
 .wrapper{
     padding: 0px;
@@ -232,7 +232,7 @@ img{
     float: right;
 }
 .title-content {
-    background: #C64718;
+    background: #024E98;
     width: 100%;
     height: 2.5rem;
     padding: .5rem;
@@ -257,5 +257,5 @@ a {color:#000;}
 a:active  {color:#000;}
 a:link    {color:#000;}
 a:visited {color:#000;}
-a:hover   {color:#E67F11;  text-decoration: none;}
+a:hover   {color:rgb(68,160,253);  text-decoration: none;}
 </style>

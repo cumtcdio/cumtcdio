@@ -63,7 +63,7 @@ export default {
 </script>
 <style scoped>
 .navbar .nav > li > a:hover {
-    color: red;
-    background-color: rgb(231,141,31);
+    color: #024E98;
+    background-color: rgb(68,160,253);
 }
 </style>

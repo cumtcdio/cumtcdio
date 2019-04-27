@@ -32,7 +32,7 @@
         },
         methods:{
             setBannerH(){
-                this.bannerH = document.body.clientWidth / 4
+                this.bannerH = document.body.clientWidth / 3
             },
             getSlideData: function () {
                 axios.get('/api/show/getAllSlide').then(response => {

@@ -6,8 +6,8 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=通知">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="summaryBorder" v-for="item in content0" :key="item.id">
-                        <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
+                    <div class="summaryBorder" v-for="item in content0" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
                         <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
@@ -16,8 +16,8 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=新闻">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="summaryBorder" v-for="item in content1" :key="item.id">
-                        <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
+                    <div class="summaryBorder" v-for="item in content1" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
                         <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
@@ -30,10 +30,10 @@
                         <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
                         <div class="summary">{{item.summary}}</div>
                     </div>
-                    <div class="summaryBorder" v-for="item in content3" :key="item.id + '1'">
-                        <div class="title">{{item.title}}</div>
-                        <!--<div class="summary">{{item.summary}}</div>-->
-                    </div>
+                    <!--<div class="summaryBorder" v-for="item in contentCDIO" :key="item.id + '1'">-->
+                        <!--<div class="title">{{item.title}}</div>-->
+                        <!--&lt;!&ndash;<div class="summary">{{item.summary}}</div>&ndash;&gt;-->
+                    <!--</div>-->
                 </div>
             </div>
             <div class="row bg2">
@@ -42,8 +42,8 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=师生风采">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="summaryBorder" v-for="item in content2" :key="item.id">
-                        <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
+                    <div class="summaryBorder" v-for="item in content2" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
                         <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
@@ -52,8 +52,8 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=专业信息">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="summaryBorder" v-for="item in content3" :key="item.id">
-                        <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
+                    <div class="summaryBorder" v-for="item in content3" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
                         <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
@@ -62,8 +62,8 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=专业实习">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="summaryBorder" v-for="item in content4" :key="item.id">
-                        <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
+                    <div class="summaryBorder" v-for="item in content4" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
                         <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
@@ -91,18 +91,18 @@
                 contentCDIO: [{
                     "id": "1",
                     "title": "EC-CDIO电子商务人才培养模式",
-                    "htmlAddress":"https://www.baidu.com/",
-                    "summary": "2019年3月20日，电商党支部召开组织生活会，大家集体观看了《孤岛32年》宣传片，受王继才夫妇驻守孤岛32年的精神所感动，大家纷纷表示要立足教师岗位，一辈子扮演好教师这样一个角色。这也是前期谈心谈话环节中，众多老师表达的意愿。同时，老师们更希望支部组织能够凝聚和汇集大家的力量，做大事，做成事。"
+                    "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
+                    "summary": "将专业课程分为核心课程和非核心课程，核心课程是表1所列的与EC-CDIO紧密结合的课程，非核心课程是指经济学、管理学、运筹学、物流管理等基础类或难在EC-CDIO框架下实现的课程，各课程配置任课教师1-2名。\n"
                 },
                     {
                         "id": "2",
                         "title": "2017级",
-                        "htmlAddress":"https://www.baidu.com/",
+                        "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
                     },
                     {
                         "id": "3",
                         "title": "2016级",
-                        "htmlAddress":"https://www.baidu.com/",
+                        "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
                        }
                 ]
             }
@@ -214,11 +214,11 @@
 /*.index {*/
     /*margin-bottom: 67px;*/
 /*}*/
-a {color:#E67F11;}
-a:active  {color:#C8700F;}
-a:link    {color:#E67F11;text-decoration:none;}
-a:visited {color:#E67F11;}
-a:hover   {color:#E67F11;}
+a {color:darkblue}
+a:active  {color:darkblue;}
+a:link    {color:darkblue;text-decoration:none;}
+a:visited {color:darkblue;}
+a:hover   {color:darkblue;}
 .aDetail  {color:black;}
 .aDetail:active  {color:black;}
 .aDetail:link    {color:black;text-decoration:none;}

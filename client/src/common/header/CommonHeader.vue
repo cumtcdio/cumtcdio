@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-1"></div>
             <div class="col-10 col-md-4">
-                <img class="img0" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/8_%E8%87%AA%E5%AE%9A%E4%B9%89px_2019.03.22.png">
+                <img class="img0" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E7%B3%BB%E5%BE%BD%2B%E7%B3%BB%E5%90%8D-1-3.jpg">
             </div>
             <div class="col-1"></div>
         </div>
@@ -18,7 +18,7 @@
 
 <style scoped>
     .bg{
-    background-color: #C64718;
+    background-color: #024E98;
     /*height: 8rem;*/
     }
     .img0{

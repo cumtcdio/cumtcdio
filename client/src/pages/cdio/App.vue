@@ -73,10 +73,10 @@
               <div class="col-5">
                 <img class="teamImg" :src="currentGroup.teamImg" alt="">
               </div>
-            </div> 
+            </div>
           </div>
           <!-- CDIO -->
-          
+
           <table class="table mt-4 mr-5 table-bordered" v-loading="loading">
             <thead class="header-two text-center">
               <tr>
@@ -408,7 +408,7 @@
     },
     computed: {
       currentGroup() {
-        return this.groups[this.currentIndex] 
+        return this.groups[this.currentIndex]
       }
     },
     mounted(){
@@ -500,10 +500,10 @@
     box-shadow: 0px 8px 20px 0 rgba(19, 23, 37, 0.12), 0 5px 5px rgba(0,0,0,.06);
 }
 .center {
-  background: #C64718;
+  background: #024E98;
 }
 .bg{
-background-color: #C64718;
+background-color: #024E98;
 /*height: 8rem;*/
 }
 .img0{

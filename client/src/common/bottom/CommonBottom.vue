@@ -4,7 +4,7 @@
         <div class="line"></div>
         <div class="bg">
             <div class="bottomFont">
-                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E7%B3%BB%E5%BE%BD.png">
+                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E8%83%8C%E6%99%AF%E7%B3%BB%E5%BE%BD.jpg">
                 <span>&nbsp;&nbsp;&nbsp;电子商务与数据科学系&nbsp;&nbsp;&nbsp;</span>
                 <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7.jpg">
                 <span>&nbsp;&nbsp;&nbsp;微信公众号&nbsp;&nbsp;&nbsp;</span>
@@ -46,7 +46,7 @@
 
 <style scoped>
     .bg{
-        background-color: #C64718;
+        background-color: #024E98;
         height: 60px;
         line-height: 3rem;
     }
