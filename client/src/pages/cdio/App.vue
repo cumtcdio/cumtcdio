@@ -1,14 +1,5 @@
 <template>
   <div id="cdio">
-    <!-- 页头 -->
-    <!--<div class="menu">-->
-      <!--<el-menu :default-active="activeIndex" mode="horizontal" class="d-flex justify-content-center" style="height:50px">-->
-        <!--<el-menu-item :index="item.index" v-for="(item, index) in menus" :key="index" :route="item.href" class="" style="height:50px;line-height:50px">-->
-          <!--{{item.title}}-->
-        <!--</el-menu-item>-->
-      <!--</el-menu>-->
-    <!--</div>-->
-    <!-- 页头 -->
     <div class="bg" style="width:1600px">
         <div>
             <img class="img0 ml-5" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E7%B3%BB%E5%BE%BD%2B%E7%B3%BB%E5%90%8D-1-3.jpg">
@@ -34,12 +25,22 @@
     <div>
       <div class="d-flex">
         <div>
+          <el-select v-model="gradeSn" placeholder="请选择" size="medium"
+                     @change="changeCurrentGrade"
+                     class="m-5 mycard">
+            <el-option
+                    v-for="(item,index) in grades"
+                    :key="index"
+                    :label="item.gradeSn + '级'"
+                    :value="item.gradeSn">
+            </el-option>
+          </el-select>
           <Card :padding="0" class="m-5 mycard">
               <CellGroup>
                   <Cell v-for="(item, index) in groups" :key="index" :name="index"
-                  @click.native="changeCurrentGroup(index)"
+                  @click.native="changeCurrentGroup(item.groupId)"
                   >
-                    <span style="width:200px">{{item.title}}</span>
+                    <span style="width:200px">{{item.groupName}}</span>
                     <Icon type="ios-arrow-forward" slot="extra" />
                   </Cell>
               </CellGroup>
@@ -54,24 +55,24 @@
                 <div class="row">
                   <div class="col-6 d-flex">
                     <div style="min-width:80px">项目名称：</div>
-                    <div>{{currentGroup.name}}</div>
+                    <div>{{groupInfo.groupName}}</div>
                   </div>
                   <div class="col-6 d-flex">
                     <div style="min-width:80px">指导老师：</div>
-                    <div>{{currentGroup.teacher}}</div>
+                    <div>{{groupInfo.teacher}}</div>
                   </div>
                   <div class="col-12 mt-3 d-flex">
                     <div style="min-width:80px">成员：</div>
-                    <div>{{currentGroup.member}}</div>
+                    <div>{{groupInfo.member}}</div>
                   </div>
                   <div class="col-12 mt-3 d-flex">
                     <div style="min-width:80px">项目简介：</div>
-                    <div>{{currentGroup.desc}}</div>
+                    <div>{{groupInfo.desc}}</div>
                   </div>
                 </div>
               </div>
               <div class="col-5">
-                <img class="teamImg" :src="currentGroup.teamImg" alt="">
+                <img class="teamImg" :src="groupInfo.groupImg" alt="">
               </div>
             </div>
           </div>
@@ -91,7 +92,7 @@
                 <td>
                   <el-select v-model="cIndex" placeholder="请选择" size="medium">
                     <el-option
-                      v-for="(course,index) in currentGroup.c"
+                      v-for="(course,index) in groupInfo.ccourseVOS"
                       :key="index"
                       :label="course.courseName"
                       :value="index">
@@ -101,7 +102,7 @@
                 <td>
                   <el-select v-model="dIndex" placeholder="请选择" size="medium">
                     <el-option
-                      v-for="(course,index) in currentGroup.d"
+                      v-for="(course,index) in groupInfo.dcourseVOS"
                       :key="index"
                       :label="course.courseName"
                       :value="index">
@@ -111,7 +112,7 @@
                 <td>
                   <el-select v-model="iIndex" placeholder="请选择" size="medium">
                     <el-option
-                      v-for="(course,index) in currentGroup.i"
+                      v-for="(course,index) in groupInfo.icourseVOS"
                       :key="index"
                       :label="course.courseName"
                       :value="index">
@@ -121,7 +122,7 @@
                 <td>
                   <el-select v-model="oIndex" placeholder="请选择" size="medium">
                     <el-option
-                      v-for="(course,index) in currentGroup.o"
+                      v-for="(course,index) in groupInfo.ocourseVOS"
                       :key="index"
                       :label="course.courseName"
                       :value="index">
@@ -132,22 +133,22 @@
               <!-- achievement -->
               <tr>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in currentGroup.c[cIndex].achievement" :key="index" class="achievement">
+                  <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].achievement" :key="index" class="achievement">
                     <a :href="item.address">{{item.name}}</a>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in currentGroup.d[dIndex].achievement" :key="index" class="achievement">
+                  <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].achievement" :key="index" class="achievement">
                     <a :href="item.address">{{item.name}}</a>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in currentGroup.i[iIndex].achievement" :key="index" class="achievement">
+                  <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].achievement" :key="index" class="achievement">
                     <a :href="item.address">{{item.name}}</a>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in currentGroup.o[oIndex].achievement" :key="index" class="achievement">
+                  <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].achievement" :key="index" class="achievement">
                     <a :href="item.address">{{item.name}}</a>
                   </div>
                 </td>
@@ -161,7 +162,7 @@
               </tr>
               <tr>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in currentGroup.c[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -169,7 +170,7 @@
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in currentGroup.d[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -177,7 +178,7 @@
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in currentGroup.i[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -185,7 +186,7 @@
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in currentGroup.o[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -224,6 +225,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
       data() {
       return {
@@ -242,206 +244,381 @@
             {
                 index: '1',
                 title: '首页',
-                href: '#'
+                href: 'index'
             },
             {
                 index: '2',
                 title: '通知',
-                href: '#'
+                href: 'list.html?title=通知'
             },
             {
                 index: '3',
                 title: '新闻',
-                href: '#'
+                href: 'list.html?title=新闻'
             },
             {
                 index: '4',
                 title: 'EC-CDIO项目教学',
-                href: '#'
+                href: 'cdio.html'
             },
             {
                 index: '5',
                 title: '师生风采',
-                href: '#'
+                href: 'list.html?title=师生风采'
             },
             {
                 index: '6',
                 title: '专业信息',
-                href: '#'
+                href: 'list.html?title=专业信息'
             },
             {
                 index: '7',
                 title: '电子商务专业实习',
-                href: '#'
+                href: 'list.html?title=专业实习'
             }
         ],
         loading: false,
-        currentIndex: '0',
+        currentGroupId: '0',
         activeIndex:'4',
-        groups: [
-          {
-            title:'第一组',
-            name: '校园移动微创客联盟',
-            teacher: '冯文龙',
-            member: 'XXX、XXX、XXX、XXX、XXX',
-            teamImg: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1967724590,2451003767&fm=11&gp=0.jpg',
-            desc: '这里是项目概要这里是项目概要这里是项目概要这里是项目概要这里是项目概要项目概要项目概要项目概要',
-            c:[
-              {
-                courseId: 1,
-                courseName: '互联网商业模式设计',
-                achievement:[
-                  {
-                    name: '商业计划书',
-                    address: '#'
-                  },
-                  {
-                    name: '商业计划书2',
-                    address: '#'
-                  }
-                ],
-                processManage: [
-                  {
-                    title: '完成商业计划书',
-                    require: `这里是任务的要求
-                    1.要求一
-                    2.要求二`,
-                    content: '这里是任务的内容',
-                    time:'2019/4/10'
-                  }
-                ]
-              },
-              {
-                courseId: 1,
-                courseName: '互联网商业模式设计2',
-                achievement:[
-                  {
-                    name: '商业计划书3',
-                    address: '#'
-                  },
-                  {
-                    name: '商业计划书4',
-                    address: '#'
-                  }
-                ],
-                processManage: [
-                  {
-                    title: '完成商业计划书完成商业计划书完成完成商业计划书完成商业计划书完成商业计划书',
-                    require: `这里是任务的要求
-                    1.要求一
-                    2.要求二`,
-                    content: '这里是任务的内容',
-                    time:'2019/4/10'
-                  }
-                ]
-              }
+        groupInfo: {
+            "groupId": 0,
+            "groupSn": "",
+            "groupName": "",
+            "member": "",
+            "gradeSn": "",
+            "groupImg": "",
+            "teacher": "",
+            "desc": "",
+            "ccourseVOS": [
+                {
+                    "courseId": 0,
+                    "courseName": "",
+                    "achievement": [
+                        {
+                            "achievementId": 1,
+                            "name": "",
+                            "address": null
+                        },
+                        {
+                            "achievementId": 0,
+                            "name": "",
+                            "address": null
+                        },
+                        {
+                            "achievementId": 0,
+                            "name": "",
+                            "address": null
+                        },
+                        {
+                            "achievementId": 0,
+                            "name": "",
+                            "address": null
+                        }
+                    ],
+                    "processManage": [
+                        {
+                            "processId": 0,
+                            "title": "",
+                            "require": "",
+                            "content": "",
+                            "time": "",
+                            "address": null
+                        },
+                        {
+                            "processId": 0,
+                            "title": "",
+                            "require": "",
+                            "content": "",
+                            "time": "",
+                            "address": null
+                        },
+                        {
+                            "processId": 0,
+                            "title": "",
+                            "require": "",
+                            "content": "",
+                            "time": "",
+                            "address": null
+                        }
+                    ]
+                },
+                {
+                    "courseId": 0,
+                    "courseName": "",
+                    "achievement": [
+                        {
+                            "achievementId": 0,
+                            "name": "",
+                            "address": null
+                        }
+                    ],
+                    "processManage": [
+                        {
+                            "processId": 0,
+                            "title": "",
+                            "require": "",
+                            "content": "",
+                            "time": "",
+                            "address": null
+                        }
+                    ]
+                }
             ],
-            d:[
-              {
-                courseId: 1,
-                courseName: 'web前端',
-                achievement:[
-                  {
-                    name: '商业计划书',
-                    address: '#'
-                  }
-                ],
-                processManage: [
-                  {
-                    title: '完成商业计划书',
-                    require: `这里是任务的要求
-                    1.要求一
-                    2.要求二`,
-                    content: '这里是任务的内容',
-                    time:'2019/4/10'
-                  }
-                ]
-              }
+            "dcourseVOS": [
+                {
+                    "courseId": 0,
+                    "courseName": "",
+                    "achievement": [
+                        {
+                            "achievementId": 0,
+                            "name": "",
+                            "address": null
+                        }
+                    ],
+                    "processManage": []
+                }
             ],
-            i:[
-              {
-                courseId: 1,
-                courseName: '互联网商业模式设计',
-                achievement:[
-                  {
-                    name: '商业计划书',
-                    address: '#'
-                  }
-                ],
-                processManage: [
-                  {
-                    title: '完成商业计划书',
-                    require: `这里是任务的要求
-                    1.要求一
-                    2.要求二`,
-                    content: '这里是任务的内容',
-                    time:'2019/4/10'
-                  }
-                ]
-              }
+            "icourseVOS": [
+                {
+                    "courseId": 0,
+                    "courseName": "",
+                    "achievement": [
+                        {
+                            "achievementId": 0,
+                            "name": "",
+                            "address": null
+                        }
+                    ],
+                    "processManage": []
+                }
             ],
-            o:[
-              {
-                courseId: 1,
-                courseName: '互联网商业模式设计',
-                achievement:[
-                  {
-                    name: '商业计划书',
-                    address: '#'
-                  }
-                ],
-                processManage: [
-                  {
-                    title: '完成商业计划书',
-                    require: `这里是任务的要求
-                    1.要求一
-                    2.要求二`,
-                    content: '这里是任务的内容',
-                    time:'2019/4/9'
-                  }
-                ]
-              }
+            "ocourseVOS": [
+                {
+                    "courseId": 0,
+                    "courseName": "",
+                    "achievement": [
+                        {
+                            "achievementId": 0,
+                            "name": "",
+                            "address": null
+                        }
+                    ],
+                    "processManage": []
+                }
             ]
-          }
-        ]
-      }
-    },
-    computed: {
-      currentGroup() {
-        return this.groups[this.currentIndex]
+        },
+        groups: [{
+            "groupId": 0,
+            "groupSn": "",
+            "groupName": "",
+            "gradeSn": "",
+            "groupImg": "",
+            "teacher": "",
+            "desc": ""
+        }],
+        gradeSn: 0,
+        grades: [{id: 1, gradeSn: '2016'}]
       }
     },
     mounted(){
-      // this.cValue = this.currentGroup.c[0].courseId
-      // this.dValue = this.currentGroup.d[0].courseId
-      // this.iValue = this.currentGroup.i[0].courseId
-      // this.oValue = this.currentGroup.o[0].courseId
+       // 初始化年级，同时初始化小组以及小组信息情况
+       this.getAllGrades()
     },
     methods: {
-      changeCurrentGroup(index) {
-        this.loading = true;
-        setTimeout(() => {
-          this.loading = false;
-        }, 400);
-        this.currentIndex = index
+      getGroupInfosByGroupId: function () {
+          this.loading = true
+          axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
+              this.groupInfo = resp.data.data
+              this.loading = false
+          })
       },
-      cDialogShow(index){
-        this.dialogContent = this.currentGroup.c[this.cIndex].processManage[index]
+      getGroupsByGradeSn: function (gradeSn) {
+          axios.get('/api/group/' + gradeSn).then(resp => {
+              var data = resp.data
+              if (data.data.length <= 0) {
+                  this.groups = [{
+                      "groupId": 0,
+                      "groupSn": "",
+                      "groupName": "",
+                      "gradeSn": "",
+                      "groupImg": "",
+                      "teacher": "",
+                      "desc": ""
+                  }],
+                  this.currentGroupId = 0
+                  this.groupInfo = {
+                      "groupId": 0,
+                      "groupSn": "",
+                      "groupName": "",
+                      "member": "",
+                      "gradeSn": "",
+                      "groupImg": "",
+                      "teacher": "",
+                      "desc": "",
+                      "ccourseVOS": [
+                          {
+                              "courseId": 0,
+                              "courseName": "",
+                              "achievement": [
+                                  {
+                                      "achievementId": 1,
+                                      "name": "",
+                                      "address": null
+                                  },
+                                  {
+                                      "achievementId": 0,
+                                      "name": "",
+                                      "address": null
+                                  },
+                                  {
+                                      "achievementId": 0,
+                                      "name": "",
+                                      "address": null
+                                  },
+                                  {
+                                      "achievementId": 0,
+                                      "name": "",
+                                      "address": null
+                                  }
+                              ],
+                              "processManage": [
+                                  {
+                                      "processId": 0,
+                                      "title": "",
+                                      "require": "",
+                                      "content": "",
+                                      "time": "",
+                                      "address": null
+                                  },
+                                  {
+                                      "processId": 0,
+                                      "title": "",
+                                      "require": "",
+                                      "content": "",
+                                      "time": "",
+                                      "address": null
+                                  },
+                                  {
+                                      "processId": 0,
+                                      "title": "",
+                                      "require": "",
+                                      "content": "",
+                                      "time": "",
+                                      "address": null
+                                  }
+                              ]
+                          },
+                          {
+                              "courseId": 0,
+                              "courseName": "",
+                              "achievement": [
+                                  {
+                                      "achievementId": 0,
+                                      "name": "",
+                                      "address": null
+                                  }
+                              ],
+                              "processManage": [
+                                  {
+                                      "processId": 0,
+                                      "title": "",
+                                      "require": "",
+                                      "content": "",
+                                      "time": "",
+                                      "address": null
+                                  }
+                              ]
+                          }
+                      ],
+                      "dcourseVOS": [
+                          {
+                              "courseId": 0,
+                              "courseName": "",
+                              "achievement": [
+                                  {
+                                      "achievementId": 0,
+                                      "name": "",
+                                      "address": null
+                                  }
+                              ],
+                              "processManage": []
+                          }
+                      ],
+                      "icourseVOS": [
+                          {
+                              "courseId": 0,
+                              "courseName": "",
+                              "achievement": [
+                                  {
+                                      "achievementId": 0,
+                                      "name": "",
+                                      "address": null
+                                  }
+                              ],
+                              "processManage": []
+                          }
+                      ],
+                      "ocourseVOS": [
+                          {
+                              "courseId": 0,
+                              "courseName": "",
+                              "achievement": [
+                                  {
+                                      "achievementId": 0,
+                                      "name": "",
+                                      "address": null
+                                  }
+                              ],
+                              "processManage": []
+                          }
+                      ]
+                  }
+              } else {
+                  this.groups = data.data
+                  this.currentGroupId = this.groups[0].groupId
+                  this.getGroupInfosByGroupId()
+              }
+          })
+      },
+      getAllGrades: function () {
+          this.loading = true
+          axios.get('/api/group/getAllGrades').then(resp => {
+              this.grades = resp.data.data
+              this.gradeSn = this.grades[0].gradeSn
+              axios.get('/api/group/' + this.gradeSn).then(resp => {
+                  this.groups = resp.data.data
+                  this.currentGroupId = this.groups[0].groupId
+                  axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
+                      this.groupInfo = resp.data.data
+                      this.loading = false
+                  })
+              })
+          })
+      },
+      changeCurrentGroup(index) {
+        this.currentGroupId = index
+        this.getGroupInfosByGroupId()
+      },
+      changeCurrentGrade: function (gradeSn) {
+        this.getGroupsByGradeSn(gradeSn)
+      },
+      cDialogShow(index) {
+        this.dialogContent = this.groupInfo.ccourseVOS[this.cIndex].processManage[index]
         this.dialogVisible = true
       },
       dDialogShow(index){
-        this.dialogContent = this.currentGroup.d[this.dIndex].processManage[index]
+        this.dialogContent = this.groupInfo.dcourseVOS[this.dIndex].processManage[index]
         this.dialogVisible = true
       },
       iDialogShow(index){
-        this.dialogContent = this.currentGroup.i[this.iIndex].processManage[index]
+        this.dialogContent = this.groupInfo.icourseVOS[this.iIndex].processManage[index]
         this.dialogVisible = true
       },
       oDialogShow(index){
-        this.dialogContent = this.currentGroup.o[this.oIndex].processManage[index]
+        this.dialogContent = this.groupInfo.ocourseVOS[this.oIndex].processManage[index]
         this.dialogVisible = true
       }
-    },
+    }
   }
 </script>
 
@@ -534,5 +711,9 @@ a{
 a:hover{
   color: #212529;
   text-decoration: none
+}
+.navbar .nav > li > a:hover {
+  color: #024E98;
+  background-color: rgb(68,160,253);
 }
 </style>

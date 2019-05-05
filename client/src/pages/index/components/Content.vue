@@ -93,17 +93,18 @@
                     "title": "EC-CDIO电子商务人才培养模式",
                     "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
                     "summary": "将专业课程分为核心课程和非核心课程，核心课程是表1所列的与EC-CDIO紧密结合的课程，非核心课程是指经济学、管理学、运筹学、物流管理等基础类或难在EC-CDIO框架下实现的课程，各课程配置任课教师1-2名。\n"
-                },
-                    {
-                        "id": "2",
-                        "title": "2017级",
-                        "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
-                    },
-                    {
-                        "id": "3",
-                        "title": "2016级",
-                        "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
-                       }
+                }
+                // ,
+                    // {
+                    //     "id": "2",
+                    //     "title": "2017级",
+                    //     "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
+                    // },
+                    // {
+                    //     "id": "3",
+                    //     "title": "2016级",
+                    //     "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
+                    //    }
                 ]
             }
         },

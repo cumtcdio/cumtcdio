@@ -124,7 +124,9 @@ public class GroupDetailVOUtil {
                 processManageVO.setTime(task.getTime());
                 //根据taskId和groupId查出address
                 TaskResult taskResult = taskResultMapper.selectByTaskIdAndGroupId(task.getId(),group.getId());
-                processManageVO.setAddress(taskResult.getAddress());
+                if(taskResult != null && StringUtils.isNotBlank(taskResult.getAddress())){
+                    processManageVO.setAddress(taskResult.getAddress());
+                }
                 processManageVOS.add(processManageVO);
             }
             courseVO.setProcessManageVOS(processManageVOS);
