@@ -30,7 +30,7 @@ export default {
 </script>
 <style scoped>
 .center {
-  background: #C64718;
+  background: #024E98;
 }
 .line{
   height: 1px;

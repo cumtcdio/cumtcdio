@@ -5,43 +5,49 @@
             <el-carousel :height="bannerH +'px'">
                 <el-carousel-item v-for="item of image"
                                   :key="item.id">
-                    <img :src="item.imgUrl" class="wraper-img" width="100%">
+                    <!--<img :src="item.img" :to="item.articleAddress" class="wraper-img" width="100%">-->
+                    <a target="_blank" :href="item.articleAddress"><img :src="item.img" class="wraper-img" width="100%"></a>
+                    <!--<router-link :to="item.articleAddress"><img :src="item.img" class="wraper-img" width="100%"></router-link>-->
                 </el-carousel-item>
             </el-carousel>
         </div>
     </div>
 </template>
 <script>
+    import axios from 'axios'
     export default {
         name: "IndexSlide",
         data () {
             return {
-                bannerH:200,
-                image: [{
-                    id: 1,
-                    imgUrl: 'https://get-1257609707.cos.ap-shanghai.myqcloud.com/01.jpg'
-                }, {
-                    id: 2,
-                    imgUrl: 'https://get-1257609707.cos.ap-shanghai.myqcloud.com/04.jpg'
-                }, {
-                    id: 3,
-                    imgUrl: 'https://get-1257609707.cos.ap-shanghai.myqcloud.com/05.jpg'
-                }]
+                bannerH:250,
+                image: {}
             }
         },
-    methods:{
-        setBannerH(){
-            this.bannerH = document.body.clientWidth / 4
-        }
-    },
-    mounted(){
-        this.setBannerH()
-        window.addEventListener('resize', () => {
+        mounted(){
             this.setBannerH()
-        }, false)
-    },
-    created(){}
-    }
+            window.addEventListener('resize', () => {
+                this.setBannerH()
+            }, false)
+            this.getSlideData()
+        },
+        methods:{
+            setBannerH(){
+                this.bannerH = document.body.clientWidth / 3
+            },
+            getSlideData: function () {
+                axios.get('/api/show/getAllSlide').then(response => {
+                    this.getSlideSucc(response)
+                })
+            },
+            getSlideSucc: function (res) {
+                var data = res.data
+                if (data.code === 0 && data.data) {
+                    this.image = data.data
+                }
+            }
+        },
+        created(){}
+        }
 </script>
 
 <style scoped>

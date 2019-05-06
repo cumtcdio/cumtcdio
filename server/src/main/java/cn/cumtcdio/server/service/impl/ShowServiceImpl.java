@@ -132,7 +132,7 @@ public class ShowServiceImpl implements ShowService {
                     ps.println("<script type=\"text/javascript\">\n" +
                             "window.onload = function () {\n" +
                             "var h = document.body.scrollHeight;\n" +
-                            "parent.postMessage(h, \"http://localhost:8080\");\n" +
+                            "parent.postMessage(h, \"http://www.cumtcdio.cn\");\n" +
                             "}</script>");
                     ps.println("</body>");
                     ps.println("</html>");
@@ -186,5 +186,11 @@ public class ShowServiceImpl implements ShowService {
         int end = line.indexOf("script") -1;
         line = line.substring(start, end);
         return line;
+    }
+
+    @Override
+    public List<ShowInfoVO> getShowList2Lazied(Integer type) {
+        List<Show> showList = showMapper.getShowList2Lazied(type);
+        return transformShowToShowInfoVO(showList);
     }
 }

@@ -32,4 +32,7 @@ public interface ShowService {
     ShowInfoVO getUpdateShowByShowId(Integer id);
 
     Integer updateShowByShowId(Show show);
+
+    //加载最新两条数据
+    List<ShowInfoVO> getShowList2Lazied(Integer type);
 }

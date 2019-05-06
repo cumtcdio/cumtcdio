@@ -6,9 +6,9 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=通知">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="synopsisBorder" v-for="item in content" :key="item.id">
-                        <div class="synopsisTitle">{{item.synopsisTitle}}</div>
-                        <div class="synopsis">{{item.synopsis}}</div>
+                    <div class="summaryBorder" v-for="item in content0" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
+                        <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4 col-sm col0">
@@ -16,9 +16,9 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=新闻">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="synopsisBorder" v-for="item in content" :key="item.id">
-                        <div class="synopsisTitle">{{item.synopsisTitle}}</div>
-                        <div class="synopsis">{{item.synopsis}}</div>
+                    <div class="summaryBorder" v-for="item in content1" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
+                        <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4 col-sm col0">
@@ -26,14 +26,14 @@
                     <div class="more text-right" >
                         <a target="_blank" href="cdio.html">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="synopsisBorder" v-for="item in contentCDIO" :key="item.id">
-                        <div class="synopsisTitle">{{item.synopsisTitle}}</div>
-                        <div class="synopsis">{{item.synopsis}}</div>
+                    <div class="summaryBorder" v-for="item in contentCDIO" :key="item.id">
+                        <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
+                        <div class="summary">{{item.summary}}</div>
                     </div>
-                    <div class="synopsisBorder" v-for="item in content3" :key="item.id + '1'">
-                        <div class="synopsisTitle">{{item.synopsisTitle}}</div>
-                        <!--<div class="synopsis">{{item.synopsis}}</div>-->
-                    </div>
+                    <!--<div class="summaryBorder" v-for="item in contentCDIO" :key="item.id + '1'">-->
+                        <!--<div class="title">{{item.title}}</div>-->
+                        <!--&lt;!&ndash;<div class="summary">{{item.summary}}</div>&ndash;&gt;-->
+                    <!--</div>-->
                 </div>
             </div>
             <div class="row bg2">
@@ -42,9 +42,9 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=师生风采">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="synopsisBorder" v-for="item in content" :key="item.id">
-                        <div class="synopsisTitle">{{item.synopsisTitle}}</div>
-                        <div class="synopsis">{{item.synopsis}}</div>
+                    <div class="summaryBorder" v-for="item in content2" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
+                        <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4 col-sm col0">
@@ -52,9 +52,9 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=专业信息">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="synopsisBorder" v-for="item in content" :key="item.id">
-                        <div class="synopsisTitle">{{item.synopsisTitle}}</div>
-                        <div class="synopsis">{{item.synopsis}}</div>
+                    <div class="summaryBorder" v-for="item in content3" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
+                        <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4 col-sm col0">
@@ -62,9 +62,9 @@
                     <div class="more text-right" >
                         <a target="_blank" href="list.html?title=专业实习">更多&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="synopsisBorder" v-for="item in content" :key="item.id">
-                        <div class="synopsisTitle">{{item.synopsisTitle}}</div>
-                        <div class="synopsis">{{item.synopsis}}</div>
+                    <div class="summaryBorder" v-for="item in content4" :key="item.showId">
+                        <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
+                        <div class="summary">{{item.summary}}</div>
                     </div>
                 </div>
             </div>
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         name: "Content",
         data () {
@@ -82,36 +83,84 @@
                 category4: "师生风采",
                 category5: "专业信息",
                 category6: "专业实习",
-                content: [{
-                    "id": "1",
-                    "synopsisTitle": "聚焦电商EC-CDIO培养模式 夯实党建工作抓手 ——记电商党支部组织生活会",
-                    "synopsis": "2019年3月20日，电商党支部召开组织生活会，大家集体观看了《孤岛32年》宣传片，受王继才夫妇驻守孤岛32年的精神所感动，大家纷纷表示要立足教师岗位，一辈子扮演好教师这样一个角色。这也是前期谈心谈话环节中，众多老师表达的意愿。同时，老师们更希望支部组织能够凝聚和汇集大家的力量，做大事，做成事。"
-                    },
-                    {
-                        "id": "2",
-                        "synopsisTitle": "2018年暑期电子商务专业认识实习活动纪实",
-                        "synopsis": "为对电子商务专业有一个初步全面的认知了解， 2018年暑假期间管理学院电商与数据科学系组织2017级全体电商系的学生踏上长达十天的电子商务认识实习旅程。电商与数据科学系的王辉老师、王贺朝老师、冯文龙老师与胡霞老师四位老师更是随队前行，全程作陪，为同学们的生活与学习提供大力支持。"
-                    }
-                ],
-                content3: [{
-                    "id": "1",
-                    "synopsisTitle": "2017级",
-                    "synopsis": "2019年3月20日，电商党支部召开组织生活会，大家集体观看了《孤岛32年》宣传片，受王继才夫妇驻守孤岛32年的精神所感动，大家纷纷表示要立足教师岗位，一辈子扮演好教师这样一个角色。这也是前期谈心谈话环节中，众多老师表达的意愿。同时，老师们更希望支部组织能够凝聚和汇集大家的力量，做大事，做成事。"
-                },
-                    {
-                        "id": "2",
-                        "synopsisTitle": "2016级",
-                        "synopsis": "为对电子商务专业有一个初步全面的认知了解， 2018年暑假期间管理学院电商与数据科学系组织2017级全体电商系的学生踏上长达十天的电子商务认识实习旅程。电商与数据科学系的王辉老师、王贺朝老师、冯文龙老师与胡霞老师四位老师更是随队前行，全程作陪，为同学们的生活与学习提供大力支持。"
-                    }
-                ],
+                content0: {},
+                content1: {},
+                content2: {},
+                content3: {},
+                content4: {},
                 contentCDIO: [{
                     "id": "1",
-                    "synopsisTitle": "EC-CDIO电子商务人才培养模式",
-                    "synopsis": "2019年3月20日，电商党支部召开组织生活会，大家集体观看了《孤岛32年》宣传片，受王继才夫妇驻守孤岛32年的精神所感动，大家纷纷表示要立足教师岗位，一辈子扮演好教师这样一个角色。这也是前期谈心谈话环节中，众多老师表达的意愿。同时，老师们更希望支部组织能够凝聚和汇集大家的力量，做大事，做成事。"
+                    "title": "EC-CDIO电子商务人才培养模式",
+                    "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
+                    "summary": "将专业课程分为核心课程和非核心课程，核心课程是表1所列的与EC-CDIO紧密结合的课程，非核心课程是指经济学、管理学、运筹学、物流管理等基础类或难在EC-CDIO框架下实现的课程，各课程配置任课教师1-2名。\n"
                 }
+                // ,
+                    // {
+                    //     "id": "2",
+                    //     "title": "2017级",
+                    //     "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
+                    // },
+                    // {
+                    //     "id": "3",
+                    //     "title": "2016级",
+                    //     "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
+                    //    }
                 ]
             }
-        }
+        },
+        mounted (){
+            this.showData()
+        },
+        methods:{
+            showData: function () {
+                axios.get('/api/show/getShowList2Lazied/0').then(response => {
+                    this.getDataSucc0(response)
+                });
+                axios.get('/api/show/getShowList2Lazied/1').then(response => {
+                    this.getDataSucc1(response)
+                });
+                axios.get('/api/show/getShowList2Lazied/2').then(response => {
+                    this.getDataSucc2(response)
+                });
+                axios.get('/api/show/getShowList2Lazied/3').then(response => {
+                    this.getDataSucc3(response)
+                });
+                axios.get('/api/show/getShowList2Lazied/4').then(response => {
+                    this.getDataSucc4(response)
+                })
+            },
+            getDataSucc0: function (res) {
+                var data = res.data
+                if (data.code === 0 && data.data) {
+                    this.content0 = data.data
+                }
+            },
+            getDataSucc1: function (res) {
+                var data = res.data
+                if (data.code === 0 && data.data) {
+                    this.content1 = data.data
+                }
+            },
+            getDataSucc2: function (res) {
+                var data = res.data
+                if (data.code === 0 && data.data) {
+                    this.content2 = data.data
+                }
+            },
+            getDataSucc3: function (res) {
+                var data = res.data
+                if (data.code === 0 && data.data) {
+                    this.content3 = data.data
+                }
+            },
+            getDataSucc4: function (res) {
+                var data = res.data
+                if (data.code === 0 && data.data) {
+                    this.content4 = data.data
+                }
+            }
+        },
+        created(){}
     }
 </script>
 
@@ -139,10 +188,10 @@
 .row{
     margin:0
 }
-.synopsisBorder{
+.summaryBorder{
     padding: 0.5rem;
 }
-.synopsisTitle{
+.title{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -150,7 +199,7 @@
     font-size: 0.9rem;
     line-height: 1.7rem;
 }
-.synopsis{
+.summary{
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -166,9 +215,14 @@
 /*.index {*/
     /*margin-bottom: 67px;*/
 /*}*/
-a {color:#E67F11;}
-a:active  {color:#C8700F;}
-a:link    {color:#E67F11;text-decoration:none;}
-a:visited {color:#E67F11;}
-a:hover   {color:#E67F11;}
+a {color:darkblue}
+a:active  {color:darkblue;}
+a:link    {color:darkblue;text-decoration:none;}
+a:visited {color:darkblue;}
+a:hover   {color:darkblue;}
+.aDetail  {color:black;}
+.aDetail:active  {color:black;}
+.aDetail:link    {color:black;text-decoration:none;}
+.aDetail:visited {color:black;}
+.aDetail:hover   {color:#002956;}
 </style>

@@ -4,6 +4,7 @@ import cn.cumtcdio.server.VO.ResultVO;
 import cn.cumtcdio.server.VO.ShowInfoVO;
 import cn.cumtcdio.server.model.Show;
 import cn.cumtcdio.server.service.ShowService;
+import cn.cumtcdio.server.service.SlideService;
 import cn.cumtcdio.server.util.ResultVOUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +24,8 @@ import java.io.IOException;
 public class ShowController {
     @Autowired
     private ShowService showService;
+    @Autowired
+    private SlideService slideService;
 
     @RequestMapping(value = "/getAllShowByType/{type}", method = RequestMethod.GET)
     @ApiOperation(value = "通过类型获取相关的show列表",response = ShowInfoVO.class)
@@ -96,4 +99,23 @@ public class ShowController {
                       @PathVariable(value = "type") Integer type){
         return ResultVOUtil.success(showService.getShowListByShowTitleAndType(title,type));
     }
+
+//    @RequestMapping(value = "/getSlideById/{id}", method = RequestMethod.GET)
+//    @ApiOperation(value = "通过id获取轮播图")
+//    public ResultVO getSlideById(@PathVariable Integer id) {
+//        return ResultVOUtil.success(slideService.selectById(id));
+//    }
+
+    @RequestMapping(value = "/getAllSlide", method = RequestMethod.GET)
+    @ApiOperation(value = "获取所有轮播图")
+    public ResultVO getAllSlide() {
+        return ResultVOUtil.success(slideService.getAll());
+    }
+
+    @RequestMapping(value = "/getShowList2Lazied/{type}", method = RequestMethod.GET)
+    @ApiOperation(value = "通过type懒加载前两条数据",response = ShowInfoVO.class)
+    public ResultVO getShowList2Lazied(@PathVariable Integer type) {
+        return ResultVOUtil.success(showService.getShowList2Lazied(type));
+    }
+
 }

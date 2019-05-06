@@ -79,7 +79,7 @@ import axios from 'axios'
 }
 hr{
     height: .1rem;
-    background-color: #C64718;
+    background-color: #024E98;
 }
 .wrapper{
     margin: 0;
