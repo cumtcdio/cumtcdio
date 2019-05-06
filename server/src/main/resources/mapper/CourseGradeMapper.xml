@@ -4,16 +4,13 @@
   <resultMap id="BaseResultMap" type="cn.cumtcdio.server.model.CourseGradeKey">
     <id column="course_id" jdbcType="INTEGER" property="courseId" />
     <id column="grade_sn" jdbcType="VARCHAR" property="gradeSn" />
+    <id column="teacher_id" jdbcType="INTEGER" property="teacherId" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="cn.cumtcdio.server.model.CourseGradeKey">
     delete from course_grade
     where course_id = #{courseId,jdbcType=INTEGER}
       and grade_sn = #{gradeSn,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.cumtcdio.server.model.CourseGradeKey">
-    insert into course_grade (course_id, grade_sn)
-    values (#{courseId,jdbcType=INTEGER}, #{gradeSn,jdbcType=VARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.CourseGradeKey">
     insert into course_grade
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -23,6 +20,9 @@
       <if test="gradeSn != null">
         grade_sn,
       </if>
+      <if test="teacherId != null">
+        teacher_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="courseId != null">
@@ -31,11 +31,20 @@
       <if test="gradeSn != null">
         #{gradeSn,jdbcType=VARCHAR},
       </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <select id="getCourseIdsByGradeSn" parameterType="STRING" resultType="INTEGER">
     select course_id
     from course_grade
     where grade_sn = #{gradeSn}
+  </select>
+  <select id="getCourseIdsByGradeSnAndTeacherId" resultType="INTEGER">
+    select course_id
+    from course_grade
+    where grade_sn = #{gradeSn}
+    and teacher_id = #{teacherId}
   </select>
 </mapper>

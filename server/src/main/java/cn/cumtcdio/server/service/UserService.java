@@ -1,8 +1,11 @@
 package cn.cumtcdio.server.service;
 
+import cn.cumtcdio.server.VO.UserBaseInfoVO;
 import cn.cumtcdio.server.VO.UserInfoVO;
 import cn.cumtcdio.server.VO.UserVO;
 import cn.cumtcdio.server.model.User;
+
+import java.util.List;
 
 /**
  * @author SpringBoot Jun
@@ -34,4 +37,8 @@ public interface UserService{
      * @return 新密钥
      */
     String refreshToken(String oldToken);
+
+    List<UserBaseInfoVO> getStudentInfo();
+
+    List<UserBaseInfoVO> getTeacherInfo();
 }

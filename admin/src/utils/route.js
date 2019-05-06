@@ -47,6 +47,14 @@ export const formatRoutes = (routes)=> {
                     require(['../components/show/' + component + '.vue'], resolve)
                 } else if (component.startsWith("Slide")) {
                     require(['../components/slide/' + component + '.vue'], resolve)
+                }else if (component.startsWith("CourseManage")) {
+                    require(['../components/course/course.vue'], resolve)
+                }else if (component.startsWith("admin")) {
+                    require(['../components/cumt/admin/admin.vue'], resolve)
+                }else if (component.startsWith("StudentInfo")) {
+                    require(['../components/info/student/studentInfo.vue'], resolve)
+                }else if (component.startsWith("TeacherInfo")) {
+                    require(['../components/info/teacher/teacherInfo.vue'], resolve)
                 }
             },
             meta: meta,

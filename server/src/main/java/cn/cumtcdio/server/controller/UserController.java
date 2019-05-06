@@ -26,4 +26,14 @@ public class UserController {
         return ResultVOUtil.success(userService.findUserInfo(username));
     }
 
+    @GetMapping(value = "/student/info")
+    public ResultVO getStudentInfo(){
+        return ResultVOUtil.success(userService.getStudentInfo());
+    }
+
+    @GetMapping(value = "/teacher/info")
+    public ResultVO getTeacherInfo(){
+        return ResultVOUtil.success(userService.getTeacherInfo());
+    }
+
 }

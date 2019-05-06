@@ -18,7 +18,7 @@ public class TaskResult implements Serializable {
 
     private String address;
 
-    private String score;
+    private Integer score;
 
     private Integer taskId;
 
@@ -56,11 +56,11 @@ public class TaskResult implements Serializable {
         this.address = address;
     }
 
-    public String getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 

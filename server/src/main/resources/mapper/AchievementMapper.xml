@@ -6,9 +6,10 @@
     <result column="course_id" jdbcType="INTEGER" property="courseId" />
     <result column="achievement_name" jdbcType="VARCHAR" property="achievementName" />
     <result column="grade_sn" jdbcType="VARCHAR" property="gradeSn" />
+    <result column="dead_line" jdbcType="TIMESTAMP" property="deadLine" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, course_id, achievement_name, grade_sn
+    id, course_id, achievement_name, grade_sn, dead_line
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,12 +21,6 @@
     delete from achievement
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.cumtcdio.server.model.Achievement">
-    insert into achievement (id, course_id, achievement_name, 
-      grade_sn)
-    values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{achievementName,jdbcType=VARCHAR}, 
-      #{gradeSn,jdbcType=VARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.Achievement" useGeneratedKeys="true" keyProperty="id">
     insert into achievement
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -41,6 +36,9 @@
       <if test="gradeSn != null">
         grade_sn,
       </if>
+      <if test="deadLine != null">
+        dead_line,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -54,6 +52,9 @@
       </if>
       <if test="gradeSn != null">
         #{gradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="deadLine != null">
+        #{deadLine,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -69,14 +70,10 @@
       <if test="gradeSn != null">
         grade_sn = #{gradeSn,jdbcType=VARCHAR},
       </if>
+      <if test="deadLine != null">
+        dead_line = #{deadLine,jdbcType=TIMESTAMP},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cumtcdio.server.model.Achievement">
-    update achievement
-    set course_id = #{courseId,jdbcType=INTEGER},
-      achievement_name = #{achievementName,jdbcType=VARCHAR},
-      grade_sn = #{gradeSn,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByCourseIdAndGradeSn" resultMap="BaseResultMap">

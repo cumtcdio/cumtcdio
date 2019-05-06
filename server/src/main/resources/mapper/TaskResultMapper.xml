@@ -6,7 +6,7 @@
     <result column="group_id" jdbcType="INTEGER" property="groupId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="score" jdbcType="INTEGER" property="score" />
     <result column="task_id" jdbcType="INTEGER" property="taskId" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -27,7 +27,7 @@
       address, score, task_id
       )
     values (#{id,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{address,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{taskId,jdbcType=INTEGER}
+      #{address,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{taskId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.TaskResult">
@@ -66,7 +66,7 @@
         #{address,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
-        #{score,jdbcType=VARCHAR},
+        #{score,jdbcType=INTEGER},
       </if>
       <if test="taskId != null">
         #{taskId,jdbcType=INTEGER},
@@ -86,7 +86,7 @@
         address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
-        score = #{score,jdbcType=VARCHAR},
+        score = #{score,jdbcType=INTEGER},
       </if>
       <if test="taskId != null">
         task_id = #{taskId,jdbcType=INTEGER},
@@ -99,7 +99,7 @@
     set group_id = #{groupId,jdbcType=INTEGER},
       `status` = #{status,jdbcType=INTEGER},
       address = #{address,jdbcType=VARCHAR},
-      score = #{score,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
       task_id = #{taskId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

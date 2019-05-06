@@ -1,8 +1,11 @@
 package cn.cumtcdio.server.service.impl;
 
+import cn.cumtcdio.server.VO.UserBaseInfoVO;
 import cn.cumtcdio.server.VO.UserInfoVO;
+import cn.cumtcdio.server.mapper.GroupMapper;
 import cn.cumtcdio.server.mapper.RoleMapper;
 import cn.cumtcdio.server.mapper.UserMapper;
+import cn.cumtcdio.server.model.Group;
 import cn.cumtcdio.server.model.Role;
 import cn.cumtcdio.server.model.User;
 import cn.cumtcdio.server.service.MenuService;
@@ -21,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +44,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private GroupMapper groupMapper;
 
     @Override
     public User selectByUserName(String username) {
@@ -96,5 +103,37 @@ public class UserServiceImpl implements UserService {
             return jwtTokenUtil.refreshToken(oldToken);
         }
         return "error";
+    }
+
+    @Override
+    public List<UserBaseInfoVO> getStudentInfo() {
+        List<User> users = userMapper.getStudentInfo();
+        List<UserBaseInfoVO> userBaseInfoVOS = new ArrayList<>();
+        convertUserToUserBaseInfoVO(users, userBaseInfoVOS);
+        return userBaseInfoVOS;
+    }
+
+    @Override
+    public List<UserBaseInfoVO> getTeacherInfo() {
+        List<User> users = userMapper.getTeacherInfo();
+        List<UserBaseInfoVO> userBaseInfoVOS = new ArrayList<>();
+        convertUserToUserBaseInfoVO(users, userBaseInfoVOS);
+        return userBaseInfoVOS;
+    }
+
+    private void convertUserToUserBaseInfoVO(List<User> users, List<UserBaseInfoVO> userBaseInfoVOS) {
+        for (User user : users){
+            UserBaseInfoVO userBaseInfoVO = new UserBaseInfoVO();
+            userBaseInfoVO.setUserId(user.getId());
+            userBaseInfoVO.setUsername(user.getUsername());
+            userBaseInfoVO.setPhone(user.getPhone());
+            userBaseInfoVO.setRealName(user.getRealName());
+            if (user.getGroupId()!=null){
+                Group group = groupMapper.selectByPrimaryKey(user.getGroupId());
+                userBaseInfoVO.setGradeSn(group.getGradeSn());
+                userBaseInfoVO.setGroupSn(group.getGroupSn());
+            }
+            userBaseInfoVOS.add(userBaseInfoVO);
+        }
     }
 }

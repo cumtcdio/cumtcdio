@@ -50,6 +50,7 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/api/**").permitAll()
                 // 把不需要认证的接口暴露出去。登录，刷新token，
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/login", "/favicon.ico", "/**/*.html",

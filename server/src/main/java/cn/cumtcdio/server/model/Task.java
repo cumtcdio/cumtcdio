@@ -37,6 +37,16 @@ public class Task implements Serializable {
 
     private Date time;
 
+    private Date deadLine;
+
+    public Date getDeadLine() {
+        return deadLine;
+    }
+
+    public void setDeadLine(Date deadLine) {
+        this.deadLine = deadLine;
+    }
+
     public Date getTime() {
         return time;
     }

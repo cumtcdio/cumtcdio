@@ -138,4 +138,14 @@
     select *
     from user
   </select>
+  <select id="getStudentInfo" resultMap="BaseResultMap">
+    select *
+    from user
+    where is_teacher = 0
+  </select>
+  <select id="getTeacherInfo" resultMap="BaseResultMap">
+    select *
+    from user
+    where is_teacher = 1
+  </select>
 </mapper>

@@ -9,9 +9,10 @@
     <result column="desc" jdbcType="VARCHAR" property="desc" />
     <result column="grade_sn" jdbcType="VARCHAR" property="gradeSn" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="dead_line" jdbcType="TIMESTAMP" property="deadLine" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, course_id, title, requires, `desc`, grade_sn, time
+    id, course_id, title, requires, `desc`, grade_sn, time,dead_line
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,14 +24,6 @@
     delete from task
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.cumtcdio.server.model.Task">
-    insert into task (id, course_id, title, 
-      requires, `desc`, grade_sn
-      )
-    values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{requires,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, #{gradeSn,jdbcType=VARCHAR}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="cn.cumtcdio.server.model.Task" useGeneratedKeys="true" keyProperty="id">
     insert into task
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -52,6 +45,9 @@
       <if test="gradeSn != null">
         grade_sn,
       </if>
+      <if test="deadLine != null">
+        dead_line,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -71,6 +67,9 @@
       </if>
       <if test="gradeSn != null">
         #{gradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="deadLine != null">
+        #{deadLine,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -92,16 +91,10 @@
       <if test="gradeSn != null">
         grade_sn = #{gradeSn,jdbcType=VARCHAR},
       </if>
+      <if test="deadLine != null">
+        dead_line = #{deadLine,jdbcType=TIMESTAMP},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cumtcdio.server.model.Task">
-    update task
-    set course_id = #{courseId,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      requires = #{requires,jdbcType=VARCHAR},
-      `desc` = #{desc,jdbcType=VARCHAR},
-      grade_sn = #{gradeSn,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByCourseIdAndGradeSn" resultMap="BaseResultMap">

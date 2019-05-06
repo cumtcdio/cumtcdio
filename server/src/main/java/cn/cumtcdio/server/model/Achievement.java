@@ -1,6 +1,7 @@
 package cn.cumtcdio.server.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * achievement
@@ -26,6 +27,16 @@ public class Achievement implements Serializable {
      * 年级
      */
     private String gradeSn;
+
+    private Date deadLine;
+
+    public Date getDeadLine() {
+        return deadLine;
+    }
+
+    public void setDeadLine(Date deadLine) {
+        this.deadLine = deadLine;
+    }
 
     private static final long serialVersionUID = 1L;
 

@@ -11,6 +11,16 @@ public class CourseGradeKey implements Serializable {
 
     private String gradeSn;
 
+    private Integer teacherId;
+
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getCourseId() {

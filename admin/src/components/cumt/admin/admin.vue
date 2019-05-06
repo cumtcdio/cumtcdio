@@ -16,7 +16,7 @@
                                 <el-card class="box-card m-3">
                                     <div slot="header" class="clearfix">
                                         <span>成果</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement">添加课程所需成果</el-button>
                                     </div>
                                     <div class="text item">
                                         <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
@@ -296,7 +296,7 @@
         },
         methods: {
             init(){
-                this.axios.get("http://localhost:8090/api/admin/gradeCourse")
+                this.axios.get("/api/admin/gradeCourse")
                     .then(res => {
                         this.grades = res.data
                         this.activeGradeId = this.grades[0].gradeId + ""
@@ -305,7 +305,7 @@
                     })
             },
             initData(){
-                this.axios.get("http://localhost:8090/api/admin/gradeCourse")
+                this.axios.get("/api/admin/gradeCourse")
                     .then(res => {
                         this.grades = res.data
                     })
@@ -323,7 +323,7 @@
                             courseId : this.activeCourseId,
                             achievementName : value
                         }
-                        this.axios.post("http://localhost:8090/api/admin/achievement/insert",formItem)
+                        this.axios.post("/api/admin/achievement/insert",formItem)
                             .then(res =>{
                                 if(res.status == 200){
                                     this.$message({
@@ -346,7 +346,7 @@
                             courseType: this.activeType,
                             gradeId: this.activeGradeId
                         }
-                        this.axios.post("http://localhost:8090/api/admin/course/insert",formItem)
+                        this.axios.post("/api/admin/course/insert",formItem)
                             .then(res =>{
                                 if(res.status == 200){
                                     this.$message({
@@ -373,7 +373,7 @@
                             courseId: targetName,
                             gradeId: this.activeGradeId
                         }
-                        this.axios.delete("http://localhost:8090/api/admin/course/delete",{params:formItem})
+                        this.axios.delete("/api/admin/course/delete",{params:formItem})
                             .then(res =>{
                                 if(res.status == 200){
                                     this.$message({
@@ -397,7 +397,7 @@
                         confirmButtonText: '确定',
                         cancelButtonText: '取消'
                     }).then(({ value }) => {
-                        this.axios.post("http://localhost:8090/api/admin/grade/insert?gradeSn="+value)
+                        this.axios.post("/api/admin/grade/insert?gradeSn="+value)
                             .then(res =>{
                                 if(res.status == 200){
                                     this.$message({
@@ -415,12 +415,12 @@
                     });
                 }
                 if (action === 'remove') {
-                    this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
+                    this.$confirm('此操作将删除该年级, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.axios.delete("http://localhost:8090/api/admin/grade/delete?gradeId="+targetName)
+                        this.axios.delete("/api/admin/grade/delete?gradeId="+targetName)
                             .then(res =>{
                                 if(res.status == 200){
                                     this.$message({
@@ -450,7 +450,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.axios.delete("http://localhost:8090/api/admin/task/delete?taskId="+scope.row.id)
+                    this.axios.delete("/api/admin/task/delete?taskId="+scope.row.id)
                         .then(res =>{
                             if(res.status == 200){
                                 this.$message({
@@ -473,7 +473,7 @@
                     gradeSn: this.activeGradeSn,
                     courseId: this.activeCourseId
                 }
-                this.axios.post("http://localhost:8090/api/admin/task/insert",formItem)
+                this.axios.post("/api/admin/task/insert",formItem)
                     .then(res =>{
                         if(res.status == 200){
                             this.$message({
