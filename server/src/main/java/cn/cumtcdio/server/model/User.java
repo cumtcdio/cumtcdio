@@ -37,6 +37,21 @@ public class User implements Serializable {
     @Column(name = "state")
     private Integer state;
 
+    @Column(name = "is_teacher")
+    private Integer isTeacher;
+
+    @Column(name = "qq_number")
+    private String qqNumber;
+
+    @Column(name = "family_address")
+    private String familyAddress;
+
+    @Column(name = "wx_number")
+    private String wxNumber;
+
+    @Column(name = "email")
+    private String email;
+
     private List<Role> roleList;
 
     public Integer getId() {
@@ -93,6 +108,46 @@ public class User implements Serializable {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Integer getIsTeacher() {
+        return isTeacher;
+    }
+
+    public void setIsTeacher(Integer isTeacher) {
+        this.isTeacher = isTeacher;
+    }
+
+    public String getQqNumber() {
+        return qqNumber;
+    }
+
+    public void setQqNumber(String qqNumber) {
+        this.qqNumber = qqNumber;
+    }
+
+    public String getFamilyAddress() {
+        return familyAddress;
+    }
+
+    public void setFamilyAddress(String familyAddress) {
+        this.familyAddress = familyAddress;
+    }
+
+    public String getWxNumber() {
+        return wxNumber;
+    }
+
+    public void setWxNumber(String wxNumber) {
+        this.wxNumber = wxNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Role> getRoleList() {

@@ -9,6 +9,11 @@
     <result column="group_id" jdbcType="INTEGER" property="groupId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="is_teacher" jdbcType="INTEGER" property="isTeacher" />
+    <result column="qq_number" jdbcType="VARCHAR" property="qqNumber" />
+    <result column="wx_number" jdbcType="VARCHAR" property="wxNumber" />
+    <result column="family_address" jdbcType="VARCHAR" property="familyAddress" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
   </resultMap>
   <resultMap id="UserRoleMapper" type="cn.cumtcdio.server.model.User" extends="BaseResultMap">
     <collection property="roleList" column="id"
