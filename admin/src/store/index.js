@@ -21,7 +21,7 @@ export default new Vuex.Store({
             state.routes = menus;
         },
         initUserInfo(state, user) {
-            console.log('aaaaaaaaaaa')
+            // console.log('aaaaaaaaaaa')
             state.user = user
             window.localStorage.setItem('user', JSON.stringify(user))
             router.push("/home")

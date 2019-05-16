@@ -20,7 +20,7 @@
 <script>
     import axios from  'axios'
     import {setToken} from '../utils/auth'
-    import {initMenu} from "../utils/route";
+    // import {initMenu} from "../utils/route";
     export default{
         data(){
             return {
@@ -55,7 +55,7 @@
                     var data = res.data
                     if (data) {
                         this.$store.commit('initUserInfo', data)
-                        console.log(this.$store.state.user)
+                        // console.log(this.$store.state.user)
                     }
                 })
             }
