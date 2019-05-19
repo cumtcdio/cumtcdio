@@ -27,7 +27,7 @@
                 style="width: 100%">
             <el-table-column
                     prop="showId"
-                    label="#"
+                    label="ID"
                     width="50">
             </el-table-column>
             <el-table-column
