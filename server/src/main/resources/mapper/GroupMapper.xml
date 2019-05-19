@@ -120,4 +120,9 @@
     where grade_sn = #{gradeSn}
     order by group_sn
   </select>
+  <select id="getGroupInfoByGroupId" resultMap="BaseResultMap" >
+    SELECT group_sn,grade_sn
+    FROM `group`
+    WHERE id = #{groupId}
+  </select>
 </mapper>

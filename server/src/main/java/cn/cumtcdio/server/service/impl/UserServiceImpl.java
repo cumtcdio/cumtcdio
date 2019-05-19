@@ -67,6 +67,16 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUserInfoByUsername(username);
         userInfoVO.setUsername(username);
         userInfoVO.setRealName(user.getRealName());
+        if (user.getGroupId() == null) {
+            userInfoVO.setGradeSn(null);
+            userInfoVO.setGroupSn(null);
+        }else {
+            Group group = new Group();
+            group = groupMapper.getGroupInfoByGroupId(user.getGroupId());
+            userInfoVO.setGroupId(user.getGroupId());
+            userInfoVO.setGroupSn(group.getGroupSn());
+            userInfoVO.setGradeSn(group.getGradeSn());
+        }
         List<Role> roles = roleMapper.getRoleByUserId(user.getId());
         userInfoVO.setRoles(roles);
         int id = 0;

@@ -74,7 +74,7 @@
                 var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
                 try {
                     FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
-                } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+                } catch (e) { if (typeof console !== 'undefined') alert(e)}
                 return wbout
             },
         }

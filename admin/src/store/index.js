@@ -9,7 +9,9 @@ export default new Vuex.Store({
         showType: 0,
         user: {
             username: window.localStorage.getItem('jwtToken' || '[]') == null ? '未登录' : JSON.parse(window.localStorage.getItem('user' || '[]')).username,
-            realname: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).realname,
+            realName: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).realName,
+            groupSn: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).groupSn,
+            gradeSn: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).gradeSn,
             roles: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).roles,
             routes: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).routes
         },
@@ -21,7 +23,6 @@ export default new Vuex.Store({
             state.routes = menus;
         },
         initUserInfo(state, user) {
-            // console.log('aaaaaaaaaaa')
             state.user = user
             window.localStorage.setItem('user', JSON.stringify(user))
             router.push("/home")

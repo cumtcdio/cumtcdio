@@ -135,7 +135,7 @@
     WHERE username = #{username}
   </select>
   <select id="getUserInfoByUsername" resultMap="BaseResultMap">
-    SELECT id,username,real_name
+    SELECT id,username,real_name,group_id
     FROM user
     WHERE username = #{username}
   </select>

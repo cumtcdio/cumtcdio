@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface GroupMapper extends MyBatisBaseDao<Group, Integer> {
     List<Group> selectGroupInfoByGradeSn(String gradeSn);
+
+    Group getGroupInfoByGroupId(Integer groupId);
 }

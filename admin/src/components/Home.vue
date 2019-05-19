@@ -9,6 +9,7 @@
                         用户<i class="el-icon-arrow-down el-icon--right"></i>
                       </span>
                         <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>{{user.realName}}</el-dropdown-item>
                             <el-dropdown-item command="logout">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -74,6 +75,9 @@
         computed: {
             routes() {
                 return this.$store.state.user.routes
+            },
+            user() {
+                return this.$store.state.user
             }
         }
     }
