@@ -17,6 +17,8 @@ public class GroupInfoVO {
 
     String teacher;
 
+    String member;
+
     /**
      * 项目概述
      */
@@ -76,5 +78,13 @@ public class GroupInfoVO {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getMember() {
+        return member;
+    }
+
+    public void setMember(String member) {
+        this.member = member;
     }
 }

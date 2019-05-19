@@ -16,7 +16,15 @@
                     <el-input v-model="formItem.name" placeholder="请输入项目名称" style="width:300px"></el-input>
                 </el-form-item>
                 <el-form-item label="指导老师" prop="teacher">
-                    <el-input v-model="formItem.teacher" placeholder="请输入指导老师" style="width:300px"></el-input>
+                    <el-select v-model="formItem.teacher" placeholder="请选择">
+                        <el-option
+                        v-for="(item, index) in teachers" 
+                        :key="index"
+                        :label="item.realName"
+                        :value="item.realName">
+                        </el-option>
+                    </el-select>
+                    <!-- <el-input v-model="formItem.teacher" placeholder="请输入指导老师" style="width:300px"></el-input> -->
                 </el-form-item>
                 <el-form-item label="成员">
                     <div style="margin:0 10px 10px 10px;padding:0" v-for="(item, index) in formItem.member" :key="index">
@@ -53,6 +61,9 @@
     export default {
         data() {
             return {
+                teachers:[
+
+                ],
                 multiple: false,
                 formItem: {
                     gradeSn: "",
@@ -71,8 +82,7 @@
                 },
                 rules:{
                     gradeSn:[{ required: true, message: '请选择年级', trigger: 'blur' },],
-                    groupSn:[{ required: true, message: '请输入组别', trigger: 'blur' },
-                        {type: 'number', message: '组别必须为数字值'}],
+                    groupSn:[{ required: true, message: '请输入组别', trigger: 'blur' }],
                     name:[{ required: true, message: '请输入项目名称', trigger: 'blur' },],
                     teacher:[{ required: true, message: '请输入指导老师', trigger: 'blur' },],
                     imgUrl:[{ required: true, message: '请上传图片', trigger: 'blur' },],
@@ -81,6 +91,13 @@
                     ],
                 }
             }
+        },
+        mounted(){
+            this.axios.get("/api/user/teacher/info")
+                .then(res =>{
+                    this.teachers = res.data.data
+                    console.log(res.data);
+                })
         },
         methods: {
             addMember(){

@@ -153,4 +153,9 @@
     from user
     where is_teacher = 1
   </select>
+  <select id="getMemberInfoByGroupId" parameterType="INTEGER" resultMap="BaseResultMap">
+    select *
+    from user
+    where group_id=#{groupId}
+  </select>
 </mapper>

@@ -50,4 +50,23 @@ public class GroupController {
         return ResultVOUtil.success(groupDetailVO);
     }
 
+    @GetMapping("/getDetail")
+    public ResultVO getDetailByGradeSnAndGroupSn(@RequestParam String gradeSn,@RequestParam String groupSn){
+        GroupDetailVO groupDetailVO = groupService.getDetailByGradeSnAndGroupSn(gradeSn,groupSn);
+        return ResultVOUtil.success(groupDetailVO);
+    }
+
+    @GetMapping(value = "/getAll")
+    @ApiOperation(value = "获取所有年级项目组信息")
+    public ResultVO getAll(){
+        return ResultVOUtil.success(groupService.getAll());
+    }
+
+    @GetMapping(value = "/member/{groupId}")
+    @ApiOperation(value = "获取所有年级项目组信息")
+    public ResultVO getMember(@PathVariable Integer groupId){
+        return ResultVOUtil.success(groupService.getMemberInfoByGroupId(groupId));
+    }
+
+
 }

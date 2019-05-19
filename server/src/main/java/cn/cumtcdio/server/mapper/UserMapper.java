@@ -17,4 +17,6 @@ public interface UserMapper extends MyBatisBaseDao<User, Integer> {
     List<User> getStudentInfo();
 
     List<User> getTeacherInfo();
+
+    List<User> getMemberInfoByGroupId(Integer groupId);
 }

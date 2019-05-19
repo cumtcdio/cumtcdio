@@ -11,11 +11,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class GroupServiceImpl implements GroupService {
+
+    @Autowired
+    GradeMapper gradeMapper;
 
     @Autowired
     GroupMapper groupMapper;
@@ -49,6 +53,10 @@ public class GroupServiceImpl implements GroupService {
         for (Group group: groups){
             GroupInfoVO groupInfoVO = new GroupInfoVO();
             BeanUtils.copyProperties(group, groupInfoVO);
+            //通过groupId查出所有成员
+            List<String> members = userMapper.getMembersByGroupId(group.getId());
+            String memberString = Joiner.on("、").join(members);
+            groupInfoVO.setMember(memberString);
             groupInfoVO.setGroupId(group.getId());
             groupInfoVOS.add(groupInfoVO);
         }
@@ -59,6 +67,30 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDetailVO getDetailByGroupId(Integer groupId) {
         return GroupDetailVOUtil.generate(groupId);
+    }
+
+    @Override
+    public List<GroupVO> getAll() {
+        List<GroupVO> groupVOS = new ArrayList<>();
+        List<Grade> grades = gradeMapper.selectAllGrades();
+        for (Grade grade: grades){
+            GroupVO groupVO = new GroupVO();
+            groupVO.setGradeSn(grade.getGradeSn());
+            groupVO.setGroupInfoVOS(getAllGroupInfoByGradeSn(grade.getGradeSn()));
+            groupVOS.add(groupVO);
+        }
+        return groupVOS;
+    }
+
+    @Override
+    public GroupDetailVO getDetailByGradeSnAndGroupSn(String gradeSn, String groupSn) {
+        Integer groupId = groupMapper.selectIdByGradeSnAndGroupSn(gradeSn,groupSn);
+        return GroupDetailVOUtil.generate(groupId);
+    }
+
+    @Override
+    public List<User> getMemberInfoByGroupId(Integer groupId) {
+        return userMapper.getMemberInfoByGroupId(groupId);
     }
 
 }

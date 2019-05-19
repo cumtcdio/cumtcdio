@@ -125,4 +125,10 @@
     FROM `group`
     WHERE id = #{groupId}
   </select>
+  <select id="selectIdByGradeSnAndGroupSn" resultType="INTEGER">
+    select  id
+    FROM `group`
+    where grade_Sn = #{gradeSn}
+    and group_Sn = #{groupSn}
+  </select>
 </mapper>
