@@ -1,6 +1,8 @@
 package cn.cumtcdio.server.service.impl;
 
 import cn.cumtcdio.server.VO.*;
+import cn.cumtcdio.server.form.GroupForm;
+import cn.cumtcdio.server.form.MemberForm;
 import cn.cumtcdio.server.mapper.*;
 import cn.cumtcdio.server.model.*;
 import cn.cumtcdio.server.service.GroupService;
@@ -91,6 +93,28 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<User> getMemberInfoByGroupId(Integer groupId) {
         return userMapper.getMemberInfoByGroupId(groupId);
+    }
+
+    @Override
+    public Integer insertGroup(GroupForm groupForm) {
+        int result = 0;
+        Group group = new Group();
+        group.setDesc(groupForm.getDesc());
+        group.setGradeSn(groupForm.getGradeSn());
+        group.setGroupImg(groupForm.getImgUrl());
+        group.setGroupName(groupForm.getName());
+        group.setGroupSn(groupForm.getGroupSn());
+        group.setTeacher(groupForm.getTeacher());
+        result += groupMapper.insertSelective(group);
+        for (MemberForm memberForm: groupForm.getMember()){
+            User user = new User();
+            //通过学号查找id
+            int userId = userMapper.getUserInfoByUsername(memberForm.getSn()).getId();
+            user.setId(userId);
+            user.setGroupId(group.getId());
+            result += userMapper.updateByPrimaryKeySelective(user);
+        }
+        return result;
     }
 
 }

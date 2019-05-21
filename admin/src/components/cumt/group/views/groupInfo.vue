@@ -145,9 +145,9 @@
                 }
                 });
             },
-            // uploadSuccess(response){
-                
-            // }
+            uploadSuccess(res){
+                this.formItem.imgUrl = res
+            }
         },
     }
 </script>

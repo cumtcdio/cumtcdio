@@ -28,9 +28,9 @@
                 </el-form-item>
                 <el-form-item label="成员">
                     <div style="margin:0 10px 10px 10px;padding:0" v-for="(item, index) in formItem.member" :key="index">
-                        <el-input v-model="item.sn" placeholder="学号..." class="mx-3" style="width:200px"></el-input>
-                        <el-input v-model="item.name" placeholder="姓名..." class="mx-3" style="width:200px"></el-input>
-                        <el-input v-model="item.telephone" placeholder="手机号..." class="mx-3" style="width:200px"></el-input>
+                        <el-input @change="(index) => memberSnChange(index,val)" v-model="item.sn" placeholder="学号..." class="mx-3" style="width:200px"></el-input>
+                        <el-input @change="(index) => memberNameChange(index,val)" v-model="item.name" placeholder="姓名..." class="mx-3" style="width:200px"></el-input>
+                        <el-input @change="(index) => memberPhoneChange(index,val)" v-model="item.telephone" placeholder="手机号..." class="mx-3" style="width:200px"></el-input>
                         <i class="el-icon-delete" style="font-size:22px;cursor:pointer" @click="deleteMember(index)"></i>
                     </div>
                     <i class="el-icon-plus" style="font-size:22px;cursor:pointer" @click="addMember"></i>
@@ -113,15 +113,38 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    this.axios.post("/api/group/insert",this.formItem)
+                        .then(res =>{
+                            if(res.status == 200){
+                                this.$message({
+                                    message: '录入成功',
+                                    type: 'success'
+                                });
+                                this.$router.push({
+                                    path:"/cdio"
+                                })
+                            }
+                        })
                 } else {
                     return false;
                 }
                 });
             },
-            // uploadSuccess(response){
-                
-            // }
+            uploadSuccess(res){
+                this.formItem.imgUrl = res
+            },
+            memberSnChange(index,val){
+                console.log(val);
+                console.log(index);
+            },
+            memberNameChange(index,val){
+                console.log(val);
+                console.log(index);
+            },
+            memberPhoneChange(index,val){
+                console.log(val);
+                console.log(index);
+            }
         },
     }
 </script>

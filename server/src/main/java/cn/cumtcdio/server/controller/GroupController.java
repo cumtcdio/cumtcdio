@@ -3,6 +3,7 @@ package cn.cumtcdio.server.controller;
 import cn.cumtcdio.server.VO.GroupDetailVO;
 import cn.cumtcdio.server.VO.GroupInfoVO;
 import cn.cumtcdio.server.VO.ResultVO;
+import cn.cumtcdio.server.form.GroupForm;
 import cn.cumtcdio.server.model.Grade;
 import cn.cumtcdio.server.service.GradeService;
 import cn.cumtcdio.server.service.GroupService;
@@ -68,5 +69,9 @@ public class GroupController {
         return ResultVOUtil.success(groupService.getMemberInfoByGroupId(groupId));
     }
 
+    @PostMapping("/insert")
+    public ResultVO getMember(@RequestBody GroupForm groupForm){
+        return ResultVOUtil.success(groupService.insertGroup(groupForm));
+    }
 
 }
