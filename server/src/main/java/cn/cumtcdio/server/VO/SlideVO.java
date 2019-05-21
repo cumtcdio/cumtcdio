@@ -1,39 +1,15 @@
-package cn.cumtcdio.server.model;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.io.Serializable;
+package cn.cumtcdio.server.VO;
 
 /**
- * user
- * @author 
+ * @author SpringBoot Jun
+ * @date 2019/5/19 20:02
  */
-public class Slide implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SlideVO {
     private Integer id;
-
-    /**
-     * 轮播图新闻名称
-     */
-    @Column(name = "title")
     private String title;
-
-    /**
-     * 轮播图图片地址
-     */
-    @Column(name = "img")
     private String img;
-
-    /**
-     * 轮播图新闻地址
-     */
-    @Column(name = "article_address")
     private String articleAddress;
-
-    @Column(name = "deleted")
+    private Integer articleId;
     private Integer deleted;
 
     public Integer getId() {
@@ -66,6 +42,14 @@ public class Slide implements Serializable {
 
     public void setArticleAddress(String articleAddress) {
         this.articleAddress = articleAddress;
+    }
+
+    public Integer getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     public Integer getDeleted() {

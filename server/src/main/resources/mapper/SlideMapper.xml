@@ -6,6 +6,7 @@
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="img" jdbcType="VARCHAR" property="img" />
         <result column="article_address" jdbcType="VARCHAR" property="articleAddress" />
+        <result column="deleted" jdbcType="INTEGER" property="deleted" />
     </resultMap>
     <sql id="Base_Column_List">
     id, title, img, article_address
@@ -80,12 +81,30 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
     <select id="selectById" resultMap="BaseResultMap">
-    select title, img, article_address
+    select id,title, img, article_address,deleted
     from slide
     where id = #{id}
     </select>
     <select id="selectAll" resultMap="BaseResultMap">
-    select id, title, img, article_address
+    select id, title, img, article_address,deleted
     from slide
     </select>
+    <insert id="insertSlide" parameterType="cn.cumtcdio.server.model.Slide" useGeneratedKeys="true" keyProperty="id">
+      insert into slide(title,article_address)
+      values (#{title},#{articleAddress})
+    </insert>
+    <update id="updateSlideImg">
+      UPDATE slide
+      SET img = #{img}
+      WHERE id = #{id}
+    </update>
+    <update id="updateSlide" parameterType="cn.cumtcdio.server.model.Slide">
+        UPDATE slide
+        SET title=#{title},article_address=#{articleAddress},deleted=#{deleted}
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteSlideById">
+        DELETE from slide
+        where id = #{id}
+    </delete>
 </mapper>
