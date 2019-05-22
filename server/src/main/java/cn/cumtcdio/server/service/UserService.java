@@ -2,6 +2,7 @@ package cn.cumtcdio.server.service;
 
 import cn.cumtcdio.server.VO.UserBaseInfoVO;
 import cn.cumtcdio.server.VO.UserInfoVO;
+import cn.cumtcdio.server.VO.UserParams;
 import cn.cumtcdio.server.VO.UserVO;
 import cn.cumtcdio.server.model.User;
 
@@ -41,4 +42,20 @@ public interface UserService{
     List<UserBaseInfoVO> getStudentInfo();
 
     List<UserBaseInfoVO> getTeacherInfo();
+
+    /**
+     * 完善用户信息
+     * @param userParams
+     * @return
+     */
+    Integer completeUserInfo(UserParams userParams);
+
+    /**
+     * 修改用户密码
+     */
+    Integer updatePassword(String username,String password);
+
+    Integer isNotFirstCompleted(String username);
+
+    UserParams getUserParams(String username);
 }

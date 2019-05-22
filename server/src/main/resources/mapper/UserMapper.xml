@@ -20,6 +20,14 @@
                 select="cn.cumtcdio.server.mapper.RoleMapper.getRoleByUserId" fetchType="eager">
     </collection>
   </resultMap>
+  <resultMap id="UserParamsMap" type="cn.cumtcdio.server.VO.UserParams">
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="qq_number" jdbcType="VARCHAR" property="qqNumber" />
+    <result column="wx_number" jdbcType="VARCHAR" property="wxNumber" />
+    <result column="family_address" jdbcType="VARCHAR" property="familyAddress" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
   <sql id="Base_Column_List">
     id, username, `password`, real_name, group_id, phone, `state`
   </sql>
@@ -157,5 +165,41 @@
     select *
     from user
     where group_id=#{groupId}
+  </select>
+  <select id="getUserParams" resultMap="UserParamsMap">
+    SELECT phone,qq_number,wx_number,family_address,email
+    FROM user
+    WHERE username = #{username}
+  </select>
+  <update id="completeUserInfo" parameterType="cn.cumtcdio.server.VO.UserParams">
+    update user
+    <set>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qqNumber != null">
+        qq_number = #{qqNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNumber != null">
+        wx_number = #{wxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="familyAddress != null">
+        family_address = #{familyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updatePassword">
+    UPDATE user
+    SET password = #{password}
+    WHERE username = #{username}
+  </update>
+  <select id="isNotFirstCompleted" resultMap="BaseResultMap">
+    SELECT phone
+    FROM user
+    WHERE username = #{username}
   </select>
 </mapper>

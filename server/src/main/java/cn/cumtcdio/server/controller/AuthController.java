@@ -25,7 +25,7 @@ public class AuthController {
         String username = map.get("username");
         String password = map.get("password");
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            return ResultVOUtil.error(401, "用户或者密码不能为空！");
+            return ResultVOUtil.error(401, "用户名或者密码不能为空！");
         }
         return ResultVOUtil.success(userService.login(username, password));
     }

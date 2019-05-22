@@ -20,7 +20,6 @@
 <script>
     import axios from  'axios'
     import {setToken} from '../utils/auth'
-    // import {initMenu} from "../utils/route";
     export default{
         data(){
             return {
@@ -45,8 +44,12 @@
                         _this.loading = false;
                         if (res && res.status == 200) {
                             var data = res.data
-                            setToken(data.data)
-                            this.getUserInfo()
+                            if(data.data == '用户名或密码错误'){
+                                this.$message.error(data.data);
+                            }else {
+                                setToken(data.data)
+                                this.getUserInfo()
+                            }
                         }
                 });
              },
@@ -55,7 +58,6 @@
                     var data = res.data
                     if (data) {
                         this.$store.commit('initUserInfo', data)
-                        // console.log(this.$store.state.user)
                     }
                 })
             }

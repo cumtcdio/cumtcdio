@@ -1,6 +1,7 @@
 package cn.cumtcdio.server.controller;
 
 import cn.cumtcdio.server.VO.ResultVO;
+import cn.cumtcdio.server.VO.UserParams;
 import cn.cumtcdio.server.service.UserService;
 import cn.cumtcdio.server.util.ResultVOUtil;
 import io.swagger.annotations.Api;
@@ -24,6 +25,29 @@ public class UserController {
     @GetMapping(value = "/getUserInfoByUsername/{username}")
     public ResultVO getUserInfoByUsername(@PathVariable String username){
         return ResultVOUtil.success(userService.findUserInfo(username));
+    }
+
+    @ApiOperation(value = "通过username完善用户信息")
+    @PostMapping(value = "/completeUserInfo")
+    public ResultVO completeUserInfo(@RequestBody UserParams userParams){
+        return ResultVOUtil.success(userService.completeUserInfo(userParams));
+    }
+
+    @ApiOperation(value = "修改用户密码")
+    @PostMapping(value = "/updatePassword/{username}/{password}")
+    public ResultVO updatePassword(@PathVariable String username,
+                                     @PathVariable String password){
+        return ResultVOUtil.success(userService.updatePassword(username,password));
+    }
+
+    @GetMapping(value = "/isNotFirstCompleted/{username}")
+    public ResultVO isNotFirstCompleted(@PathVariable String username){
+        return ResultVOUtil.success(userService.isNotFirstCompleted(username));
+    }
+
+    @GetMapping(value = "/getUserParams/{username}")
+    public ResultVO getUserParams(@PathVariable String username){
+        return ResultVOUtil.success(userService.getUserParams(username));
     }
 
     @GetMapping(value = "/student/info")
