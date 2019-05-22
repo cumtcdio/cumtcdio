@@ -58,6 +58,8 @@ export const formatRoutes = (routes)=> {
                     require(['../components/info/student/studentInfo.vue'], resolve)
                 }else if (component.startsWith("TeacherInfo")) {
                     require(['../components/info/teacher/teacherInfo.vue'], resolve)
+                }else if (component.startsWith("CompleteUserInfo")) {
+                    require(['../components/info/user/CompleteUserInfo.vue'], resolve)
                 }
             },
             meta: meta,

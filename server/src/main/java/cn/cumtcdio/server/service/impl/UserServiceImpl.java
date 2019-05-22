@@ -2,6 +2,7 @@ package cn.cumtcdio.server.service.impl;
 
 import cn.cumtcdio.server.VO.UserBaseInfoVO;
 import cn.cumtcdio.server.VO.UserInfoVO;
+import cn.cumtcdio.server.VO.UserParams;
 import cn.cumtcdio.server.mapper.GroupMapper;
 import cn.cumtcdio.server.mapper.RoleMapper;
 import cn.cumtcdio.server.mapper.UserMapper;
@@ -16,12 +17,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -101,10 +105,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(String username, String password) {
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManager.authenticate(upToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        return jwtTokenUtil.generateToken(userDetails);
+        try{
+            Authentication authentication = authenticationManager.authenticate(upToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            return jwtTokenUtil.generateToken(userDetails);
+        } catch (BadCredentialsException e){
+            return "用户名或密码错误";
+        }
     }
 
     @Override
@@ -129,6 +137,33 @@ public class UserServiceImpl implements UserService {
         List<UserBaseInfoVO> userBaseInfoVOS = new ArrayList<>();
         convertUserToUserBaseInfoVO(users, userBaseInfoVOS);
         return userBaseInfoVOS;
+    }
+
+    @Override
+    public Integer completeUserInfo(UserParams userParams) {
+        return userMapper.completeUserInfo(userParams);
+    }
+
+    @Override
+    public Integer updatePassword(String username, String password) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String pw = passwordEncoder.encode(password);
+        return userMapper.updatePassword(pw,username);
+    }
+
+    @Override
+    public Integer isNotFirstCompleted(String username) {
+        User user = userMapper.isNotFirstCompleted(username);
+        Integer number = 0;
+        if (user != null) {
+            number = 1;
+        }
+        return number;
+    }
+
+    @Override
+    public UserParams getUserParams(String username) {
+        return userMapper.getUserParams(username);
     }
 
     private void convertUserToUserBaseInfoVO(List<User> users, List<UserBaseInfoVO> userBaseInfoVOS) {

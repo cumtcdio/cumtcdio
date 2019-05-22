@@ -6,10 +6,17 @@
                 <div style="display: flex;align-items: center;margin-right: 7px">
                     <el-dropdown @command="handleCommand">
                       <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
-                        用户<i class="el-icon-arrow-down el-icon--right"></i>
+                        {{user.realName}}
+                          <i><img src="http://bpic.588ku.com/element_pic/01/40/00/64573ce2edc0728.jpg"
+                                  style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
+                          <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
                       </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>{{user.realName}}</el-dropdown-item>
+                            <el-dropdown-item>
+                                <router-link to="/info/complete">
+                                    {{user.realName}}
+                                </router-link>
+                            </el-dropdown-item>
                             <el-dropdown-item command="logout">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
