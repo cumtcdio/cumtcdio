@@ -134,22 +134,22 @@
               <tr>
                 <td style="margin:0;padding:0">
                   <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].achievement" :key="index" class="achievement">
-                    <a :href="item.address">{{item.name}}</a>
+                    <div @click="handlePreview(item.address)">{{item.name}}</div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
                   <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].achievement" :key="index" class="achievement">
-                    <a :href="item.address">{{item.name}}</a>
+                    <div @click="handlePreview(item.address)">{{item.name}}</div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
                   <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].achievement" :key="index" class="achievement">
-                    <a :href="item.address">{{item.name}}</a>
+                    <div @click="handlePreview(item.address)">{{item.name}}</div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
                   <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].achievement" :key="index" class="achievement">
-                    <a :href="item.address">{{item.name}}</a>
+                    <div @click="handlePreview(item.address)">{{item.name}}</div>
                   </div>
                 </td>
               </tr>
@@ -162,7 +162,7 @@
               </tr>
               <tr>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index,item)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -170,7 +170,7 @@
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index,item)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -178,7 +178,7 @@
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index,item)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -186,7 +186,7 @@
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index)">
+                  <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index,item)">
                     <div style="position:relative">
                       <div class="ellipsis">{{item.title}}</div>
                       <div class="time text-muted">{{item.time}}</div>
@@ -199,11 +199,25 @@
           <el-dialog
             title="项目过程管理"
             :visible.sync="dialogVisible"
-            width="30%">
+            top="2vh"
+            width="60%">
             <div v-text="dialogContent.title"></div>
             <div v-text="dialogContent.time"></div>
             <div v-text="dialogContent.require"></div>
             <div v-text="dialogContent.content"></div>
+            <iframe :src='officeUrl'
+            width='100%' height='600px' frameborder='1'>
+            </iframe>
+          </el-dialog>
+          <el-dialog
+              title="文件预览"
+              :visible.sync="fileDialogVisible"
+              top="2vh"
+              width="60%"
+              style="height:1000px">
+              <iframe :src='officeUrl'
+              width='100%' height='600px' frameborder='1'>
+              </iframe>
           </el-dialog>
         </div>
       </div>
@@ -229,6 +243,8 @@
   export default {
       data() {
       return {
+        officeUrl:"",
+        fileDialogVisible:false,
         dialogContent: {
           title: '',
           time: '',
@@ -425,6 +441,10 @@
        this.getAllGrades()
     },
     methods: {
+      handlePreview(address){
+          this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+address
+          this.fileDialogVisible = true
+      },
       getGroupInfosByGroupId: function () {
           this.loading = true
           axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
@@ -602,20 +622,24 @@
       changeCurrentGrade: function (gradeSn) {
         this.getGroupsByGradeSn(gradeSn)
       },
-      cDialogShow(index) {
+      cDialogShow(index,item) {
         this.dialogContent = this.groupInfo.ccourseVOS[this.cIndex].processManage[index]
+        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
         this.dialogVisible = true
       },
-      dDialogShow(index){
+      dDialogShow(index,item){
         this.dialogContent = this.groupInfo.dcourseVOS[this.dIndex].processManage[index]
+        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
         this.dialogVisible = true
       },
-      iDialogShow(index){
+      iDialogShow(index,item){
         this.dialogContent = this.groupInfo.icourseVOS[this.iIndex].processManage[index]
+        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
         this.dialogVisible = true
       },
-      oDialogShow(index){
+      oDialogShow(index,item){
         this.dialogContent = this.groupInfo.ocourseVOS[this.oIndex].processManage[index]
+        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
         this.dialogVisible = true
       }
     }
