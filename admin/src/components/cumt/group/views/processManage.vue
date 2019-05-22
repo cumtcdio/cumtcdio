@@ -3,7 +3,7 @@
         <el-tabs type="border-card">
             <el-tab-pane label="C" class="p-3">
                 <el-collapse>
-                    <el-collapse-item v-for="(item, index) in group.c" :key="index" :title="item.courseName">
+                    <el-collapse-item v-for="(item, index) in group.ccourseVOS" :key="index" :title="item.courseName">
                         <el-table
                             :data="item.achievement"
                             border>
@@ -26,10 +26,10 @@
                             label="操作">
                             <template slot-scope="scope">
                                 <el-upload
-                                action="https://jsonplaceholder.typicode.com/posts/"
+                                :action="uploadUrl"
                                 :multiple = "multiple"
                                 :show-file-list = "showFile"
-                                :on-success="uploadSuccess(scope.row.achievementId)">
+                                :on-success="(response)=>uploadSuccess(scope.row.addressId,response)">
                                     <el-button slot="trigger" type="primary" size="small">上传</el-button>
                                     <el-button class="ml-2" @click="handlePreview(scope.row.address)" type="primary" size="small">查看</el-button>
                                 </el-upload>
@@ -47,7 +47,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="processUploadSuccess()">
+                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>
@@ -57,7 +57,7 @@
             </el-tab-pane>
             <el-tab-pane label="D" class="p-3">
                 <el-collapse>
-                    <el-collapse-item v-for="(item, index) in group.d" :key="index" :title="item.courseName">
+                    <el-collapse-item v-for="(item, index) in group.dcourseVOS" :key="index" :title="item.courseName">
                         <el-table
                             :data="item.achievement"
                             border>
@@ -80,10 +80,10 @@
                             label="操作">
                             <template slot-scope="scope">
                                 <el-upload
-                                action="https://jsonplaceholder.typicode.com/posts/"
+                                :action="uploadUrl"
                                 :multiple = "multiple"
                                 :show-file-list = "showFile"
-                                :on-success="uploadSuccess(scope.row.achievementId)">
+                                :on-success="(response)=>uploadSuccess(scope.row.addressId,response)">
                                     <el-button slot="trigger" type="primary" size="small">上传</el-button>
                                     <el-button class="ml-2" @click="handlePreview(scope.row.address)" type="primary" size="small">查看</el-button>
                                 </el-upload>
@@ -101,7 +101,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="processUploadSuccess()">
+                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>
@@ -111,7 +111,7 @@
             </el-tab-pane>
             <el-tab-pane label="I" class="p-3">
                 <el-collapse>
-                    <el-collapse-item v-for="(item, index) in group.i" :key="index" :title="item.courseName">
+                    <el-collapse-item v-for="(item, index) in group.icourseVOS" :key="index" :title="item.courseName">
                         <el-table
                             :data="item.achievement"
                             border>
@@ -137,7 +137,7 @@
                                 :action="uploadUrl"
                                 :multiple = "multiple"
                                 :show-file-list = "showFile"
-                                :on-success="uploadSuccess(scope.row.achievementId)">
+                                :on-success="(response)=>uploadSuccess(scope.row.addressId,response)">
                                     <el-button slot="trigger" type="primary" size="small">上传</el-button>
                                     <el-button class="ml-2" @click="handlePreview(scope.row.address)" type="primary" size="small">查看</el-button>
                                 </el-upload>
@@ -155,7 +155,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="processUploadSuccess()">
+                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>
@@ -165,7 +165,7 @@
             </el-tab-pane>
             <el-tab-pane label="O" class="p-3">
                 <el-collapse>
-                    <el-collapse-item v-for="(item, index) in group.o" :key="index" :title="item.courseName">
+                    <el-collapse-item v-for="(item, index) in group.ocourseVOS" :key="index" :title="item.courseName">
                         <el-table
                             :data="item.achievement"
                             border>
@@ -188,10 +188,10 @@
                             label="操作">
                             <template slot-scope="scope">
                                 <el-upload
-                                action="https://jsonplaceholder.typicode.com/posts/"
+                                :action="uploadUrl"
                                 :multiple = "multiple"
                                 :show-file-list = "showFile"
-                                :on-success="uploadSuccess(scope.row.achievementId)">
+                                :on-success="(response)=>uploadSuccess(scope.row.addressId,response)">
                                     <el-button slot="trigger" type="primary" size="small">上传</el-button>
                                     <el-button class="ml-2" @click="handlePreview(scope.row.address)" type="primary" size="small">查看</el-button>
                                 </el-upload>
@@ -209,7 +209,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="processUploadSuccess()">
+                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">:on-success="processUploadSuccess()">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>
@@ -219,6 +219,16 @@
                 </el-collapse>
             </el-tab-pane>
         </el-tabs>
+        <el-dialog
+            title="项目过程管理"
+            :visible.sync="dialogVisible"
+            top="2vh"
+            width="60%"
+            style="height:1000px">
+            <iframe :src='officeUrl'
+             width='100%' height='600px' frameborder='1'>
+            </iframe>
+        </el-dialog>
     </div>
 </template>
 
@@ -226,147 +236,57 @@
     export default {
         data() {
             return {
-                uploadUrl: "",
+                officeUrl:"",
+                dialogVisible: false,
+                uploadUrl: "/api/upload",
                 showFile: false,
                 multiple: false,
                 group: {
-                    title:'第一组',
-                    name: '校园移动微创客联盟',
-                    teacher: '冯文龙',
-                    member: 'XXX、XXX、XXX、XXX、XXX',
-                    teamImg: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1967724590,2451003767&fm=11&gp=0.jpg',
-                    desc: '这里是项目概要这里是项目概要这里是项目概要这里是项目概要这里是项目概要项目概要项目概要项目概要',
-                    c:[
-                    {
-                        courseId: 1,
-                        courseName: '互联网商业模式设计',
-                        achievement:[
-                        {
-                            achievementId: 1,
-                            name: '商业计划书',
-                            address: '',
-                            score: 51
-                        },
-                        {
-                            name: '商业计划书2',
-                            address: '#'
-                        }
-                        ],
-                        processManage: [
-                        {
-                            title: '完成商业计划书',
-                            require: `这里是任务的要求
-                            1.要求一
-                            2.要求二`,
-                            content: '这里是任务的内容',
-                            time:'2019/4/10'
-                        }
-                        ]
-                    },
-                    {
-                        courseId: 1,
-                        courseName: '互联网商业模式设计2',
-                        achievement:[
-                        {
-                            name: '商业计划书3',
-                            address: '#'
-                        },
-                        {
-                            name: '商业计划书4',
-                            address: '#'
-                        }
-                        ],
-                        processManage: [
-                        {
-                            title: '完成商业计划书完成商业计划书完成完成商业计划书完成商业计划书完成商业计划书',
-                            require: `这里是任务的要求
-                            1.要求一
-                            2.要求二`,
-                            content: '这里是任务的内容',
-                            time:'2019/4/10'
-                        }
-                        ]
-                    }
-                    ],
-                    d:[
-                    {
-                        courseId: 1,
-                        courseName: 'web前端',
-                        achievement:[
-                        {
-                            name: '商业计划书',
-                            address: '#'
-                        }
-                        ],
-                        processManage: [
-                        {
-                            title: '完成商业计划书',
-                            require: `这里是任务的要求
-                            1.要求一
-                            2.要求二`,
-                            content: '这里是任务的内容',
-                            time:'2019/4/10'
-                        }
-                        ]
-                    }
-                    ],
-                    i:[
-                    {
-                        courseId: 1,
-                        courseName: '互联网商业模式设计',
-                        achievement:[
-                        {
-                            name: '商业计划书',
-                            address: '#'
-                        }
-                        ],
-                        processManage: [
-                        {
-                            title: '完成商业计划书',
-                            require: `这里是任务的要求
-                            1.要求一
-                            2.要求二`,
-                            content: '这里是任务的内容',
-                            time:'2019/4/10'
-                        }
-                        ]
-                    }
-                    ],
-                    o:[
-                    {
-                        courseId: 1,
-                        courseName: '互联网商业模式设计',
-                        achievement:[
-                        {
-                            name: '商业计划书',
-                            address: '#'
-                        }
-                        ],
-                        processManage: [
-                        {
-                            title: '完成商业计划书',
-                            require: `这里是任务的要求
-                            1.要求一
-                            2.要求二`,
-                            content: '这里是任务的内容',
-                            time:'2019/4/9'
-                        }
-                        ]
-                    }
-                    ]
+
                 }
             }
         },
+        mounted(){
+            this.axios.get("/api/group/getDetail?gradeSn="+this.$store.state.user.gradeSn+"&groupSn="+this.$store.state.user.groupSn)
+                .then(res =>{
+                    this.group = res.data.data
+                })
+        },
         methods: {
-            uploadSuccess() {
-                
+            uploadSuccess(addressId,res) {
+                this.axios.put("/api/group/achievement/upload?addressId="+addressId+"&address="+res)
+                    .then(res =>{
+                        if(res.status == 200){
+                            this.axios.get("/api/group/getDetail?gradeSn="+this.$store.state.user.gradeSn+"&groupSn="+this.$store.state.user.groupSn)
+                                .then(res =>{
+                                    this.group = res.data.data
+                                })
+                            this.$message({
+                                message: '上传成功',
+                                type: 'success'
+                            });
+                        }
+                    })
             },
-            processUploadSuccess(){
-                
+            processUploadSuccess(addressId,res){
+                this.axios.put("/api/group/task/upload?addressId="+addressId+"&address="+res)
+                    .then(res =>{
+                        if(res.status == 200){
+                            this.axios.get("/api/group/getDetail?gradeSn="+this.$store.state.user.gradeSn+"&groupSn="+this.$store.state.user.groupSn)
+                                .then(res =>{
+                                    this.group = res.data.data
+                                })
+                            this.$message({
+                                message: '上传成功',
+                                type: 'success'
+                            });
+                        }
+                    })
             },
-            // handlePreview(address){
-            //     // console.log(address)
-            // },
+            handlePreview(address){
+                this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+address
+                this.dialogVisible = true
+            },
             
 
         },

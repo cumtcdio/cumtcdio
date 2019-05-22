@@ -117,6 +117,16 @@
             <el-button type="primary" @click="handleTaskAdd">发 布</el-button>
         </span>
         </el-dialog>
+        <el-dialog
+            title="项目过程管理"
+            :visible.sync="dialogVisible"
+            top="2vh"
+            width="60%"
+            style="height:1000px">
+            <iframe :src='officeUrl'
+             width='100%' height='600px' frameborder='1'>
+            </iframe>
+        </el-dialog>
     </div>
 </template>
 
@@ -124,6 +134,8 @@
     export default {
         data() {
             return {
+                officeUrl:"",
+                dialogVisible: false,
                 taskFormItem:{
                     title:"",
                     require:"",
@@ -262,6 +274,14 @@
                             })
                     })
                 
+            },
+            handleView(scope){
+                this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+scope.row.address
+                this.dialogVisible = true
+            },
+            handleTaskView(scope){
+                this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+scope.row.address
+                this.dialogVisible = true
             }
         },
     }

@@ -8,6 +8,16 @@ public class AchievementVO {
 
     private String address;
 
+    private Integer addressId;
+
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
+    }
+
     public Integer getAchievementId() {
         return achievementId;
     }

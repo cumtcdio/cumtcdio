@@ -70,8 +70,23 @@ public class GroupController {
     }
 
     @PostMapping("/insert")
-    public ResultVO getMember(@RequestBody GroupForm groupForm){
+    public ResultVO insertGroup(@RequestBody GroupForm groupForm){
         return ResultVOUtil.success(groupService.insertGroup(groupForm));
+    }
+
+    @PutMapping("/update")
+    public ResultVO updateGroup(@RequestBody GroupForm groupForm){
+        return ResultVOUtil.success(groupService.updateGroup(groupForm));
+    }
+
+    @PutMapping("/achievement/upload")
+    public ResultVO uploadAchievement(@RequestParam Integer addressId,@RequestParam String address){
+        return ResultVOUtil.success(groupService.uploadAchievement(addressId,address));
+    }
+
+    @PutMapping("/task/upload")
+    public ResultVO uploadTask(@RequestParam Integer addressId,@RequestParam String address){
+        return ResultVOUtil.success(groupService.uploadTask(addressId,address));
     }
 
 }

@@ -21,4 +21,10 @@ public interface GroupService {
     List<User> getMemberInfoByGroupId(Integer groupId);
 
     Integer insertGroup(GroupForm groupForm);
+
+    Integer updateGroup(GroupForm groupForm);
+
+    Integer uploadAchievement(Integer addressId, String address);
+
+    Integer uploadTask(Integer addressId, String address);
 }

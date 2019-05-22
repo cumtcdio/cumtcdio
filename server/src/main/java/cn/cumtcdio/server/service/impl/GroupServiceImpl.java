@@ -8,12 +8,11 @@ import cn.cumtcdio.server.model.*;
 import cn.cumtcdio.server.service.GroupService;
 import cn.cumtcdio.server.util.GroupDetailVOUtil;
 import com.google.common.base.Joiner;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +95,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public Integer insertGroup(GroupForm groupForm) {
         int result = 0;
         Group group = new Group();
@@ -106,6 +106,46 @@ public class GroupServiceImpl implements GroupService {
         group.setGroupSn(groupForm.getGroupSn());
         group.setTeacher(groupForm.getTeacher());
         result += groupMapper.insertSelective(group);
+        result += updateMemberSn(groupForm, group);
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public Integer updateGroup(GroupForm groupForm) {
+        int result = 0;
+        Group group = new Group();
+        group.setId(groupMapper.selectIdByGradeSnAndGroupSn(groupForm.getGradeSn(),groupForm.getGroupSn()));
+        group.setDesc(groupForm.getDesc());
+        group.setGradeSn(groupForm.getGradeSn());
+        group.setGroupImg(groupForm.getImgUrl());
+        group.setGroupName(groupForm.getName());
+        group.setGroupSn(groupForm.getGroupSn());
+        group.setTeacher(groupForm.getTeacher());
+        result += groupMapper.updateByPrimaryKeySelective(group);
+        result += updateMemberSn(groupForm, group);
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public Integer uploadAchievement(Integer addressId,String address) {
+        AchievementAddress achievementAddress = new AchievementAddress();
+        achievementAddress.setId(addressId);
+        achievementAddress.setAddress(address);
+        return achievementAddressMapper.updateByPrimaryKeySelective(achievementAddress);
+    }
+
+    @Override
+    public Integer uploadTask(Integer addressId, String address) {
+        TaskResult taskResult = new TaskResult();
+        taskResult.setId(addressId);
+        taskResult.setAddress(address);
+        return taskResultMapper.updateByPrimaryKeySelective(taskResult);
+    }
+
+    private int updateMemberSn(GroupForm groupForm, Group group) {
+        int result = 0;
         for (MemberForm memberForm: groupForm.getMember()){
             User user = new User();
             //通过学号查找id

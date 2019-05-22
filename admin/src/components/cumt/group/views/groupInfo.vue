@@ -30,9 +30,7 @@
                 </el-form-item>
                 <el-form-item label="成员">
                     <div style="margin:0 10px 10px 10px;padding:0" v-for="(item, index) in formItem.member" :key="index">
-                        <el-input v-model="item.sn" placeholder="学号..." class="mx-3" style="width:200px"></el-input>
-                        <el-input v-model="item.name" placeholder="姓名..." class="mx-3" style="width:200px"></el-input>
-                        <el-input v-model="item.telephone" placeholder="手机号..." class="mx-3" style="width:200px"></el-input>
+                        <el-input v-model="item.sn" placeholder="仅输入学号即可..." class="mx-3" style="width:200px"></el-input>
                         <i class="el-icon-delete" style="font-size:22px;cursor:pointer" @click="deleteMember(index)"></i>
                     </div>
                     <i class="el-icon-plus" style="font-size:22px;cursor:pointer" @click="addMember"></i>
@@ -83,7 +81,7 @@
                         // {type: 'number', message: '组别必须为数字值'}
                         ],
                     name:[{ required: true, message: '请输入项目名称', trigger: 'blur' },],
-                    teacher:[{ required: true, message: '请输入指导老师', trigger: 'blur' },],
+                    // teacher:[{ required: true, message: '请输入指导老师', trigger: 'blur' },],
                     imgUrl:[{ required: true, message: '请上传图片', trigger: 'blur' },],
                     desc:[{ required: true, message: '请输入项目概要', trigger: 'blur' },
                         { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
@@ -115,7 +113,7 @@
                             //         telephone: member.phone
                             //     })
                             // }
-                            res.data.data.forEach((member,index) => {
+                            res.data.data.forEach((member) => {
                                 this.formItem.member.push({
                                     sn: member.username,
                                     name: member.realName,
@@ -128,9 +126,7 @@
         methods: {
             addMember(){
                 this.formItem.member.push({
-                            sn: "",
-                            name: "",
-                            telephone: ""
+                            sn: ""
                         })
             },
             deleteMember(index) {
@@ -139,7 +135,26 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    this.$confirm('确认修改?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.axios.put("/api/group/update",this.formItem)
+                            .then(res =>{
+                                if(res.status == 200){
+                                    this.$message({
+                                        message: '修改成功',
+                                        type: 'success'
+                                    });
+                                    this.$router.push({
+                                        path:"/cdio"
+                                    })
+                                }
+                            })
+                    }).catch(() => {
+                          
+                    });
                 } else {
                     return false;
                 }
