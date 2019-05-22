@@ -90,66 +90,82 @@
             <tbody class="text-center">
               <tr>
                 <td>
-                  <el-select v-model="cIndex" placeholder="请选择" size="medium">
-                    <el-option
-                      v-for="(course,index) in groupInfo.ccourseVOS"
-                      :key="index"
-                      :label="course.courseName"
-                      :value="index">
-                    </el-option>
-                  </el-select>
+                  <div v-if="groupInfo.ccourseVOS.length">
+                    <el-select v-model="cIndex" placeholder="请选择" size="medium">
+                      <el-option
+                        v-for="(course,index) in groupInfo.ccourseVOS"
+                        :key="index"
+                        :label="course.courseName"
+                        :value="index">
+                      </el-option>
+                    </el-select>
+                  </div>
                 </td>
                 <td>
-                  <el-select v-model="dIndex" placeholder="请选择" size="medium">
-                    <el-option
-                      v-for="(course,index) in groupInfo.dcourseVOS"
-                      :key="index"
-                      :label="course.courseName"
-                      :value="index">
-                    </el-option>
-                  </el-select>
+                  <div v-if="groupInfo.dcourseVOS.length">
+                    <el-select v-model="dIndex" placeholder="请选择" size="medium">
+                      <el-option
+                        v-for="(course,index) in groupInfo.dcourseVOS"
+                        :key="index"
+                        :label="course.courseName"
+                        :value="index">
+                      </el-option>
+                    </el-select>
+                  </div>
                 </td>
                 <td>
-                  <el-select v-model="iIndex" placeholder="请选择" size="medium">
-                    <el-option
-                      v-for="(course,index) in groupInfo.icourseVOS"
-                      :key="index"
-                      :label="course.courseName"
-                      :value="index">
-                    </el-option>
-                  </el-select>
+                  <div v-if="groupInfo.icourseVOS.length">
+                    <el-select v-model="iIndex" placeholder="请选择" size="medium">
+                      <el-option
+                        v-for="(course,index) in groupInfo.icourseVOS"
+                        :key="index"
+                        :label="course.courseName"
+                        :value="index">
+                      </el-option>
+                    </el-select>
+                  </div>
                 </td>
                 <td>
-                  <el-select v-model="oIndex" placeholder="请选择" size="medium">
-                    <el-option
-                      v-for="(course,index) in groupInfo.ocourseVOS"
-                      :key="index"
-                      :label="course.courseName"
-                      :value="index">
-                    </el-option>
-                  </el-select>
+                  <div v-if="groupInfo.ocourseVOS.length">
+                    <el-select v-model="oIndex" placeholder="请选择" size="medium">
+                      <el-option
+                        v-for="(course,index) in groupInfo.ocourseVOS"
+                        :key="index"
+                        :label="course.courseName"
+                        :value="index">
+                      </el-option>
+                    </el-select>
+                  </div>
                 </td>
               </tr>
               <!-- achievement -->
               <tr>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].achievement" :key="index" class="achievement">
-                    <div @click="handlePreview(item.address)">{{item.name}}</div>
+                  <div v-if="groupInfo.ccourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].achievement" :key="index" class="achievement">
+                      <div @click="handlePreview(item.address)">{{item.name}}</div>
+                    </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].achievement" :key="index" class="achievement">
-                    <div @click="handlePreview(item.address)">{{item.name}}</div>
+                  <div v-if="groupInfo.dcourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].achievement" :key="index" class="achievement">
+                      <div @click="handlePreview(item.address)">{{item.name}}</div>
+                    </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].achievement" :key="index" class="achievement">
-                    <div @click="handlePreview(item.address)">{{item.name}}</div>
+                  <div v-if="groupInfo.icourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].achievement" :key="index" class="achievement">
+                      <div @click="handlePreview(item.address)">{{item.name}}</div>
+                    </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
-                  <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].achievement" :key="index" class="achievement">
-                    <div @click="handlePreview(item.address)">{{item.name}}</div>
+                  <div v-if="groupInfo.ocourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].achievement" :key="index" class="achievement">
+                      <div @click="handlePreview(item.address)">{{item.name}}</div>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -162,34 +178,42 @@
               </tr>
               <tr>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index,item)">
-                    <div style="position:relative">
-                      <div class="ellipsis">{{item.title}}</div>
-                      <div class="time text-muted">{{item.time}}</div>
+                  <div v-if="groupInfo.ccourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index,item)">
+                      <div style="position:relative">
+                        <div class="ellipsis">{{item.title}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                      </div>
                     </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index,item)">
-                    <div style="position:relative">
-                      <div class="ellipsis">{{item.title}}</div>
-                      <div class="time text-muted">{{item.time}}</div>
+                  <div v-if="groupInfo.dcourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index,item)">
+                      <div style="position:relative">
+                        <div class="ellipsis">{{item.title}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                      </div>
                     </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index,item)">
-                    <div style="position:relative">
-                      <div class="ellipsis">{{item.title}}</div>
-                      <div class="time text-muted">{{item.time}}</div>
+                  <div v-if="groupInfo.icourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index,item)">
+                      <div style="position:relative">
+                        <div class="ellipsis">{{item.title}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                      </div>
                     </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0;cursor:pointer">
-                  <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index,item)">
-                    <div style="position:relative">
-                      <div class="ellipsis">{{item.title}}</div>
-                      <div class="time text-muted">{{item.time}}</div>
+                  <div v-if="groupInfo.ocourseVOS.length">
+                    <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index,item)">
+                      <div style="position:relative">
+                        <div class="ellipsis">{{item.title}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                      </div>
                     </div>
                   </div>
                 </td>
@@ -202,7 +226,7 @@
             top="2vh"
             width="60%">
             <div v-text="dialogContent.title"></div>
-            <div v-text="dialogContent.time"></div>
+            <div >{{dialogContent.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
             <div v-text="dialogContent.require"></div>
             <div v-text="dialogContent.content"></div>
             <iframe :src='officeUrl'
@@ -642,7 +666,30 @@
         this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
         this.dialogVisible = true
       }
-    }
+    },
+    filters: {
+      dateFormat: function(value,fmt) {
+          let getDate = new Date(value);
+          let o = {
+              'M+': getDate.getMonth() + 1,
+              'd+': getDate.getDate(),
+              'h+': getDate.getHours(),
+              'm+': getDate.getMinutes(),
+              's+': getDate.getSeconds(),
+              'q+': Math.floor((getDate.getMonth() + 3) / 3),
+              'S': getDate.getMilliseconds()
+          };
+          if (/(y+)/.test(fmt)) {
+              fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+          }
+          for (let k in o) {
+              if (new RegExp('(' + k + ')').test(fmt)) {
+              fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+              }
+          }
+          return fmt;
+      }
+  }
   }
 </script>
 
@@ -667,6 +714,7 @@
   position: relative;
   text-align: center;
   justify-content: center;
+  cursor: pointer;
 }
 .ivu-cell-main{
   width: 100%;

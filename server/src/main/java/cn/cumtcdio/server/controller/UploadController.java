@@ -15,7 +15,6 @@ public class UploadController {
     UploadService uploadService;
 
     @PostMapping("/upload")
-//    @PreAuthorize("hasAuthority('admin')")
     public String uploadImage(@RequestParam MultipartFile file){
         String uri = uploadService.upload(file);
         return uri;

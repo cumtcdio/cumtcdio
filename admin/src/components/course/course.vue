@@ -83,7 +83,7 @@
                                         <el-table-column
                                             label="操作">
                                             <template slot-scope="scope">
-                                                 <el-button v-if="!scope.row.address" @click="handleTaskView(scope)" type="text" size="small">查看</el-button>
+                                                 <el-button v-if="scope.row.address" @click="handleTaskView(scope)" type="text" size="small">查看</el-button>
                                                  <el-button v-if="!scope.row.score" @click="handleTaskScore(scope)" type="text" size="small">打分</el-button>
                                                  <el-button v-if="scope.row.score" @click="handleTaskScore(scope)" type="text" size="small">重新打分</el-button>
                                             </template>

@@ -8,6 +8,16 @@ public class CourseForm {
 
     String courseType;
 
+    Integer teacherId;
+
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
+
     public Integer getGradeId() {
         return gradeId;
     }

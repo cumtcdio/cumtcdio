@@ -55,6 +55,7 @@ public class CourseServiceImpl implements CourseService {
             courseGradeKey.setCourseId(course.getId());
             String gradeSn = gradeMapper.selectByPrimaryKey(courseForm.getGradeId()).getGradeSn();
             courseGradeKey.setGradeSn(gradeSn);
+            courseGradeKey.setTeacherId(courseForm.getTeacherId());
             result += courseGradeMapper.insertSelective(courseGradeKey);
         }else {
             CourseGradeKey courseGradeKey = new CourseGradeKey();

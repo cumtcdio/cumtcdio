@@ -106,9 +106,11 @@ public class GroupDetailVOUtil {
                 achievementVO.setName(achievement.getAchievementName());
                 //查出该组该课程的成果address
                 AchievementAddress achievementAddress = achievementAddressMapper.selectByAchiIdAndGroupId(achievement.getId(),group.getId());
+                if (achievementAddress != null ){
+                    achievementVO.setAddressId(achievementAddress.getId());
+                }
                 if (achievementAddress != null && StringUtils.isNotBlank(achievementAddress.getAddress())){
                     achievementVO.setAddress(achievementAddress.getAddress());
-                    achievementVO.setAddressId(achievementAddress.getId());
                 }
                 achievementVOS.add(achievementVO);
             }
@@ -127,6 +129,8 @@ public class GroupDetailVOUtil {
                 TaskResult taskResult = taskResultMapper.selectByTaskIdAndGroupId(task.getId(),group.getId());
                 if(taskResult != null && StringUtils.isNotBlank(taskResult.getAddress())){
                     processManageVO.setAddress(taskResult.getAddress());
+                }
+                if(taskResult != null){
                     processManageVO.setAddressId(taskResult.getId());
                 }
                 processManageVOS.add(processManageVO);

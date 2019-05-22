@@ -47,7 +47,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">
+                                :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>
@@ -101,7 +101,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">
+                                :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>
@@ -155,7 +155,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">
+                                :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>
@@ -209,7 +209,7 @@
                                 class="my-2"
                                 :action="uploadUrl"
                                 :multiple = "multiple"
-                                :on-success="(response)=>processUploadSuccess(scope.row.addressId,response)">:on-success="processUploadSuccess()">
+                                :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
                             </el-collapse-item>

@@ -33,8 +33,8 @@
                     <el-table-column
                     label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(item.gradeSn,scope.row.groupSn)" type="text" size="small">基本信息修改</el-button>
-                        <el-button type="text" size="small" @click="editClick">项目过程管理</el-button>
+                        <el-button v-if="$store.state.user.groupSn == scope.row.groupSn && $store.state.user.gradeSn == item.gradeSn" @click="handleClick(item.gradeSn,scope.row.groupSn)" type="text" size="small">基本信息修改</el-button>
+                        <el-button v-if="$store.state.user.groupSn == scope.row.groupSn && $store.state.user.gradeSn == item.gradeSn" type="text" size="small" @click="editClick">项目过程管理</el-button>
                     </template>
                     </el-table-column>
                 </el-table>
@@ -74,6 +74,16 @@
                 this.$router.push("/cdio/group/processManage")
             }
         },
+        watch:{
+            $route (to,from){
+                if(to.path == "/cdio" && from.path.indexOf('/cdio/group') != -1){
+                    this.axios.get("/api/group/getAll")
+                    .then(res =>{
+                        this.groupInfo = res.data.data
+                    })
+                }
+            }
+        }
     }
 </script>
 <style scoped>

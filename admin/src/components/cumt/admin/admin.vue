@@ -267,6 +267,24 @@
             <el-button type="primary" @click="handleTaskAdd">发 布</el-button>
         </span>
         </el-dialog>
+        <el-dialog
+            title="提示"
+            :visible.sync="courseDialogVisible"
+            width="30%">
+            <el-input v-model="courseName" placeholder="课程名称" class="mb-4"></el-input>
+            <el-select v-model="teacherId" placeholder="请选择">
+                        <el-option
+                        v-for="(item, index) in teachers" 
+                        :key="index"
+                        :label="item.realName"
+                        :value="item.userId">
+                        </el-option>
+                    </el-select>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="courseDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="courseFormSubmit">确 定</el-button>
+            </span>
+        </el-dialog>
 
     </div>
 </template>
@@ -275,6 +293,10 @@
     export default {
         data() {
             return {
+                courseName:"",
+                courseDialogVisible: false,
+                teacherId:null,
+                teachers:null,
                 taskFormItem:{
                     title:"",
                     require:"",
@@ -302,6 +324,10 @@
                         this.activeGradeId = this.grades[0].gradeId + ""
                         this.activeGradeSn = this.grades[0].gradeSn + ""
                         this.activeCourseId = this.grades[0].cCourses[0].courseId+ ""
+                    })
+                this.axios.get("/api/user/teacher/info")
+                    .then(res =>{
+                        this.teachers = res.data.data
                     })
             },
             initData(){
@@ -337,31 +363,32 @@
             },
             handleCourseEdit(targetName, action) {
                 if (action === 'add') {
-                    this.$prompt('请输入课程名称', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消'
-                    }).then(({ value }) => {
-                        let formItem = {
-                            courseName: value,
-                            courseType: this.activeType,
-                            gradeId: this.activeGradeId
-                        }
-                        this.axios.post("/api/admin/course/insert",formItem)
-                            .then(res =>{
-                                if(res.status == 200){
-                                    this.$message({
-                                        type: 'success',
-                                        message: '添加成功'
-                                    });
-                                    this.initData()
-                                }
-                            })
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消'
-                        });       
-                    });
+                    // this.$prompt('请输入课程名称', '提示', {
+                    //     confirmButtonText: '确定',
+                    //     cancelButtonText: '取消'
+                    // }).then(({ value }) => {
+                    //     let formItem = {
+                    //         courseName: value,
+                    //         courseType: this.activeType,
+                    //         gradeId: this.activeGradeId
+                    //     }
+                    //     this.axios.post("/api/admin/course/insert",formItem)
+                    //         .then(res =>{
+                    //             if(res.status == 200){
+                    //                 this.$message({
+                    //                     type: 'success',
+                    //                     message: '添加成功'
+                    //                 });
+                    //                 this.initData()
+                    //             }
+                    //         })
+                    // }).catch(() => {
+                    //     this.$message({
+                    //         type: 'info',
+                    //         message: '已取消'
+                    //     });       
+                    // });
+                    this.courseDialogVisible = true
                 }
                 if (action === 'remove') {
                     this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
@@ -484,6 +511,25 @@
                             this.taskFormItem.title = ""
                             this.taskFormItem.require = ""
                             this.taskFormItem.desc = ""
+                        }
+                    })
+            },
+            courseFormSubmit(){
+                let formItem = {
+                    courseName: this.courseName,
+                    teacherId : this.teacherId,
+                    courseType: this.activeType,
+                    gradeId: this.activeGradeId
+                }
+                this.axios.post("/api/admin/course/insert",formItem)
+                    .then(res =>{
+                        if(res.status == 200){
+                            this.courseDialogVisible = false
+                            this.$message({
+                                type: 'success',
+                                message: '添加成功'
+                            });
+                            this.initData()
                         }
                     })
             }
