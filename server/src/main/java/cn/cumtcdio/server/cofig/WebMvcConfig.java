@@ -52,7 +52,10 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 把不需要认证的接口暴露出去。登录，刷新token，
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/show/getShowDetailsByShowId/**","/api/show/getAllSlide",
+                        "/api/show/countOneTypeShowList/**","/api/show/getShowListLazied/**","/api/group/**",
+                        "/api/show/getShowList2Lazied/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/login", "/favicon.ico", "/**/*.html",
                         "/**/*.css", "/**/*.js", "/assets/**", "/**/*.ttf").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
