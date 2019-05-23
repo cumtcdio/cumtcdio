@@ -154,7 +154,7 @@
         },
         methods: {
             init() {
-                this.axios.get("/api/course/teacher/4")
+                this.axios.get("/api/course/teacher/"+this.$store.state.user.id)
                     .then(res =>{
                         this.courses = res.data
                         this.activeGradeSn = this.courses[0].gradeSn

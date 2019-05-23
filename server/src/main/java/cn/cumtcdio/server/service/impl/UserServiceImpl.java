@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
     public UserInfoVO findUserInfo(String username) {
         UserInfoVO userInfoVO = new UserInfoVO();
         User user = userMapper.getUserInfoByUsername(username);
+        userInfoVO.setId(user.getId());
         userInfoVO.setUsername(username);
         userInfoVO.setRealName(user.getRealName());
         if (user.getGroupId() == null) {

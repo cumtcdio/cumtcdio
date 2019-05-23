@@ -10,6 +10,7 @@ export default new Vuex.Store({
         user: {
             username: window.localStorage.getItem('jwtToken' || '[]') == null ? '未登录' : JSON.parse(window.localStorage.getItem('user' || '[]')).username,
             realName: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).realName,
+            id: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).id,
             groupSn: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).groupSn,
             gradeSn: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).gradeSn,
             roles: window.localStorage.getItem('jwtToken' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).roles,
