@@ -48,6 +48,10 @@ public class SlideService {
             return slideMapper.selectAll();
       }
 
+
+      public List<Slide> getFrontSlide() {
+            return slideMapper.getFrontSlide();
+      }
       /**
        *  添加轮播图
        */

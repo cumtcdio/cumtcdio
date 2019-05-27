@@ -107,4 +107,9 @@
         DELETE from slide
         where id = #{id}
     </delete>
+    <select id="getFrontSlide" resultMap="BaseResultMap">
+        SELECT *
+        FROM slide
+        WHERE deleted = 0
+    </select>
 </mapper>

@@ -14,6 +14,8 @@ public interface SlideMapper{
 //    查找所有轮播图
     List<Slide> selectAll();
 
+    List<Slide> getFrontSlide();
+
     // 添加一条slide数据
     Integer insertSlide(Slide slide);
 
