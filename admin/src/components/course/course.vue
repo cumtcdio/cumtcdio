@@ -127,6 +127,7 @@
              width='100%' height='600px' frameborder='1'>
             </iframe>
         </el-dialog>
+        <a :href="zipUrl" id="zip" style="display:none">zip</a>
     </div>
 </template>
 
@@ -134,6 +135,7 @@
     export default {
         data() {
             return {
+                zipUrl:"#",
                 officeUrl:"",
                 dialogVisible: false,
                 taskFormItem:{
@@ -276,12 +278,28 @@
                 
             },
             handleView(scope){
-                this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+scope.row.address
-                this.dialogVisible = true
+                if(scope.row.address.indexOf(".zip") > -1){
+                    this.zipUrl = scope.row.address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
+
+                }else{
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+scope.row.address
+                    this.dialogVisible = true   
+                }
             },
             handleTaskView(scope){
-                this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+scope.row.address
-                this.dialogVisible = true
+                if(scope.row.address.indexOf(".zip") > -1){
+                    this.zipUrl = scope.row.address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
+
+                }else{
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+scope.row.address
+                    this.dialogVisible = true   
+                }
             }
         },
     }

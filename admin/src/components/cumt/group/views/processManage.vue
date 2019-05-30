@@ -229,6 +229,7 @@
              width='100%' height='600px' frameborder='1'>
             </iframe>
         </el-dialog>
+        <a :href="zipUrl" id="zip" style="display:none">zip</a>
     </div>
 </template>
 
@@ -243,7 +244,8 @@
                 multiple: false,
                 group: {
 
-                }
+                },
+                zipUrl:"#",
             }
         },
         mounted(){
@@ -284,11 +286,17 @@
                     })
             },
             handlePreview(address){
-                this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+address
-                this.dialogVisible = true
-            },
-            
+                if(address.indexOf(".zip") > -1){
+                    this.zipUrl = address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
 
+                }else{
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+address
+                    this.dialogVisible = true   
+                }
+            },
         },
     }
 </script>

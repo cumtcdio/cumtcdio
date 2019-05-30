@@ -466,8 +466,16 @@
     },
     methods: {
       handlePreview(address){
-          this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+address
-          this.fileDialogVisible = true
+          if(address.indexOf(".zip") > -1){
+                    this.zipUrl = address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
+
+                }else{
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+address
+                    this.fileDialogVisible = true   
+                }
       },
       getGroupInfosByGroupId: function () {
           this.loading = true
@@ -647,24 +655,52 @@
         this.getGroupsByGradeSn(gradeSn)
       },
       cDialogShow(index,item) {
-        this.dialogContent = this.groupInfo.ccourseVOS[this.cIndex].processManage[index]
-        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-        this.dialogVisible = true
+        if(item.address.indexOf(".zip") > -1){
+                    this.zipUrl = item.address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
+                }else{
+                    this.dialogContent = this.groupInfo.ccourseVOS[this.cIndex].processManage[index]
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
+                    this.dialogVisible = true  
+                }
       },
       dDialogShow(index,item){
-        this.dialogContent = this.groupInfo.dcourseVOS[this.dIndex].processManage[index]
-        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-        this.dialogVisible = true
+        if(item.address.indexOf(".zip") > -1){
+                    this.zipUrl = item.address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
+                }else{
+                    this.dialogContent = this.groupInfo.dcourseVOS[this.dIndex].processManage[index]
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
+                    this.dialogVisible = true  
+                }
       },
       iDialogShow(index,item){
-        this.dialogContent = this.groupInfo.icourseVOS[this.iIndex].processManage[index]
-        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-        this.dialogVisible = true
+        if(item.address.indexOf(".zip") > -1){
+                    this.zipUrl = item.address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
+                }else{
+                    this.dialogContent = this.groupInfo.icourseVOS[this.iIndex].processManage[index]
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
+                    this.dialogVisible = true  
+                }
       },
       oDialogShow(index,item){
-        this.dialogContent = this.groupInfo.ocourseVOS[this.oIndex].processManage[index]
-        this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-        this.dialogVisible = true
+        if(item.address.indexOf(".zip") > -1){
+                    this.zipUrl = item.address
+                    setTimeout(() => {
+                        document.querySelector('#zip').click()
+                    }, 0.5);
+                }else{
+                    this.dialogContent = this.groupInfo.ocourseVOS[this.oIndex].processManage[index]
+                    this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
+                    this.dialogVisible = true  
+                }
       }
     },
     filters: {
