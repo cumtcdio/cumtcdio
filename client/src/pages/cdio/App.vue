@@ -477,7 +477,7 @@
                     this.fileDialogVisible = true   
                 }
       },
-      getGroupInfosByGroupId: function () {
+      getGroupInfoByGroupId: function () {
           this.loading = true
           axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
               this.groupInfo = resp.data.data
@@ -628,7 +628,7 @@
               } else {
                   this.groups = data.data
                   this.currentGroupId = this.groups[0].groupId
-                  this.getGroupInfosByGroupId()
+                  this.getGroupInfoByGroupId()
               }
           })
       },
@@ -649,7 +649,7 @@
       },
       changeCurrentGroup(index) {
         this.currentGroupId = index
-        this.getGroupInfosByGroupId()
+        this.getGroupInfoByGroupId()
       },
       changeCurrentGrade: function (gradeSn) {
         this.getGroupsByGradeSn(gradeSn)

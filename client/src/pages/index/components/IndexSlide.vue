@@ -35,7 +35,7 @@
                 this.bannerH = document.body.clientWidth / 3
             },
             getSlideData: function () {
-                axios.get('/api/show/getAllSlide').then(response => {
+                axios.get('/api/show/getFrontSlide').then(response => {
                     this.getSlideSucc(response)
                 })
             },

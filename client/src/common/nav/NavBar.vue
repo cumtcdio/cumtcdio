@@ -24,7 +24,7 @@ export default {
                 {
                     index: '1',
                     title: '首页',
-                    href: 'index'
+                    href: 'index.html'
                 },
                 {
                     index: '2',

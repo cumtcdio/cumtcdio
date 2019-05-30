@@ -112,6 +112,12 @@ public class ShowController {
         return ResultVOUtil.success(slideService.getAll());
     }
 
+    @RequestMapping(value = "/getFrontSlide", method = RequestMethod.GET)
+    @ApiOperation(value = "获取前端可显示的轮播图")
+    public ResultVO getFrontSlide() {
+        return ResultVOUtil.success(slideService.getFrontSlide());
+    }
+
     @RequestMapping(value = "/getShowList2Lazied/{type}", method = RequestMethod.GET)
     @ApiOperation(value = "通过type懒加载前两条数据",response = ShowInfoVO.class)
     public ResultVO getShowList2Lazied(@PathVariable Integer type) {
