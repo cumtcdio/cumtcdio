@@ -3,6 +3,14 @@
         <div style="text-align: center">
             学生基本信息表
         </div>
+        <el-select v-model="value" placeholder="请选择">
+            <el-option
+                    v-for="item in options"
+                    :key="item.gradeSn"
+                    :label="item.gradeSn"
+                    :value="item.gradeSn">
+            </el-option>
+        </el-select>
         <el-table
                 :data="tableData"
                 id="outtable"
@@ -13,24 +21,32 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="name"
+                    prop="realName"
                     label="姓名"
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="class"
-                    label="班级">
+                    prop="groupSn"
+                    label="组别"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="phone"
+                    label="手机号"
+                    width="180">
             </el-table-column>
             <el-table-column
                     prop="qqNumber"
-                    label="QQ号">
+                    label="QQ号"
+                    width="180">
             </el-table-column>
             <el-table-column
                     prop="email"
-                    label="邮箱">
+                    label="邮箱"
+                    width="180">
             </el-table-column>
             <el-table-column
-                    prop="address"
+                    prop="family_address"
                     label="地址">
             </el-table-column>
         </el-table>
@@ -44,39 +60,45 @@
     export default {
         data() {
             return {
-                tableData: [{
-                    username: '09162321',
-                    name: '王小虎',
-                    class: '2016-2班',
-                    qqNumber: '1521231293',
-                    email: '123213213@qq.com',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                },{
-                    username: '09162321',
-                    name: '王小虎',
-                    class: '2016-2班',
-                    qqNumber: '1521231293',
-                    email: '123213213@qq.com',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                },{
-                    username: '09162321',
-                    name: '王小虎',
-                    class: '2016-2班',
-                    qqNumber: '1521231293',
-                    email: '123213213@qq.com',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }]
+                gradeSn: null,
+                tableData: [],
+                options: [],
+                value: ''
             }
         },
         methods: {
+            getStudentIndoByGradeSn: function () {
+                this.getRequest('/api/user/student/info/' + this.value).then(res => {
+                    if (res.data){
+                        this.tableData = res.data
+                    }
+                })
+            },
+            getGrade: function () {
+              this.getRequest('/api/group/getAllGrades').then(res => {
+                  if (res.data) {
+                      this.options = res.data
+                      this.value = this.options[0].gradeSn
+                      this.getStudentIndoByGradeSn()
+                  }
+              })
+            },
             exportExcel: function () {
                 var wb = XLSX.utils.table_to_book(document.querySelector('#outtable'))
                 var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
                 try {
-                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
+                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), this.value + '级学生基本信息表.xlsx')
                 } catch (e) { if (typeof console !== 'undefined') alert(e)}
                 return wbout
             },
+        },
+        mounted() {
+            this.getGrade()
+        },
+        watch: {
+            value: function () {
+                this.getStudentIndoByGradeSn()
+            }
         }
     }
 </script>

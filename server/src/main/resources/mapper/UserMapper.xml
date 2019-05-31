@@ -152,12 +152,12 @@
     from user
   </select>
   <select id="getStudentInfo" resultMap="BaseResultMap">
-    select *
+    select id,username,real_name,phone,qq_number,family_address,email,group_id
     from user
-    where is_teacher = 0
+    where is_teacher = 0 and username like CONCAT('09',#{grade},'%')
   </select>
   <select id="getTeacherInfo" resultMap="BaseResultMap">
-    select *
+    select id,username,real_name,phone,wx_number,family_address,email,group_id
     from user
     where is_teacher = 1
   </select>

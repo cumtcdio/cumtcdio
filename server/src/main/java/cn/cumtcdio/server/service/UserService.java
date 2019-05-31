@@ -39,7 +39,7 @@ public interface UserService{
      */
     String refreshToken(String oldToken);
 
-    List<UserBaseInfoVO> getStudentInfo();
+    List<UserBaseInfoVO> getStudentInfo(String grade);
 
     List<UserBaseInfoVO> getTeacherInfo();
 

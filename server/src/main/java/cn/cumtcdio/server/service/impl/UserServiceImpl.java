@@ -125,8 +125,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserBaseInfoVO> getStudentInfo() {
-        List<User> users = userMapper.getStudentInfo();
+    public List<UserBaseInfoVO> getStudentInfo(String grade) {
+        String gradeSn = grade.substring(2);
+        List<User> users = userMapper.getStudentInfo(gradeSn);
         List<UserBaseInfoVO> userBaseInfoVOS = new ArrayList<>();
         convertUserToUserBaseInfoVO(users, userBaseInfoVOS);
         return userBaseInfoVOS;
@@ -174,9 +175,12 @@ public class UserServiceImpl implements UserService {
             userBaseInfoVO.setUsername(user.getUsername());
             userBaseInfoVO.setPhone(user.getPhone());
             userBaseInfoVO.setRealName(user.getRealName());
+            userBaseInfoVO.setEmail(user.getEmail());
+            userBaseInfoVO.setWxNumber(user.getWxNumber());
+            userBaseInfoVO.setQqNumber(user.getQqNumber());
+            userBaseInfoVO.setFamily_address(user.getFamilyAddress());
             if (user.getGroupId()!=null){
                 Group group = groupMapper.selectByPrimaryKey(user.getGroupId());
-                userBaseInfoVO.setGradeSn(group.getGradeSn());
                 userBaseInfoVO.setGroupSn(group.getGroupSn());
             }
             userBaseInfoVOS.add(userBaseInfoVO);

@@ -10,7 +10,13 @@ public class UserBaseInfoVO {
 
     String phone;
 
-    String gradeSn;
+    String qqNumber;
+
+    String wxNumber;
+
+    String email;
+
+    String family_address;
 
     String groupSn;
 
@@ -46,19 +52,43 @@ public class UserBaseInfoVO {
         this.phone = phone;
     }
 
-    public String getGradeSn() {
-        return gradeSn;
-    }
-
-    public void setGradeSn(String gradeSn) {
-        this.gradeSn = gradeSn;
-    }
-
     public String getGroupSn() {
         return groupSn;
     }
 
     public void setGroupSn(String groupSn) {
         this.groupSn = groupSn;
+    }
+
+    public String getQqNumber() {
+        return qqNumber;
+    }
+
+    public void setQqNumber(String qqNumber) {
+        this.qqNumber = qqNumber;
+    }
+
+    public String getWxNumber() {
+        return wxNumber;
+    }
+
+    public void setWxNumber(String wxNumber) {
+        this.wxNumber = wxNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFamily_address() {
+        return family_address;
+    }
+
+    public void setFamily_address(String family_address) {
+        this.family_address = family_address;
     }
 }

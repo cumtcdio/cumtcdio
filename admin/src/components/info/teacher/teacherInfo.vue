@@ -13,20 +13,27 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="name"
+                    prop="realName"
                     label="姓名"
                     width="180">
             </el-table-column>
             <el-table-column
+                    prop="phone"
+                    label="手机号"
+                    width="180">
+            </el-table-column>
+            <el-table-column
                     prop="wxNumber"
-                    label="微信号">
+                    label="微信号"
+                    width="180">
             </el-table-column>
             <el-table-column
                     prop="email"
-                    label="邮箱">
+                    label="邮箱"
+                    width="180">
             </el-table-column>
             <el-table-column
-                    prop="address"
+                    prop="family_address"
                     label="地址">
             </el-table-column>
         </el-table>
@@ -40,36 +47,28 @@
     export default {
         data() {
             return {
-                tableData: [{
-                    username: '427111',
-                    name: '王XX',
-                    wxNumber: '1521231293',
-                    email: '123213213@qq.com',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                },{
-                    username: '427111',
-                    name: '王XX',
-                    wxNumber: '1521231293',
-                    email: '123213213@qq.com',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                },{
-                    username: '427111',
-                    name: '王XX',
-                    wxNumber: '1521231293',
-                    email: '123213213@qq.com',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }]
+                tableData: []
             }
         },
         methods: {
+            getTeacherInfo: function () {
+              this.getRequest('/api/user/teacher/info').then(res => {
+                  if(res.data){
+                      this.tableData = res.data
+                  }
+              })
+            },
             exportExcel: function () {
                 var wb = XLSX.utils.table_to_book(document.querySelector('#teacherTable'))
                 var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
                 try {
-                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '老师信息表.xlsx')
+                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '老师基本信息表.xlsx')
                 } catch (e) { if (typeof console !== 'undefined') alert(e) }
                 return wbout
             },
+        },
+        mounted() {
+            this.getTeacherInfo()
         }
     }
 </script>

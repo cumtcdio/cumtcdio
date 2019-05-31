@@ -38,7 +38,7 @@ export default {
                 },
                 {
                     index: '4',
-                    title: 'EC-CDIO项目教学',
+                    title: 'EC-CDIO人才培养',
                     href: 'cdio.html'
                 },
                 {
@@ -53,7 +53,7 @@ export default {
                 },
                 {
                     index: '7',
-                    title: '电子商务专业实习',
+                    title: '项目沙龙',
                     href: 'list.html?title=专业实习'
                 }
             ]
