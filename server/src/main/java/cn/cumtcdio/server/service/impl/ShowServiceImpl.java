@@ -128,7 +128,7 @@ public class ShowServiceImpl implements ShowService {
                     ps.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
                     ps.println("</head>");
                     ps.println("<body>");
-                    ps.println(show.getHtmlContent());
+                    ps.println(new String(show.getHtmlContent().getBytes("gbk"), "UTF-8"));
                     ps.println("<script type=\"text/javascript\">\n" +
                             "window.onload = function () {\n" +
                             "var h = document.body.scrollHeight;\n" +
