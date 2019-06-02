@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-1"></div>
             <div class="col-10 col-md-4">
-                <img class="img0" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E7%B3%BB%E5%BE%BD%2B%E7%B3%BB%E5%90%8D-1-3.jpg">
+                <img class="img0" src="http://slide-1257444045.cos.ap-shanghai.myqcloud.com/236f1862-2a65-4843-abc8-4acba1b1d68e.jpg">
             </div>
             <div class="col-1"></div>
         </div>
