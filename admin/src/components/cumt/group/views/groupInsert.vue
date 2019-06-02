@@ -5,8 +5,7 @@
             <el-form ref="form" :model="formItem" label-width="80px" :rules="rules">
                 <el-form-item label="年级" prop="gradeSn">
                     <el-select v-model="formItem.gradeSn" placeholder="请选择年级">
-                        <el-option label="2016" value="2016"></el-option>
-                        <el-option label="2017" value="2017"></el-option>
+                        <el-option v-for="(item, index) in grades" :key="index" :label="item.gradeSn" :value="item.gradeSn"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="组别" prop="groupSn">
@@ -59,6 +58,9 @@
     export default {
         data() {
             return {
+                grades:[
+
+                ],
                 teachers:[
 
                 ],
@@ -92,6 +94,10 @@
             this.axios.get("/api/user/teacher/info")
                 .then(res =>{
                     this.teachers = res.data.data
+                })
+            this.axios.get("/api/group/getAllGrades")
+                .then(res =>{
+                    this.grades = res.data.data
                 })
         },
         methods: {
