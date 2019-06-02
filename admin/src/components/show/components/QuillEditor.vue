@@ -19,6 +19,15 @@
                            style="display:block;margin:7px auto">立即提交</el-button>
             </el-form-item>
         </el-form>
+        <el-dialog
+                title="提示"
+                :visible.sync="dialogVisible"
+                :close-on-click-modal="false"
+                :close-on-press-escape="false"
+                :show-close="false"
+                width="30%">
+            <span>正在上传，请稍等！</span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -34,6 +43,7 @@
         },
         data () {
             return{
+                dialogVisible: false,
                 editorOption:{
                     modules:{
                         toolbar:[
@@ -97,8 +107,10 @@
                     if (valid) {
                         var id = parseInt(this.$route.params.index);
                         if (id === 0) {
+                            this.dialogVisible = true
                             this.insertShow()
                         } else {
+                            this.dialogVisible = true
                             this.updateShow()
                         }
 
@@ -111,6 +123,7 @@
                 this.formItem.type = this.$store.state.showType;
                 this.postRequest('/api/show/insertShow',this.formItem).then(res =>{
                     if(res.code === 0){
+                        this.dialogVisible = false
                         this.$router.push('/show/' + this.$store.state.showType)
                     }
                 }).catch(error =>{
@@ -120,6 +133,7 @@
             updateShow: function () {
                 this.putRequest('/api/show/updateShowByShowId', this.formItem).then(res => {
                     if (res.code === 0) {
+                        this.dialogVisible = false
                         this.$router.push('/show/' + this.$store.state.showType)
                     }
                 }).catch(error =>{

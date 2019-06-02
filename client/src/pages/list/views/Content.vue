@@ -106,6 +106,7 @@ export default {
                     break;
                 case "专业实习":
                     this.titleParam = 4;
+                    this.title = '项目沙龙'
                     break;
                 default:
                     alert("SomeThing wrong happened！");

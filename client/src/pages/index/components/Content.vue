@@ -24,16 +24,11 @@
                 <div class="col-12 col-md-4 col-sm col0">
                     <div class="category">{{category3}}</div>
                     <div class="more text-right" >
-                        <a target="_blank" href="cdio.html">更多&gt;&gt;&nbsp;</a>
+                        <a target="_blank" href="cdio.html">过程管理&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="summaryBorder" v-for="item in contentCDIO" :key="item.id">
-                        <div class="title"><a class="aDetail" target="_blank" :href="item.htmlAddress" >{{item.title}}</a></div>
-                        <div class="summary">{{item.summary}}</div>
+                    <div class="summaryBorder" v-for="(item,index) in contentCDIO" :key="item.id">
+                        <div class="title" style="line-height: 1rem"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{index+1}}.{{item.title}}</a></div>
                     </div>
-                    <!--<div class="summaryBorder" v-for="item in contentCDIO" :key="item.id + '1'">-->
-                        <!--<div class="title">{{item.title}}</div>-->
-                        <!--&lt;!&ndash;<div class="summary">{{item.summary}}</div>&ndash;&gt;-->
-                    <!--</div>-->
                 </div>
             </div>
             <div class="row bg2">
@@ -79,33 +74,16 @@
             return {
                 category1: "通知",
                 category2: "新闻",
-                category3: "EC-CDIO项目教学",
+                category3: "EC-CDIO人才培养",
                 category4: "师生风采",
                 category5: "专业信息",
-                category6: "专业实习",
+                category6: "项目沙龙",
                 content0: {},
                 content1: {},
                 content2: {},
                 content3: {},
                 content4: {},
-                contentCDIO: [{
-                    "id": "1",
-                    "title": "EC-CDIO电子商务人才培养模式",
-                    "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
-                    "summary": "将专业课程分为核心课程和非核心课程，核心课程是表1所列的与EC-CDIO紧密结合的课程，非核心课程是指经济学、管理学、运筹学、物流管理等基础类或难在EC-CDIO框架下实现的课程，各课程配置任课教师1-2名。\n"
-                }
-                // ,
-                    // {
-                    //     "id": "2",
-                    //     "title": "2017级",
-                    //     "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
-                    // },
-                    // {
-                    //     "id": "3",
-                    //     "title": "2016级",
-                    //     "htmlAddress":"http://www.cumtcdio.cn/cdio.html",
-                    //    }
-                ]
+                contentCDIO: []
             }
         },
         mounted (){
@@ -127,6 +105,9 @@
                 });
                 axios.get('/api/show/getShowList2Lazied/4').then(response => {
                     this.getDataSucc4(response)
+                });
+                axios.get('/api/show/getAllShowByType/5').then(response => {
+                    this.getDataSucc5(response)
                 })
             },
             getDataSucc0: function (res) {
@@ -157,6 +138,12 @@
                 var data = res.data
                 if (data.code === 0 && data.data) {
                     this.content4 = data.data
+                }
+            },
+            getDataSucc5: function (res) {
+                var data = res.data
+                if (data.code === 0 && data.data){
+                    this.contentCDIO = data.data
                 }
             }
         },

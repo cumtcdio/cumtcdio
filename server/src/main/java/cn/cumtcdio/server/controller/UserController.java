@@ -50,9 +50,9 @@ public class UserController {
         return ResultVOUtil.success(userService.getUserParams(username));
     }
 
-    @GetMapping(value = "/student/info")
-    public ResultVO getStudentInfo(){
-        return ResultVOUtil.success(userService.getStudentInfo());
+    @GetMapping(value = "/student/info/{grade}")
+    public ResultVO getStudentInfo(@PathVariable String grade){
+        return ResultVOUtil.success(userService.getStudentInfo(grade));
     }
 
     @GetMapping(value = "/teacher/info")
