@@ -12,6 +12,7 @@
             </el-option>
         </el-select>
         <el-table
+                v-loading="loading"
                 :data="tableData"
                 id="outtable"
                 style="width: 100%">
@@ -63,13 +64,16 @@
                 gradeSn: null,
                 tableData: [],
                 options: [],
-                value: ''
+                value: '',
+                loading: false
             }
         },
         methods: {
             getStudentIndoByGradeSn: function () {
+                this.loading = true
                 this.getRequest('/api/user/student/info/' + this.value).then(res => {
                     if (res.data){
+                        this.loading = false
                         this.tableData = res.data
                     }
                 })

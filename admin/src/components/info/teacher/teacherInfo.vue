@@ -4,6 +4,7 @@
             老师基本信息表
         </div>
         <el-table
+                v-loading="loading"
                 :data="tableData"
                 id="teacherTable"
                 style="width: 100%">
@@ -47,13 +48,16 @@
     export default {
         data() {
             return {
-                tableData: []
+                tableData: [],
+                loading: false
             }
         },
         methods: {
             getTeacherInfo: function () {
+                this.loading = true
               this.getRequest('/api/user/teacher/info').then(res => {
                   if(res.data){
+                      this.loading = false
                       this.tableData = res.data
                   }
               })
