@@ -46,7 +46,11 @@
               </CellGroup>
           </Card>
         </div>
-        <div class="ml-5">
+        <div class="m1-5" v-if="!hasInfo" style="margin:0;padding:0">
+          <div style="position: absolute;left:0; top:0; right:0; bottom: 0; margin: auto;width: 300px;
+    height: 300px;">暂无数据!</div>
+        </div>
+        <div class="ml-5" v-if="hasInfo">
           <!-- 项目信息 -->
           <div class="card" style="width:1000px;margin-top:30px" v-loading="loading">
             <div class="card-header header">项目信息</div>
@@ -271,6 +275,7 @@
   export default {
       data() {
       return {
+        hasInfo: true,
         officeUrl:"",
         fileDialogVisible:false,
         dialogContent: {
@@ -629,7 +634,9 @@
                           }
                       ]
                   }
+                  this.hasInfo = false
               } else {
+                  this.hasInfo = true
                   this.groups = data.data
                   this.currentGroupId = this.groups[0].groupId
                   this.getGroupInfoByGroupId()
@@ -642,12 +649,18 @@
               this.grades = resp.data.data
               this.gradeSn = this.grades[0].gradeSn
               axios.get('/api/group/' + this.gradeSn).then(resp => {
-                  this.groups = resp.data.data
-                  this.currentGroupId = this.groups[0].groupId
-                  axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
-                      this.groupInfo = resp.data.data
+                  var data = resp.data
+                  if(data.data.size > 0){
+                      this.groups = resp.data.data
+                      this.currentGroupId = this.groups[0].groupId
+                      axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
+                          this.groupInfo = resp.data.data
+                          this.loading = false
+                      })
+                  }else {
+                      this.hasInfo = false
                       this.loading = false
-                  })
+                  }
               })
           })
       },
