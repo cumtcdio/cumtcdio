@@ -659,7 +659,7 @@
         this.getGroupsByGradeSn(gradeSn)
       },
       cDialogShow(index,item) {
-        if(item.address.indexOf(".zip") > -1){
+        if(item.address.indexOf(".zip") > -1||item.address.indexOf(".pdf") > -1||item.address.indexOf(".PDF") > -1){
                     this.zipUrl = item.address
                     setTimeout(() => {
                         document.querySelector('#zip').click()
@@ -671,7 +671,7 @@
                 }
       },
       dDialogShow(index,item){
-        if(item.address.indexOf(".zip") > -1){
+        if(item.address.indexOf(".zip") > -1||item.address.indexOf(".pdf") > -1||item.address.indexOf(".PDF") > -1){
                     this.zipUrl = item.address
                     setTimeout(() => {
                         document.querySelector('#zip').click()
@@ -683,7 +683,7 @@
                 }
       },
       iDialogShow(index,item){
-        if(item.address.indexOf(".zip") > -1){
+        if(item.address.indexOf(".zip") > -1||item.address.indexOf(".pdf") > -1||item.address.indexOf(".PDF") > -1){
                     this.zipUrl = item.address
                     setTimeout(() => {
                         document.querySelector('#zip').click()
@@ -695,7 +695,7 @@
                 }
       },
       oDialogShow(index,item){
-        if(item.address.indexOf(".zip") > -1){
+        if(item.address.indexOf(".zip") > -1||item.address.indexOf(".pdf") > -1||item.address.indexOf(".PDF") > -1){
                     this.zipUrl = item.address
                     setTimeout(() => {
                         document.querySelector('#zip').click()
