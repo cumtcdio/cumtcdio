@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -130,18 +131,36 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public Integer uploadAchievement(Integer addressId,String address) {
-        AchievementAddress achievementAddress = new AchievementAddress();
-        achievementAddress.setId(addressId);
-        achievementAddress.setAddress(address);
-        return achievementAddressMapper.updateByPrimaryKeySelective(achievementAddress);
+        //判断是否已经截止
+        AchievementAddress aa = achievementAddressMapper.selectByPrimaryKey(addressId);
+        Achievement achievement = achievementMapper.selectByPrimaryKey(aa.getAchievementId());
+        Date now = new Date();
+        if (now.before(achievement.getDeadLine())){
+            AchievementAddress achievementAddress = new AchievementAddress();
+            achievementAddress.setId(addressId);
+            achievementAddress.setAddress(address);
+            return achievementAddressMapper.updateByPrimaryKeySelective(achievementAddress);
+        }else {
+            return 0;
+        }
+
     }
 
     @Override
     public Integer uploadTask(Integer addressId, String address) {
-        TaskResult taskResult = new TaskResult();
-        taskResult.setId(addressId);
-        taskResult.setAddress(address);
-        return taskResultMapper.updateByPrimaryKeySelective(taskResult);
+        //判断是否已经截止
+        TaskResult tr = taskResultMapper.selectByPrimaryKey(addressId);
+        Task task = taskMapper.selectByPrimaryKey(tr.getTaskId());
+        Date now = new Date();
+        if (now.before(task.getDeadLine())){
+            TaskResult taskResult = new TaskResult();
+            taskResult.setId(addressId);
+            taskResult.setAddress(address);
+            return taskResultMapper.updateByPrimaryKeySelective(taskResult);
+        }else {
+            return 0;
+        }
+
     }
 
     private int updateMemberSn(GroupForm groupForm, Group group) {

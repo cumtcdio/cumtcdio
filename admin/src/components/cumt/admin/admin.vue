@@ -16,7 +16,7 @@
                                 <el-card class="box-card m-3">
                                     <div slot="header" class="clearfix">
                                         <span>成果</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement">添加课程所需成果</el-button>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="achiDialogVisible = true">添加课程所需成果</el-button>
                                     </div>
                                     <div class="text item">
                                         <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
@@ -76,7 +76,7 @@
                                 <el-card class="box-card m-3">
                                     <div slot="header" class="clearfix">
                                         <span>成果</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="achiDialogVisible = true">添加课程所需成果</el-button>
                                     </div>
                                     <div class="text item">
                                         <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
@@ -136,7 +136,7 @@
                                 <el-card class="box-card m-3">
                                     <div slot="header" class="clearfix">
                                         <span>成果</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="achiDialogVisible = true">添加课程所需成果</el-button>
                                     </div>
                                     <div class="text item">
                                         <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
@@ -196,7 +196,7 @@
                                 <el-card class="box-card m-3">
                                     <div slot="header" class="clearfix">
                                         <span>成果</span>
-                                        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAddAchievement()">添加课程所需成果</el-button>
+                                        <el-button style="float: right; padding: 3px 0" type="text" @click="achiDialogVisible = true">添加课程所需成果</el-button>
                                     </div>
                                     <div class="text item">
                                         <div v-for="(item, index) in item.achievement" :key="index">{{item.achievementName}}</div>
@@ -248,6 +248,27 @@
             </el-tab-pane>
         </el-tabs>
         <el-dialog
+        title="添加成果"
+        :visible.sync="achiDialogVisible"
+        width="30%">
+        <el-form ref="form" :model="achiFormItem" label-width="80px">
+            <el-form-item label="成果名称" prop="title">
+                <el-input v-model="achiFormItem.name" placeholder="请输入成果名称"></el-input>
+            </el-form-item>
+            <el-form-item label="截止时间" prop="deadLine">
+                <el-date-picker
+                    v-model="achiFormItem.deadLine"
+                    type="datetime"
+                    placeholder="选择截止日期">
+                </el-date-picker>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="achiDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleAddAchievement">发 布</el-button>
+        </span>
+        </el-dialog>
+        <el-dialog
         title="发布任务"
         :visible.sync="taskDialogVisible"
         width="30%">
@@ -260,6 +281,13 @@
             </el-form-item>
             <el-form-item label="任务内容" prop="desc">
                 <el-input v-model="taskFormItem.desc" placeholder="请输入任务内容"></el-input>
+            </el-form-item>
+            <el-form-item label="截止时间" prop="deadLine">
+                <el-date-picker
+                    v-model="taskFormItem.deadLine"
+                    type="datetime"
+                    placeholder="选择截止日期">
+                </el-date-picker>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -293,6 +321,11 @@
     export default {
         data() {
             return {
+                achiFormItem:{
+                    name:"",
+                    deadLine:""
+                },
+                achiDialogVisible:false,
                 courseName:"",
                 courseDialogVisible: false,
                 teacherId:null,
@@ -301,6 +334,7 @@
                     title:"",
                     require:"",
                     desc:"",
+                    deadLine:""
                 },
                 taskDialogVisible: false,
                 activeGradeSn: "0",
@@ -340,25 +374,25 @@
                 this.activeGradeSn = tab.label
             },
             handleAddAchievement(){
-                this.$prompt('请输入成果名', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消'
-                    }).then(({ value }) => {
-                        let formItem = {
-                            gradeSn : this.activeGradeSn,
-                            courseId : this.activeCourseId,
-                            achievementName : value
+                this.achiDialogVisible = false
+                let formItem = {
+                    gradeSn : this.activeGradeSn,
+                    courseId : this.activeCourseId,
+                    achievementName : this.achiFormItem.name,
+                    deadLine: this.achiFormItem.deadLine
+                }
+                this.axios.post("/api/admin/achievement/insert",formItem)
+                    .then(res =>{
+                        if(res.status == 200){
+                            this.$message({
+                                type: 'success',
+                                message: '发布成功!'
+                            });
+                            this.initData()
+                            this.taskFormItem.title = ""
+                            this.taskFormItem.require = ""
+                            this.taskFormItem.desc = ""
                         }
-                        this.axios.post("/api/admin/achievement/insert",formItem)
-                            .then(res =>{
-                                if(res.status == 200){
-                                    this.$message({
-                                        type: 'success',
-                                        message: '添加成功'
-                                    });
-                                    this.initData()
-                                }
-                            })
                     })
             },
             handleCourseEdit(targetName, action) {

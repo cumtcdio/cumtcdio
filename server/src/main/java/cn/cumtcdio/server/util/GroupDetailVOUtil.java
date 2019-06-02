@@ -104,6 +104,7 @@ public class GroupDetailVOUtil {
                 AchievementVO achievementVO = new AchievementVO();
                 achievementVO.setAchievementId(achievement.getId());
                 achievementVO.setName(achievement.getAchievementName());
+                achievementVO.setDeadLine(achievement.getDeadLine());
                 //查出该组该课程的成果address
                 AchievementAddress achievementAddress = achievementAddressMapper.selectByAchiIdAndGroupId(achievement.getId(),group.getId());
                 if (achievementAddress != null ){
@@ -111,6 +112,7 @@ public class GroupDetailVOUtil {
                 }
                 if (achievementAddress != null && StringUtils.isNotBlank(achievementAddress.getAddress())){
                     achievementVO.setAddress(achievementAddress.getAddress());
+                    achievementVO.setScore(achievementAddress.getScore());
                 }
                 achievementVOS.add(achievementVO);
             }
@@ -125,10 +127,12 @@ public class GroupDetailVOUtil {
                 processManageVO.setRequire(task.getRequires());
                 processManageVO.setContent(task.getDesc());
                 processManageVO.setTime(task.getTime());
+                processManageVO.setDeadLine(task.getDeadLine());
                 //根据taskId和groupId查出address
                 TaskResult taskResult = taskResultMapper.selectByTaskIdAndGroupId(task.getId(),group.getId());
                 if(taskResult != null && StringUtils.isNotBlank(taskResult.getAddress())){
                     processManageVO.setAddress(taskResult.getAddress());
+                    processManageVO.setScore(taskResult.getScore());
                 }
                 if(taskResult != null){
                     processManageVO.setAddressId(taskResult.getId());

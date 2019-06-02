@@ -1,5 +1,7 @@
 package cn.cumtcdio.server.VO;
 
+import java.util.Date;
+
 public class AchievementVO {
 
     private Integer achievementId;
@@ -9,6 +11,26 @@ public class AchievementVO {
     private String address;
 
     private Integer addressId;
+
+    private Integer score;
+
+    private Date deadLine;
+
+    public Date getDeadLine() {
+        return deadLine;
+    }
+
+    public void setDeadLine(Date deadLine) {
+        this.deadLine = deadLine;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
 
     public Integer getAddressId() {
         return addressId;

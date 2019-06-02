@@ -19,8 +19,17 @@
                             </template>
                             </el-table-column>
                             <el-table-column
-                            prop="score"
                             label="得分">
+                            <template slot-scope="scope">
+                                <div v-if="scope.row.score">{{scope.row.score}}</div>
+                                <div v-if="!scope.row.score">未打分</div>
+                            </template>
+                            </el-table-column>
+                            <el-table-column
+                            label="截止时间">
+                            <template slot-scope="scope">
+                                <div>{{scope.row.deadLine | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                            </template>
                             </el-table-column>
                             <el-table-column
                             label="操作">
@@ -40,7 +49,8 @@
                         <el-tag class="mt-4 mb-3" style="margin-left:200px;margin-right:200px">项目过程管理</el-tag>
                         <el-collapse style="margin-left:200px;margin-right:200px">
                             <el-collapse-item v-for="(item, index) in item.processManage" :key="index" :title="item.title" name="1">
-                                <div>{{item.time}}</div>
+                                <div>发布时间：{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                <div>截止时间：{{item.deadLine | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
                                 <div><pre>{{item.require}}</pre></div>
                                 <div>{{item.content}}</div>
                                 <el-upload
@@ -50,6 +60,8 @@
                                 :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
+                                <el-button @click="handlePreview(item.address)" type="primary" size="small">文件预览</el-button>
+                                <div>得分：{{item.score}}</div>
                             </el-collapse-item>
                         </el-collapse>
                     </el-collapse-item>
@@ -94,7 +106,8 @@
                         <el-tag class="mt-4 mb-3" style="margin-left:200px;margin-right:200px">项目过程管理</el-tag>
                         <el-collapse style="margin-left:200px;margin-right:200px">
                             <el-collapse-item v-for="(item, index) in item.processManage" :key="index" :title="item.title" name="1">
-                                <div>{{item.time}}</div>
+                                <div>发布时间：{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                <div>截止时间：{{item.deadLine | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
                                 <div><pre>{{item.require}}</pre></div>
                                 <div>{{item.content}}</div>
                                 <el-upload
@@ -104,6 +117,8 @@
                                 :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
+                                <el-button @click="handlePreview(item.address)" type="primary" size="small">文件预览</el-button>
+                                <div>得分：{{item.score}}</div>
                             </el-collapse-item>
                         </el-collapse>
                     </el-collapse-item>
@@ -148,7 +163,8 @@
                         <el-tag class="mt-4 mb-3" style="margin-left:200px;margin-right:200px">项目过程管理</el-tag>
                         <el-collapse style="margin-left:200px;margin-right:200px">
                             <el-collapse-item v-for="(item, index) in item.processManage" :key="index" :title="item.title" name="1">
-                                <div>{{item.time}}</div>
+                                <div>发布时间：{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                <div>截止时间：{{item.deadLine | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
                                 <div><pre>{{item.require}}</pre></div>
                                 <div>{{item.content}}</div>
                                 <el-upload
@@ -158,6 +174,8 @@
                                 :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
+                                <el-button @click="handlePreview(item.address)" type="primary" size="small">文件预览</el-button>
+                                <div>得分：{{item.score}}</div>
                             </el-collapse-item>
                         </el-collapse>
                     </el-collapse-item>
@@ -202,7 +220,8 @@
                         <el-tag class="mt-4 mb-3" style="margin-left:200px;margin-right:200px">项目过程管理</el-tag>
                         <el-collapse style="margin-left:200px;margin-right:200px">
                             <el-collapse-item v-for="(item, index) in item.processManage" :key="index" :title="item.title" name="1">
-                                <div>{{item.time}}</div>
+                                <div>发布时间：{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                                <div>截止时间：{{item.deadLine | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
                                 <div><pre>{{item.require}}</pre></div>
                                 <div>{{item.content}}</div>
                                 <el-upload
@@ -212,6 +231,8 @@
                                 :on-success="(response)=>processUploadSuccess(item.addressId,response)">
                                     <el-button type="primary" size="small">上传文件</el-button>
                                 </el-upload>
+                                <el-button @click="handlePreview(item.address)" type="primary" size="small">文件预览</el-button>
+                                <div>得分：{{item.score}}</div>
                             </el-collapse-item>
                         </el-collapse>
 
@@ -259,30 +280,53 @@
                 this.axios.put("/api/group/achievement/upload?addressId="+addressId+"&address="+res)
                     .then(res =>{
                         if(res.status == 200){
-                            this.axios.get("/api/group/getDetail?gradeSn="+this.$store.state.user.gradeSn+"&groupSn="+this.$store.state.user.groupSn)
-                                .then(res =>{
-                                    this.group = res.data.data
-                                })
+                            if(res.data.data == 0){
+                                this.$message.error('截止时间已过');
+                            }else{
+                                this.axios.get("/api/group/getDetail?gradeSn="+this.$store.state.user.gradeSn+"&groupSn="+this.$store.state.user.groupSn)
+                                    .then(res =>{
+                                        this.group = res.data.data
+                                    })
+                                this.$message({
+                                    message: '上传成功',
+                                    type: 'success'
+                                });
+                            }
+                        }else{
                             this.$message({
-                                message: '上传成功',
-                                type: 'success'
+                                message: '发生未知错误',
+                                type: 'error'
                             });
                         }
+                    }).catch(()=>{
+                        this.$message({
+                            message: '发生未知错误',
+                            type: 'error'
+                        });
                     })
             },
             processUploadSuccess(addressId,res){
                 this.axios.put("/api/group/task/upload?addressId="+addressId+"&address="+res)
                     .then(res =>{
                         if(res.status == 200){
-                            this.axios.get("/api/group/getDetail?gradeSn="+this.$store.state.user.gradeSn+"&groupSn="+this.$store.state.user.groupSn)
-                                .then(res =>{
-                                    this.group = res.data.data
-                                })
-                            this.$message({
-                                message: '上传成功',
-                                type: 'success'
-                            });
+                            if(res.data.data == 0){
+                                this.$message.error('截止时间已过');
+                            }else{
+                                this.axios.get("/api/group/getDetail?gradeSn="+this.$store.state.user.gradeSn+"&groupSn="+this.$store.state.user.groupSn)
+                                    .then(res =>{
+                                        this.group = res.data.data
+                                    })
+                                this.$message({
+                                    message: '上传成功',
+                                    type: 'success'
+                                });
+                            }
                         }
+                    }).catch(()=>{
+                        this.$message({
+                            message: '发生未知错误',
+                            type: 'error'
+                        });
                     })
             },
             handlePreview(address){
@@ -298,6 +342,29 @@
                 }
             },
         },
+        filters: {
+            dateFormat: function(value,fmt) {
+                let getDate = new Date(value);
+                let o = {
+                    'M+': getDate.getMonth() + 1,
+                    'd+': getDate.getDate(),
+                    'h+': getDate.getHours(),
+                    'm+': getDate.getMinutes(),
+                    's+': getDate.getSeconds(),
+                    'q+': Math.floor((getDate.getMonth() + 3) / 3),
+                    'S': getDate.getMilliseconds()
+                };
+                if (/(y+)/.test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+                }
+                for (let k in o) {
+                    if (new RegExp('(' + k + ')').test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+                    }
+                }
+                return fmt;
+            }
+        }
     }
 </script>
 

@@ -30,6 +30,16 @@ public class Achievement implements Serializable {
 
     private Date deadLine;
 
+    private Date time;
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
     public Date getDeadLine() {
         return deadLine;
     }

@@ -182,7 +182,7 @@
                     <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index,item)">
                       <div style="position:relative">
                         <div class="ellipsis">{{item.title}}</div>
-                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
                   </div>
@@ -192,7 +192,7 @@
                     <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index,item)">
                       <div style="position:relative">
                         <div class="ellipsis">{{item.title}}</div>
-                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
                   </div>
@@ -202,7 +202,7 @@
                     <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index,item)">
                       <div style="position:relative">
                         <div class="ellipsis">{{item.title}}</div>
-                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
                   </div>
@@ -212,7 +212,7 @@
                     <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index,item)">
                       <div style="position:relative">
                         <div class="ellipsis">{{item.title}}</div>
-                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+                        <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
                   </div>
