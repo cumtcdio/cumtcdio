@@ -142,29 +142,33 @@
               <tr>
                 <td style="margin:0;padding:0">
                   <div v-if="groupInfo.ccourseVOS.length">
-                    <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].achievement" :key="index" class="achievement">
+                    <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].achievement" :key="index" class="achievement" style="padding:7px 0">
                       <div @click="handlePreview(item.address)">{{item.name}}</div>
+                      <div class="time text-muted">{{item.deadLine | dateFormat('yyyy-MM-dd')}}</div>
                     </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
                   <div v-if="groupInfo.dcourseVOS.length">
-                    <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].achievement" :key="index" class="achievement">
+                    <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].achievement" :key="index" class="achievement" style="padding:7px 0">
                       <div @click="handlePreview(item.address)">{{item.name}}</div>
+                      <div class="time text-muted">{{item.deadLine | dateFormat('yyyy-MM-dd')}}</div>
                     </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
                   <div v-if="groupInfo.icourseVOS.length">
-                    <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].achievement" :key="index" class="achievement">
+                    <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].achievement" :key="index" class="achievement" style="padding:7px 0">
                       <div @click="handlePreview(item.address)">{{item.name}}</div>
+                      <div class="time text-muted">{{item.deadLine | dateFormat('yyyy-MM-dd')}}</div>
                     </div>
                   </div>
                 </td>
                 <td style="margin:0;padding:0">
                   <div v-if="groupInfo.ocourseVOS.length">
-                    <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].achievement" :key="index" class="achievement">
+                    <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].achievement" :key="index" class="achievement" style="padding:7px 0">
                       <div @click="handlePreview(item.address)">{{item.name}}</div>
+                      <div class="time text-muted">{{item.deadLine | dateFormat('yyyy-MM-dd')}}</div>
                     </div>
                   </div>
                 </td>
@@ -180,8 +184,8 @@
                 <td style="margin:0;padding:0;cursor:pointer">
                   <div v-if="groupInfo.ccourseVOS.length">
                     <div v-for="(item,index) in groupInfo.ccourseVOS[cIndex].processManage" :key="index" class="achievement" @click="cDialogShow(index,item)">
-                      <div style="position:relative">
-                        <div class="ellipsis">{{item.title}}</div>
+                      <div style="position:relative;padding:7px 0">
+                        <div class="ellipsis">{{index+1}}.{{item.title}}</div>
                         <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
@@ -190,8 +194,8 @@
                 <td style="margin:0;padding:0;cursor:pointer">
                   <div v-if="groupInfo.dcourseVOS.length">
                     <div v-for="(item,index) in groupInfo.dcourseVOS[dIndex].processManage" :key="index" class="achievement" @click="dDialogShow(index,item)">
-                      <div style="position:relative">
-                        <div class="ellipsis">{{item.title}}</div>
+                      <div style="position:relative;padding:7px 0">
+                        <div class="ellipsis">{{index+1}}.{{item.title}}</div>
                         <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
@@ -200,8 +204,8 @@
                 <td style="margin:0;padding:0;cursor:pointer">
                   <div v-if="groupInfo.icourseVOS.length">
                     <div v-for="(item,index) in groupInfo.icourseVOS[iIndex].processManage" :key="index" class="achievement" @click="iDialogShow(index,item)">
-                      <div style="position:relative">
-                        <div class="ellipsis">{{item.title}}</div>
+                      <div style="position:relative;padding:7px 0">
+                        <div class="ellipsis">{{index+1}}.{{item.title}}</div>
                         <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
@@ -210,8 +214,8 @@
                 <td style="margin:0;padding:0;cursor:pointer">
                   <div v-if="groupInfo.ocourseVOS.length">
                     <div v-for="(item,index) in groupInfo.ocourseVOS[oIndex].processManage" :key="index" class="achievement" @click="oDialogShow(index,item)">
-                      <div style="position:relative">
-                        <div class="ellipsis">{{item.title}}</div>
+                      <div style="position:relative;padding:7px 0">
+                        <div class="ellipsis">{{index+1}}.{{item.title}}</div>
                         <div class="time text-muted">{{item.time | dateFormat('yyyy-MM-dd')}}</div>
                       </div>
                     </div>
@@ -466,7 +470,7 @@
     },
     methods: {
       handlePreview(address){
-          if(address.indexOf(".zip") > -1){
+          if(address.indexOf(".zip") > -1 ||address.indexOf(".pdf") > -1||address.indexOf(".PDF") > -1){
                     this.zipUrl = address
                     setTimeout(() => {
                         document.querySelector('#zip').click()
@@ -738,14 +742,10 @@
   max-width: 250px;
 }
 .time{
-  position: absolute;
   font-size: 13px;
-  right: 0;
-  bottom: -15px
 }
 .achievement{
   border-bottom:1px solid #dee2e6;
-  line-height: 50px;
   align-items: center;
   position: relative;
   text-align: center;

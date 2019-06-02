@@ -334,7 +334,7 @@
                 
             },
             handleView(scope){
-                if(scope.row.address.indexOf(".zip") > -1){
+                if(scope.row.address.indexOf(".zip") > -1||scope.row.address.indexOf(".pdf") > -1||scope.row.address.indexOf(".PDF") > -1){
                     this.zipUrl = scope.row.address
                     setTimeout(() => {
                         document.querySelector('#zip').click()
@@ -346,7 +346,7 @@
                 }
             },
             handleTaskView(scope){
-                if(scope.row.address.indexOf(".zip") > -1){
+                if(scope.row.address.indexOf(".zip") > -1||scope.row.address.indexOf(".pdf") > -1||scope.row.address.indexOf(".PDF") > -1){
                     this.zipUrl = scope.row.address
                     setTimeout(() => {
                         document.querySelector('#zip').click()

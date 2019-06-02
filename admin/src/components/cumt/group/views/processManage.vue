@@ -330,7 +330,7 @@
                     })
             },
             handlePreview(address){
-                if(address.indexOf(".zip") > -1){
+                if(address.indexOf(".zip") > -1 ||address.indexOf(".pdf") > -1||address.indexOf(".PDF") > -1){
                     this.zipUrl = address
                     setTimeout(() => {
                         document.querySelector('#zip').click()
