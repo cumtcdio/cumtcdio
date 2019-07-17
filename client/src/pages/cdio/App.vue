@@ -650,7 +650,7 @@
               this.gradeSn = this.grades[0].gradeSn
               axios.get('/api/group/' + this.gradeSn).then(resp => {
                   var data = resp.data
-                  if(data.data.size > 0){
+                  if(data.data.length > 0){
                       this.groups = resp.data.data
                       this.currentGroupId = this.groups[0].groupId
                       axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
