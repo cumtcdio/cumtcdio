@@ -4,9 +4,9 @@
         <div class="line"></div>
         <div class="bg">
             <div class="bottomFont">
-                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E8%83%8C%E6%99%AF%E7%B3%BB%E5%BE%BD.jpg">
+                <img class="photo" src="http://slide-1257444045.cos.ap-shanghai.myqcloud.com/b312a710-a8c2-45d7-94d1-b68d8e3876a5.jpg">
                 <span>&nbsp;&nbsp;&nbsp;电子商务与数据科学系&nbsp;&nbsp;&nbsp;</span>
-                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7.jpg">
+                <img class="photo" src="http://slide-1257444045.cos.ap-shanghai.myqcloud.com/00646f06-671c-418f-aa44-b8601f3637cd.jpg">
                 <span>&nbsp;&nbsp;&nbsp;微信公众号&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>

@@ -2,7 +2,7 @@
   <div id="cdio">
     <div class="bg" style="width:1600px">
         <div>
-            <img class="img0 ml-5" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E7%B3%BB%E5%BE%BD%2B%E7%B3%BB%E5%90%8D-1-3.jpg">
+            <img class="img0 ml-5" src="http://slide-1257444045.cos.ap-shanghai.myqcloud.com/236f1862-2a65-4843-abc8-4acba1b1d68e.jpg">
         </div>
     </div>
     <div class="line"></div>
@@ -260,10 +260,10 @@
         <div class="line"></div>
         <div class="bg" style="height: 60px;line-height: 3rem;">
             <div class="bottomFont">
-                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/3%E2%80%BB%E8%83%8C%E6%99%AF%E7%B3%BB%E5%BE%BD.jpg">
-                <span>&nbsp;&nbsp;&nbsp;电子商务与数据科学系&nbsp;&nbsp;&nbsp;</span>
-                <img class="photo" src="https://get-1257609707.cos.ap-shanghai.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7.jpg">
-                <span>&nbsp;&nbsp;&nbsp;微信公众号&nbsp;&nbsp;&nbsp;</span>
+              <img class="photo" src="http://slide-1257444045.cos.ap-shanghai.myqcloud.com/b312a710-a8c2-45d7-94d1-b68d8e3876a5.jpg">
+              <span>&nbsp;&nbsp;&nbsp;电子商务与数据科学系&nbsp;&nbsp;&nbsp;</span>
+              <img class="photo" src="http://slide-1257444045.cos.ap-shanghai.myqcloud.com/00646f06-671c-418f-aa44-b8601f3637cd.jpg">
+              <span>&nbsp;&nbsp;&nbsp;微信公众号&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>
     </div>
@@ -483,7 +483,7 @@
 
                 }else{
                     this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+address
-                    this.fileDialogVisible = true   
+                    this.fileDialogVisible = true
                 }
       },
       getGroupInfoByGroupId: function () {
@@ -650,7 +650,7 @@
               this.gradeSn = this.grades[0].gradeSn
               axios.get('/api/group/' + this.gradeSn).then(resp => {
                   var data = resp.data
-                  if(data.data.size > 0){
+                  if(data.data.length > 0){
                       this.groups = resp.data.data
                       this.currentGroupId = this.groups[0].groupId
                       axios.get('/api/group/id/' + this.currentGroupId).then(resp => {
@@ -680,7 +680,7 @@
                 }else{
                     this.dialogContent = this.groupInfo.ccourseVOS[this.cIndex].processManage[index]
                     this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-                    this.dialogVisible = true  
+                    this.dialogVisible = true
                 }
       },
       dDialogShow(index,item){
@@ -692,7 +692,7 @@
                 }else{
                     this.dialogContent = this.groupInfo.dcourseVOS[this.dIndex].processManage[index]
                     this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-                    this.dialogVisible = true  
+                    this.dialogVisible = true
                 }
       },
       iDialogShow(index,item){
@@ -704,7 +704,7 @@
                 }else{
                     this.dialogContent = this.groupInfo.icourseVOS[this.iIndex].processManage[index]
                     this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-                    this.dialogVisible = true  
+                    this.dialogVisible = true
                 }
       },
       oDialogShow(index,item){
@@ -716,7 +716,7 @@
                 }else{
                     this.dialogContent = this.groupInfo.ocourseVOS[this.oIndex].processManage[index]
                     this.officeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+item.address
-                    this.dialogVisible = true  
+                    this.dialogVisible = true
                 }
       }
     },

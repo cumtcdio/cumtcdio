@@ -33,6 +33,15 @@
                 width="30%">
             <span>清稍候......</span>
         </el-dialog>
+        <el-dialog
+                title="确认提交？"
+                :visible.sync="loading"
+                :show-close="false"
+                :close-on-press-escape="false"
+                :close-on-click-modal="false"
+                width="30%">
+            <span>清稍候......</span>
+        </el-dialog>
         <div class="user-info" v-if="completed">
             <h3 style="text-align: center">个人信息</h3>
             <div>

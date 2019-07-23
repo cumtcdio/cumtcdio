@@ -23,10 +23,10 @@
                 </div>
                 <div class="col-12 col-md-4 col-sm col0">
                     <div class="category">{{category3}}</div>
-                    <div class="more text-right" >
+                    <div class="more text-right" style="margin-bottom: 7px" >
                         <a target="_blank" href="cdio.html">过程管理&gt;&gt;&nbsp;</a>
                     </div>
-                    <div class="summaryBorder" v-for="(item,index) in contentCDIO" :key="item.id">
+                    <div class="summaryBorder"  v-for="(item,index) in contentCDIO" :key="item.id">
                         <div class="title" style="line-height: 1rem"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{index+1}}.{{item.title}}</a></div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="summaryBorder" v-for="item in content3" :key="item.showId">
                         <div class="title"><a class="aDetail" target="_blank" :href="'/details.html?showId='+ item.showId" >{{item.title}}</a></div>
-                        <div class="summary">{{item.summary}}</div>
+                        <!--<div class="summary">{{item.summary}}</div>-->
                     </div>
                 </div>
                 <div class="col-12 col-md-4 col-sm col0">

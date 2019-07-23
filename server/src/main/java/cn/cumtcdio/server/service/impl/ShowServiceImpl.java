@@ -122,13 +122,14 @@ public class ShowServiceImpl implements ShowService {
                     //创建临时文件并写入内容
                     fileTemp.createNewFile();
                     fileTemp.setWritable(true);
-                    PrintStream ps = new PrintStream(fileTemp);
+                    PrintStream ps = new PrintStream(fileTemp,"UTF-8");
                     ps.println("<html>");
                     ps.println("<head>");
                     ps.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
                     ps.println("</head>");
                     ps.println("<body>");
-                    ps.println(new String(show.getHtmlContent().getBytes("gbk"), "UTF-8"));
+//                    ps.println(new String(show.getHtmlContent().getBytes("UTF-8"), "GBK"));
+                    ps.println(show.getHtmlContent());
                     ps.println("<script type=\"text/javascript\">\n" +
                             "window.onload = function () {\n" +
                             "var h = document.body.scrollHeight;\n" +
