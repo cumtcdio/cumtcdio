@@ -267,6 +267,7 @@
             </div>
         </div>
     </div>
+    <a :href="zipUrl" id="zip" style="display:none">zip</a>
   </div>
 </template>
 
@@ -275,6 +276,7 @@
   export default {
       data() {
       return {
+        zipUrl:"#",
         hasInfo: true,
         officeUrl:"",
         fileDialogVisible:false,
