@@ -14,16 +14,31 @@
                 <el-form-item label="项目名称" prop="name">
                     <el-input v-model="formItem.name" placeholder="请输入项目名称" style="width:300px"></el-input>
                 </el-form-item>
-                <el-form-item label="指导老师" prop="teacher">
-                    <el-select v-model="formItem.teacher" placeholder="请选择">
-                        <el-option
-                        v-for="(item, index) in teachers" 
-                        :key="index"
-                        :label="item.realName"
-                        :value="item.realName">
-                        </el-option>
-                    </el-select>
-                    <!-- <el-input v-model="formItem.teacher" placeholder="请输入指导老师" style="width:300px"></el-input> -->
+                <!--<el-form-item label="指导老师" prop="teacher">-->
+                    <!--<el-select v-model="formItem.teacher" placeholder="请选择">-->
+                        <!--<el-option-->
+                        <!--v-for="(item, index) in teachers" -->
+                        <!--:key="index"-->
+                        <!--:label="item.realName"-->
+                        <!--:value="item.realName">-->
+                        <!--</el-option>-->
+                    <!--</el-select>-->
+                    <!--&lt;!&ndash; <el-input v-model="formItem.teacher" placeholder="请输入指导老师" style="width:300px"></el-input> &ndash;&gt;-->
+                <!--</el-form-item>-->
+                <el-form-item label="指导老师">
+                    <div style="margin:0 10px 10px 10px;padding:0" v-for="(item, index) in selectTeacherList" :key="index">
+                        <!--<el-input v-model="item.sn" placeholder="仅输入学号即可..." class="mx-3" style="width:200px"></el-input>-->
+                        <el-select v-model="item.teacher" placeholder="请选择">
+                            <el-option
+                            v-for="(item, index) in teachers"
+                            :key="index"
+                            :label="item.realName"
+                            :value="item.realName">
+                            </el-option>
+                        </el-select>
+                        <i class="el-icon-delete" style="font-size:22px;cursor:pointer" @click="deleteTeacher(index)"></i>
+                    </div>
+                    <i class="el-icon-plus" style="font-size:22px;cursor:pointer" @click="addTeacher"></i>
                 </el-form-item>
                 <el-form-item label="成员">
                     <div style="margin:0 10px 10px 10px;padding:0" v-for="(item, index) in formItem.member" :key="index">
@@ -63,6 +78,11 @@
                 ],
                 teachers:[
 
+                ],
+                selectTeacherList: [
+                    {
+                        teacher: ''
+                    }
                 ],
                 multiple: false,
                 formItem: {
@@ -109,6 +129,14 @@
             deleteMember(index) {
                 this.formItem.member.splice(index,1)
             },
+            addTeacher(){
+              this.selectTeacherList.push({
+                  teacher: ''
+              })
+            },
+            deleteTeacher(index){
+              this.selectTeacherList.splice(index,1)
+            },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -117,6 +145,15 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
+                        var groupTeacher = "";
+                        for(var i = 0;i < this.selectTeacherList.length;i++){
+                            if(i == this.selectTeacherList.length-1){
+                                groupTeacher = groupTeacher + this.selectTeacherList[i].teacher;
+                            }else {
+                                groupTeacher = groupTeacher + this.selectTeacherList[i].teacher+ "、";
+                            }
+                        }
+                        this.formItem.teacher = groupTeacher;
                         this.axios.post("/api/group/insert",this.formItem)
                             .then(res =>{
                                 if(res.status == 200){

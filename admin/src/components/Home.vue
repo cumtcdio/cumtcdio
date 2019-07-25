@@ -42,6 +42,13 @@
                     <keep-alive>
                         <router-view></router-view>
                     </keep-alive>
+                    <div v-if="isHome">
+                        <div class="home_top">
+                            <h2>电子商务与数据科学系</h2>
+                        </div>
+                        <div class="home_content">
+                        </div>
+                    </div>
                 </el-main>
             </el-container>
         </el-container>
@@ -68,6 +75,7 @@
                     //         {id: 1, name: 'CDIO管理', path: '/cdio'}
                     //     ]}
                 // ]
+                isHome: false,
             }
         },
         methods: {
@@ -77,7 +85,18 @@
                     removeToken()
                     this.$router.push('/')
                 }
+            },
+            checkIsHome(){
+                var string = this.$route.path
+                if(string.endsWith("home")){
+                    this.isHome = true;
+                }else{
+                    this.isHome = false
+                }
             }
+        },
+        mounted(){
+            this.checkIsHome();
         },
         computed: {
             routes() {
@@ -85,6 +104,11 @@
             },
             user() {
                 return this.$store.state.user
+            }
+        },
+        watch: {
+            $route: function () {
+                this.checkIsHome();
             }
         }
     }
@@ -119,5 +143,11 @@
         font-size: 22px;
         display: inline;
         margin-left: 8px;
+    }
+    .home_top{
+        text-align: center;
+    }
+    .home_content{
+
     }
 </style>
